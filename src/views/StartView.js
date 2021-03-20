@@ -3,7 +3,7 @@ import {Button, Layout, Text, Icon} from '@ui-kitten/components';
 import {StyleSheet} from 'react-native';
 import Logo from '../res/images/logo.svg';
 
-export const StartView = () => {
+export const StartView = ({navigation}) => {
   const shakeIconRef = React.useRef();
 
   const ChevronIcon = (props) => (
@@ -44,7 +44,10 @@ export const StartView = () => {
       <Button
         style={styles.likeButton}
         accessoryLeft={ChevronIcon}
-        onPress={() => shakeIconRef.current.startAnimation()}>
+        onPress={() => {
+          shakeIconRef.current.startAnimation();
+          navigation.navigate('Content');
+        }}>
         GO DRIVING
       </Button>
     </Layout>

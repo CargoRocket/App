@@ -15,7 +15,7 @@ import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
 import {EvaIconsPack} from '@ui-kitten/eva-icons';
 import * as eva from '@eva-design/eva';
 import {default as theme} from './res/custom-theme.json';
-import {StartView} from './views/StartView';
+import {Views} from './views/Views';
 
 /**
  * Use any valid `name` property from eva icons (e.g `github`, or `heart-outline`)
@@ -26,7 +26,7 @@ export default () => (
   <>
     <IconRegistry icons={EvaIconsPack} />
     <ApplicationProvider {...eva} theme={{...eva.light, ...theme}}>
-      <StartView />
+      <Views />
     </ApplicationProvider>
   </>
 );
