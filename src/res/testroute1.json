@@ -1,0 +1,1719 @@
+
+    {
+    "geometry": "wbc`|Asy}nPM`@gCrH_HqI{MmPkEoFc`@ed@|@eCJWxA_EsBeC}AkBkCwCcQsPwG_Gy@m@_B}@qBcBoMiKuRiScKgGoGuAkHgE}CaEu@iA_BaClAsEvGsVv@uC|CmLdDaMTy@T{@dGaU`EgOx@cDf@}B~BeL`@gBpF_Wj@qCfFkV\\_BLs@G{@W[iAs@uNiJuH}EuLcIsCiBwBsAmGiEuAiAsEqCLeFaTqZ}S_TaDmDiFVgRuQgCuF_CwBlAmE`@oA{GaFsAqJgDgDuC_BRqAfAsI|@cILcAtAkKr@qEfBkKPoTi@_@}TsQ_DaCwHcL}DiI{BuGyAiFg@qB[sA[gCBwFe@{S{c@}PuALaDjEsGbFmKdGyQkI_D_BmCqAuDgBiCsAF_GH{[iF{TcBi@fFaZUYMc@oAsAyYoW}w@qs@iYuVaBwAn@}CrDeDLcCEeCWiA_C}DeEuF}BkEb@{Ev@eC|@uAt@kAp@eAe@{@uDkHb@oARmDwBwVqDkb@yCe^eE{e@mDw^kH{t@M{Ht@_Hx@{EcImFeAu@qAy@eb@uVwScMoMoIgz@of@eBaA{KlPwAvBW^}@rAyAkDoB}DaBoDwE{JyEiI{Sgb@hIyLnBuC",
+    "legs": [
+        {
+            "summary": "Schubartstraße, Werastraße",
+            "weight": 878.2,
+            "duration": 945,
+            "steps": [
+                {
+                    "intersections": [
+                        {
+                            "out": 0,
+                            "entry": [
+                                true
+                            ],
+                            "bearings": [
+                                302
+                            ],
+                            "location": [
+                                9.174442,
+                                48.777276
+                            ]
+                        },
+                        {
+                            "out": 2,
+                            "in": 0,
+                            "entry": [
+                                false,
+                                true,
+                                true
+                            ],
+                            "bearings": [
+                                180,
+                                210,
+                                300
+                            ],
+                            "location": [
+                                9.174425,
+                                48.777283
+                            ]
+                        }
+                    ],
+                    "driving_side": "right",
+                    "geometry": "wbc`|Asy}nPM`@gCrH",
+                    "mode": "pushing bike",
+                    "maneuver": {
+                        "bearing_after": 302,
+                        "bearing_before": 0,
+                        "location": [
+                            9.174442,
+                            48.777276
+                        ],
+                        "type": "depart",
+                        "instruction": "Head northwest"
+                    },
+                    "weight": 22.1,
+                    "duration": 22.1,
+                    "name": "",
+                    "distance": 15.1
+                },
+                {
+                    "intersections": [
+                        {
+                            "out": 0,
+                            "in": 1,
+                            "entry": [
+                                true,
+                                false,
+                                true
+                            ],
+                            "bearings": [
+                                45,
+                                120,
+                                225
+                            ],
+                            "location": [
+                                9.174271,
+                                48.777351
+                            ]
+                        },
+                        {
+                            "out": 0,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                30,
+                                135,
+                                225
+                            ],
+                            "location": [
+                                9.174839,
+                                48.777835
+                            ]
+                        }
+                    ],
+                    "driving_side": "right",
+                    "geometry": "mgc`|A}n}nP_HqI{MmPkEoFc`@ed@",
+                    "mode": "cycling",
+                    "maneuver": {
+                        "bearing_after": 36,
+                        "bearing_before": 303,
+                        "location": [
+                            9.174271,
+                            48.777351
+                        ],
+                        "modifier": "right",
+                        "type": "end of road",
+                        "instruction": "Turn right onto Theodor-Heuss-Straße (B 27a)"
+                    },
+                    "ref": "B 27a",
+                    "weight": 38,
+                    "duration": 38,
+                    "name": "Theodor-Heuss-Straße (B 27a)",
+                    "distance": 141.4
+                },
+                {
+                    "intersections": [
+                        {
+                            "out": 1,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false,
+                                true
+                            ],
+                            "bearings": [
+                                30,
+                                120,
+                                210,
+                                315
+                            ],
+                            "location": [
+                                9.175434,
+                                48.778365
+                            ]
+                        },
+                        {
+                            "out": 0,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                30,
+                                120,
+                                225
+                            ],
+                            "location": [
+                                9.175676,
+                                48.778341
+                            ]
+                        },
+                        {
+                            "out": 0,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false,
+                                true
+                            ],
+                            "bearings": [
+                                30,
+                                120,
+                                210,
+                                300
+                            ],
+                            "location": [
+                                9.17573,
+                                48.778388
+                            ]
+                        },
+                        {
+                            "out": 0,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                30,
+                                120,
+                                210
+                            ],
+                            "location": [
+                                9.175806,
+                                48.778458
+                            ]
+                        },
+                        {
+                            "out": 0,
+                            "in": 1,
+                            "entry": [
+                                true,
+                                false,
+                                true
+                            ],
+                            "bearings": [
+                                30,
+                                210,
+                                300
+                            ],
+                            "location": [
+                                9.176216,
+                                48.778888
+                            ]
+                        },
+                        {
+                            "out": 0,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false,
+                                true
+                            ],
+                            "bearings": [
+                                30,
+                                120,
+                                210,
+                                300
+                            ],
+                            "location": [
+                                9.17627,
+                                48.778965
+                            ]
+                        },
+                        {
+                            "out": 0,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false,
+                                true
+                            ],
+                            "bearings": [
+                                30,
+                                150,
+                                210,
+                                330
+                            ],
+                            "location": [
+                                9.176517,
+                                48.779254
+                            ]
+                        },
+                        {
+                            "out": 0,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false,
+                                true
+                            ],
+                            "bearings": [
+                                15,
+                                165,
+                                210,
+                                330
+                            ],
+                            "location": [
+                                9.176974,
+                                48.779763
+                            ]
+                        },
+                        {
+                            "out": 0,
+                            "in": 1,
+                            "entry": [
+                                true,
+                                false,
+                                true
+                            ],
+                            "bearings": [
+                                45,
+                                225,
+                                300
+                            ],
+                            "location": [
+                                9.177214,
+                                48.780128
+                            ]
+                        },
+                        {
+                            "out": 0,
+                            "in": 1,
+                            "entry": [
+                                true,
+                                false,
+                                true
+                            ],
+                            "bearings": [
+                                45,
+                                225,
+                                300
+                            ],
+                            "location": [
+                                9.177251,
+                                48.780155
+                            ]
+                        }
+                    ],
+                    "driving_side": "right",
+                    "geometry": "yfe`|Asw_oP|@eCJWxA_EsBeC}AkBkCwCcQsPwG_Gy@m@_B}@qBcBoMiKuRiScKgGoGuAkHgE}CaEu@iA_BaC",
+                    "mode": "cycling",
+                    "maneuver": {
+                        "bearing_after": 125,
+                        "bearing_before": 35,
+                        "location": [
+                            9.175434,
+                            48.778365
+                        ],
+                        "modifier": "right",
+                        "type": "turn",
+                        "instruction": "Turn right"
+                    },
+                    "weight": 68.5,
+                    "duration": 98.79999999999998,
+                    "name": "",
+                    "distance": 265
+                },
+                {
+                    "intersections": [
+                        {
+                            "out": 1,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false,
+                                true
+                            ],
+                            "bearings": [
+                                30,
+                                120,
+                                225,
+                                300
+                            ],
+                            "location": [
+                                9.177316,
+                                48.780203
+                            ]
+                        },
+                        {
+                            "out": 1,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                30,
+                                120,
+                                300
+                            ],
+                            "location": [
+                                9.17809,
+                                48.779917
+                            ]
+                        }
+                    ],
+                    "driving_side": "right",
+                    "geometry": "uyh`|AgmcoPlAsEvGsVv@uC|CmLdDaMTy@T{@dGaU`EgOx@cDf@}B~BeL`@gBpF_Wj@qCfFkV\\_BLs@",
+                    "mode": "cycling",
+                    "maneuver": {
+                        "bearing_after": 118,
+                        "bearing_before": 40,
+                        "location": [
+                            9.177316,
+                            48.780203
+                        ],
+                        "modifier": "right",
+                        "type": "turn",
+                        "instruction": "Turn right onto Bolzstraße"
+                    },
+                    "weight": 66.5,
+                    "duration": 66.5,
+                    "name": "Bolzstraße",
+                    "distance": 247.1
+                },
+                {
+                    "intersections": [
+                        {
+                            "out": 0,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                30,
+                                120,
+                                285
+                            ],
+                            "location": [
+                                9.1803,
+                                48.779173
+                            ]
+                        },
+                        {
+                            "out": 0,
+                            "in": 1,
+                            "entry": [
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                30,
+                                210
+                            ],
+                            "location": [
+                                9.181057,
+                                48.780163
+                            ]
+                        }
+                    ],
+                    "driving_side": "right",
+                    "geometry": "iyf`|AwgioPG{@W[iAs@uNiJuH}EuLcIsCiBwBsAmGiEuAiAsEqC",
+                    "mode": "cycling",
+                    "maneuver": {
+                        "bearing_after": 26,
+                        "bearing_before": 111,
+                        "location": [
+                            9.1803,
+                            48.779173
+                        ],
+                        "modifier": "left",
+                        "type": "new name",
+                        "instruction": "Continue left onto Stauffenbergstraße"
+                    },
+                    "weight": 35.5,
+                    "duration": 37.1,
+                    "name": "Stauffenbergstraße",
+                    "distance": 137.2
+                },
+                {
+                    "intersections": [
+                        {
+                            "out": 0,
+                            "in": 1,
+                            "entry": [
+                                true,
+                                false,
+                                true
+                            ],
+                            "bearings": [
+                                90,
+                                210,
+                                300
+                            ],
+                            "location": [
+                                9.18113,
+                                48.780269
+                            ]
+                        }
+                    ],
+                    "driving_side": "right",
+                    "geometry": "y}h`|As{joPLeF",
+                    "mode": "cycling",
+                    "maneuver": {
+                        "bearing_after": 94,
+                        "bearing_before": 23,
+                        "location": [
+                            9.18113,
+                            48.780269
+                        ],
+                        "modifier": "right",
+                        "type": "end of road",
+                        "instruction": "Turn right onto John-Cranko-Weg"
+                    },
+                    "weight": 5,
+                    "duration": 6,
+                    "name": "John-Cranko-Weg",
+                    "distance": 8.5
+                },
+                {
+                    "intersections": [
+                        {
+                            "out": 0,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                45,
+                                105,
+                                270
+                            ],
+                            "location": [
+                                9.181245,
+                                48.780262
+                            ]
+                        },
+                        {
+                            "out": 0,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                30,
+                                120,
+                                210
+                            ],
+                            "location": [
+                                9.182022,
+                                48.780934
+                            ]
+                        }
+                    ],
+                    "driving_side": "right",
+                    "geometry": "k}h`|AybkoPaTqZ}S_TaDmD",
+                    "mode": "cycling",
+                    "maneuver": {
+                        "bearing_after": 39,
+                        "bearing_before": 94,
+                        "location": [
+                            9.181245,
+                            48.780262
+                        ],
+                        "modifier": "left",
+                        "type": "turn",
+                        "instruction": "Turn left"
+                    },
+                    "weight": 33.1,
+                    "duration": 64.7,
+                    "name": "",
+                    "distance": 105.2
+                },
+                {
+                    "intersections": [
+                        {
+                            "out": 0,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                0,
+                                30,
+                                210
+                            ],
+                            "location": [
+                                9.182109,
+                                48.781015
+                            ]
+                        }
+                    ],
+                    "driving_side": "right",
+                    "geometry": "mlj`|AyxloPiFVgRuQ",
+                    "mode": "cycling",
+                    "maneuver": {
+                        "bearing_after": 354,
+                        "bearing_before": 35,
+                        "location": [
+                            9.182109,
+                            48.781015
+                        ],
+                        "modifier": "slight left",
+                        "type": "turn",
+                        "instruction": "Make a slight left"
+                    },
+                    "weight": 16.2,
+                    "duration": 32.3,
+                    "name": "",
+                    "distance": 53.7
+                },
+                {
+                    "intersections": [
+                        {
+                            "out": 1,
+                            "in": 3,
+                            "entry": [
+                                true,
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                15,
+                                45,
+                                150,
+                                210
+                            ],
+                            "location": [
+                                9.182396,
+                                48.78144
+                            ]
+                        },
+                        {
+                            "out": 0,
+                            "in": 1,
+                            "entry": [
+                                true,
+                                false,
+                                true
+                            ],
+                            "bearings": [
+                                45,
+                                225,
+                                330
+                            ],
+                            "location": [
+                                9.182519,
+                                48.781508
+                            ]
+                        },
+                        {
+                            "out": 0,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                60,
+                                210,
+                                285
+                            ],
+                            "location": [
+                                9.182682,
+                                48.781533
+                            ]
+                        }
+                    ],
+                    "driving_side": "right",
+                    "geometry": "_gk`|AwjmoPgCuF_CwBlAmE`@oA{GaFsAqJgDgDuC_B",
+                    "mode": "cycling",
+                    "maneuver": {
+                        "bearing_after": 49,
+                        "bearing_before": 32,
+                        "location": [
+                            9.182396,
+                            48.78144
+                        ],
+                        "modifier": "slight right",
+                        "type": "fork",
+                        "instruction": "Keep right at the fork"
+                    },
+                    "weight": 32.2,
+                    "duration": 57.599999999999994,
+                    "name": "",
+                    "distance": 84.7
+                },
+                {
+                    "intersections": [
+                        {
+                            "out": 0,
+                            "in": 1,
+                            "entry": [
+                                true,
+                                false,
+                                true
+                            ],
+                            "bearings": [
+                                105,
+                                210,
+                                285
+                            ],
+                            "location": [
+                                9.183152,
+                                48.781859
+                            ]
+                        },
+                        {
+                            "out": 1,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                30,
+                                105,
+                                285
+                            ],
+                            "location": [
+                                9.183193,
+                                48.781849
+                            ]
+                        },
+                        {
+                            "out": 1,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                30,
+                                105,
+                                285
+                            ],
+                            "location": [
+                                9.183363,
+                                48.781813
+                            ]
+                        },
+                        {
+                            "out": 1,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                30,
+                                105,
+                                285
+                            ],
+                            "location": [
+                                9.183525,
+                                48.781782
+                            ]
+                        },
+                        {
+                            "out": 0,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                105,
+                                195,
+                                285
+                            ],
+                            "location": [
+                                9.183559,
+                                48.781775
+                            ]
+                        },
+                        {
+                            "out": 1,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                30,
+                                105,
+                                285
+                            ],
+                            "location": [
+                                9.183757,
+                                48.781732
+                            ]
+                        },
+                        {
+                            "out": 1,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                30,
+                                105,
+                                285
+                            ],
+                            "location": [
+                                9.183862,
+                                48.781706
+                            ]
+                        }
+                    ],
+                    "driving_side": "right",
+                    "geometry": "eal`|A_znoPRqAfAsI|@cILcAtAkKr@qEfBkK",
+                    "mode": "cycling",
+                    "maneuver": {
+                        "bearing_after": 109,
+                        "bearing_before": 23,
+                        "location": [
+                            9.183152,
+                            48.781859
+                        ],
+                        "modifier": "right",
+                        "type": "end of road",
+                        "instruction": "Turn right onto John-Cranko-Weg"
+                    },
+                    "weight": 21.5,
+                    "duration": 21.5,
+                    "name": "John-Cranko-Weg",
+                    "distance": 70.4
+                },
+                {
+                    "intersections": [
+                        {
+                            "out": 1,
+                            "in": 3,
+                            "entry": [
+                                true,
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                30,
+                                90,
+                                135,
+                                285
+                            ],
+                            "location": [
+                                9.18406,
+                                48.781654
+                            ]
+                        }
+                    ],
+                    "driving_side": "right",
+                    "geometry": "ktk`|AwrpoPPoT",
+                    "mode": "cycling",
+                    "maneuver": {
+                        "bearing_after": 91,
+                        "bearing_before": 111,
+                        "location": [
+                            9.18406,
+                            48.781654
+                        ],
+                        "modifier": "slight left",
+                        "type": "fork",
+                        "instruction": "Keep left onto John-Cranko-Weg"
+                    },
+                    "weight": 11.7,
+                    "duration": 11.7,
+                    "name": "John-Cranko-Weg",
+                    "distance": 25.2
+                },
+                {
+                    "intersections": [
+                        {
+                            "out": 0,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                30,
+                                195,
+                                270
+                            ],
+                            "location": [
+                                9.184404,
+                                48.781645
+                            ]
+                        }
+                    ],
+                    "driving_side": "right",
+                    "geometry": "ysk`|AghqoPi@_@}TsQ_DaC",
+                    "mode": "cycling",
+                    "maneuver": {
+                        "bearing_after": 28,
+                        "bearing_before": 91,
+                        "location": [
+                            9.184404,
+                            48.781645
+                        ],
+                        "modifier": "left",
+                        "type": "turn",
+                        "instruction": "Turn left onto Ferdinand-Leitner-Steg"
+                    },
+                    "weight": 13.7,
+                    "duration": 13.7,
+                    "name": "Ferdinand-Leitner-Steg",
+                    "distance": 57.4
+                },
+                {
+                    "intersections": [
+                        {
+                            "out": 1,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                15,
+                                45,
+                                210
+                            ],
+                            "location": [
+                                9.184783,
+                                48.782097
+                            ]
+                        },
+                        {
+                            "out": 0,
+                            "in": 1,
+                            "entry": [
+                                true,
+                                false,
+                                true
+                            ],
+                            "bearings": [
+                                75,
+                                240,
+                                330
+                            ],
+                            "location": [
+                                9.185513,
+                                48.782489
+                            ]
+                        },
+                        {
+                            "out": 2,
+                            "in": 0,
+                            "entry": [
+                                false,
+                                true,
+                                true
+                            ],
+                            "bearings": [
+                                135,
+                                165,
+                                330
+                            ],
+                            "location": [
+                                9.186217,
+                                48.783234
+                            ]
+                        }
+                    ],
+                    "driving_side": "right",
+                    "geometry": "apl`|A}_roPwHcL}DiI{BuGyAiFg@qB[sA[gCBwFe@{S{c@}PuALaDjEsGbFmKdGyQkI_D_BmCqAuDgBiCsAF_GH{[iF{TcBi@",
+                    "mode": "cycling",
+                    "maneuver": {
+                        "bearing_after": 40,
+                        "bearing_before": 28,
+                        "location": [
+                            9.184783,
+                            48.782097
+                        ],
+                        "modifier": "slight right",
+                        "type": "continue",
+                        "instruction": "Make a slight right to stay on Ferdinand-Leitner-Steg"
+                    },
+                    "weight": 107.5,
+                    "duration": 107.5,
+                    "name": "Ferdinand-Leitner-Steg",
+                    "distance": 386.1
+                },
+                {
+                    "intersections": [
+                        {
+                            "out": 1,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                0,
+                                105,
+                                210
+                            ],
+                            "location": [
+                                9.187282,
+                                48.784341
+                            ]
+                        }
+                    ],
+                    "driving_side": "right",
+                    "geometry": "i|p`|Ac|voPfFaZ",
+                    "mode": "cycling",
+                    "maneuver": {
+                        "bearing_after": 111,
+                        "bearing_before": 35,
+                        "location": [
+                            9.187282,
+                            48.784341
+                        ],
+                        "modifier": "right",
+                        "type": "turn",
+                        "instruction": "Turn right"
+                    },
+                    "weight": 14.4,
+                    "duration": 14.4,
+                    "name": "",
+                    "distance": 34.3
+                },
+                {
+                    "intersections": [
+                        {
+                            "out": 0,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                45,
+                                150,
+                                285
+                            ],
+                            "location": [
+                                9.187715,
+                                48.784225
+                            ]
+                        },
+                        {
+                            "out": 0,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                30,
+                                105,
+                                225
+                            ],
+                            "location": [
+                                9.187746,
+                                48.784243
+                            ]
+                        },
+                        {
+                            "out": 0,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                30,
+                                120,
+                                210
+                            ],
+                            "location": [
+                                9.18818,
+                                48.784712
+                            ]
+                        },
+                        {
+                            "out": 0,
+                            "in": 1,
+                            "entry": [
+                                true,
+                                false,
+                                true
+                            ],
+                            "bearings": [
+                                30,
+                                210,
+                                300
+                            ],
+                            "location": [
+                                9.189021,
+                                48.785623
+                            ]
+                        }
+                    ],
+                    "driving_side": "right",
+                    "geometry": "aup`|AewwoPUYMc@oAsAyYoW}w@qs@iYuVaBwA",
+                    "mode": "cycling",
+                    "maneuver": {
+                        "bearing_after": 47,
+                        "bearing_before": 111,
+                        "location": [
+                            9.187715,
+                            48.784225
+                        ],
+                        "modifier": "left",
+                        "type": "turn",
+                        "instruction": "Turn left onto Ulmenallee"
+                    },
+                    "weight": 78.2,
+                    "duration": 78.7,
+                    "name": "Ulmenallee",
+                    "distance": 243.6
+                },
+                {
+                    "intersections": [
+                        {
+                            "out": 0,
+                            "in": 1,
+                            "entry": [
+                                true,
+                                false,
+                                true
+                            ],
+                            "bearings": [
+                                120,
+                                210,
+                                345
+                            ],
+                            "location": [
+                                9.189444,
+                                48.786093
+                            ]
+                        }
+                    ],
+                    "driving_side": "right",
+                    "geometry": "yit`|Agc{oPn@}CrDeD",
+                    "mode": "cycling",
+                    "maneuver": {
+                        "bearing_after": 126,
+                        "bearing_before": 29,
+                        "location": [
+                            9.189444,
+                            48.786093
+                        ],
+                        "modifier": "right",
+                        "type": "turn",
+                        "instruction": "Turn right"
+                    },
+                    "weight": 8.6,
+                    "duration": 8.6,
+                    "name": "",
+                    "distance": 18.1
+                },
+                {
+                    "intersections": [
+                        {
+                            "out": 0,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                90,
+                                135,
+                                330
+                            ],
+                            "location": [
+                                9.189606,
+                                48.785979
+                            ]
+                        },
+                        {
+                            "out": 1,
+                            "in": 3,
+                            "entry": [
+                                true,
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                0,
+                                45,
+                                180,
+                                225
+                            ],
+                            "location": [
+                                9.189871,
+                                48.786051
+                            ]
+                        },
+                        {
+                            "out": 0,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false,
+                                true
+                            ],
+                            "bearings": [
+                                45,
+                                180,
+                                225,
+                                345
+                            ],
+                            "location": [
+                                9.189994,
+                                48.78615
+                            ]
+                        }
+                    ],
+                    "driving_side": "right",
+                    "geometry": "ubt`|Akm{oPLcCEeCWiA_C}DeEuF}BkE",
+                    "mode": "cycling",
+                    "maneuver": {
+                        "bearing_after": 91,
+                        "bearing_before": 147,
+                        "location": [
+                            9.189606,
+                            48.785979
+                        ],
+                        "modifier": "left",
+                        "type": "turn",
+                        "instruction": "Turn left"
+                    },
+                    "weight": 13.100000000000001,
+                    "duration": 13.100000000000001,
+                    "name": "",
+                    "distance": 47.3
+                },
+                {
+                    "intersections": [
+                        {
+                            "out": 1,
+                            "in": 2,
+                            "entry": [
+                                false,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                60,
+                                105,
+                                225
+                            ],
+                            "location": [
+                                9.190096,
+                                48.786213
+                            ]
+                        },
+                        {
+                            "out": 1,
+                            "in": 3,
+                            "entry": [
+                                true,
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                45,
+                                135,
+                                225,
+                                285
+                            ],
+                            "location": [
+                                9.190206,
+                                48.786195
+                            ]
+                        },
+                        {
+                            "out": 1,
+                            "in": 3,
+                            "entry": [
+                                true,
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                45,
+                                135,
+                                225,
+                                315
+                            ],
+                            "location": [
+                                9.190316,
+                                48.786136
+                            ]
+                        },
+                        {
+                            "out": 1,
+                            "in": 3,
+                            "entry": [
+                                true,
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                30,
+                                105,
+                                210,
+                                315
+                            ],
+                            "location": [
+                                9.190354,
+                                48.786109
+                            ]
+                        }
+                    ],
+                    "driving_side": "right",
+                    "geometry": "iqt`|A_l|oPb@{Ev@eC|@uAt@kAp@eAe@{@",
+                    "mode": "cycling",
+                    "maneuver": {
+                        "bearing_after": 102,
+                        "bearing_before": 46,
+                        "location": [
+                            9.190096,
+                            48.786213
+                        ],
+                        "modifier": "right",
+                        "type": "turn",
+                        "instruction": "Turn right"
+                    },
+                    "weight": 11.5,
+                    "duration": 11.5,
+                    "name": "",
+                    "distance": 29.7
+                },
+                {
+                    "intersections": [
+                        {
+                            "out": 0,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false,
+                                true
+                            ],
+                            "bearings": [
+                                45,
+                                135,
+                                285,
+                                330
+                            ],
+                            "location": [
+                                9.190419,
+                                48.786103
+                            ]
+                        },
+                        {
+                            "out": 0,
+                            "in": 1,
+                            "entry": [
+                                true,
+                                false,
+                                true
+                            ],
+                            "bearings": [
+                                75,
+                                225,
+                                315
+                            ],
+                            "location": [
+                                9.190569,
+                                48.786194
+                            ]
+                        },
+                        {
+                            "out": 1,
+                            "in": 3,
+                            "entry": [
+                                true,
+                                true,
+                                true,
+                                false,
+                                true
+                            ],
+                            "bearings": [
+                                30,
+                                75,
+                                210,
+                                255,
+                                315
+                            ],
+                            "location": [
+                                9.192141,
+                                48.786392
+                            ]
+                        }
+                    ],
+                    "driving_side": "right",
+                    "geometry": "mjt`|Ae`}oPuDkHb@oARmDwBwVqDkb@yCe^eE{e@mDw^kH{t@M{Ht@_Hx@{E",
+                    "mode": "cycling",
+                    "maneuver": {
+                        "bearing_after": 46,
+                        "bearing_before": 97,
+                        "location": [
+                            9.190419,
+                            48.786103
+                        ],
+                        "modifier": "slight left",
+                        "type": "turn",
+                        "instruction": "Make a slight left onto Schubartstraße"
+                    },
+                    "weight": 83.80000000000001,
+                    "duration": 83.80000000000001,
+                    "name": "Schubartstraße",
+                    "distance": 315.8
+                },
+                {
+                    "intersections": [
+                        {
+                            "out": 0,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                30,
+                                210,
+                                285
+                            ],
+                            "location": [
+                                9.194545,
+                                48.786679
+                            ]
+                        },
+                        {
+                            "out": 0,
+                            "in": 1,
+                            "entry": [
+                                true,
+                                false,
+                                true
+                            ],
+                            "bearings": [
+                                30,
+                                210,
+                                270
+                            ],
+                            "location": [
+                                9.195325,
+                                48.787812
+                            ]
+                        },
+                        {
+                            "out": 0,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                30,
+                                120,
+                                210
+                            ],
+                            "location": [
+                                9.195493,
+                                48.788044
+                            ]
+                        }
+                    ],
+                    "driving_side": "right",
+                    "geometry": "mnu`|AabepPcImFeAu@qAy@eb@uVwScMoMoIgz@of@eBaA",
+                    "mode": "cycling",
+                    "maneuver": {
+                        "bearing_after": 25,
+                        "bearing_before": 109,
+                        "location": [
+                            9.194545,
+                            48.786679
+                        ],
+                        "modifier": "left",
+                        "type": "end of road",
+                        "instruction": "Turn left onto Werastraße"
+                    },
+                    "weight": 103.4,
+                    "duration": 73.4,
+                    "name": "Werastraße",
+                    "distance": 288.3
+                },
+                {
+                    "intersections": [
+                        {
+                            "out": 2,
+                            "in": 1,
+                            "entry": [
+                                true,
+                                false,
+                                true
+                            ],
+                            "bearings": [
+                                30,
+                                210,
+                                315
+                            ],
+                            "location": [
+                                9.196158,
+                                48.789043
+                            ]
+                        },
+                        {
+                            "out": 2,
+                            "in": 1,
+                            "entry": [
+                                true,
+                                false,
+                                true
+                            ],
+                            "bearings": [
+                                60,
+                                135,
+                                315
+                            ],
+                            "location": [
+                                9.195803,
+                                48.789305
+                            ]
+                        }
+                    ],
+                    "driving_side": "right",
+                    "geometry": "ebz`|A{fhpP{KlPwAvBW^}@rA",
+                    "mode": "pushing bike",
+                    "maneuver": {
+                        "bearing_after": 317,
+                        "bearing_before": 22,
+                        "location": [
+                            9.196158,
+                            48.789043
+                        ],
+                        "modifier": "left",
+                        "type": "turn",
+                        "instruction": "Turn left"
+                    },
+                    "weight": 43.900000000000006,
+                    "duration": 43.900000000000006,
+                    "name": "",
+                    "distance": 43.7
+                },
+                {
+                    "intersections": [
+                        {
+                            "out": 0,
+                            "in": 1,
+                            "entry": [
+                                true,
+                                false,
+                                true
+                            ],
+                            "bearings": [
+                                45,
+                                135,
+                                225
+                            ],
+                            "location": [
+                                9.195761,
+                                48.789336
+                            ]
+                        },
+                        {
+                            "out": 0,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                45,
+                                90,
+                                225
+                            ],
+                            "location": [
+                                9.195847,
+                                48.789381
+                            ]
+                        },
+                        {
+                            "out": 0,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false,
+                                true
+                            ],
+                            "bearings": [
+                                45,
+                                120,
+                                225,
+                                270
+                            ],
+                            "location": [
+                                9.19622,
+                                48.789594
+                            ]
+                        }
+                    ],
+                    "driving_side": "right",
+                    "geometry": "otz`|AangpPyAkDoB}DaBoDwE{JyEiI{Sgb@",
+                    "mode": "cycling",
+                    "maneuver": {
+                        "bearing_after": 50,
+                        "bearing_before": 317,
+                        "location": [
+                            9.195761,
+                            48.789336
+                        ],
+                        "modifier": "right",
+                        "type": "end of road",
+                        "instruction": "Turn right onto Neckarstraße"
+                    },
+                    "weight": 41.900000000000006,
+                    "duration": 32.2,
+                    "name": "Neckarstraße",
+                    "distance": 116.9
+                },
+                {
+                    "intersections": [
+                        {
+                            "out": 1,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                45,
+                                135,
+                                225
+                            ],
+                            "location": [
+                                9.196949,
+                                48.790037
+                            ]
+                        },
+                        {
+                            "out": 1,
+                            "in": 2,
+                            "entry": [
+                                true,
+                                true,
+                                false
+                            ],
+                            "bearings": [
+                                45,
+                                135,
+                                315
+                            ],
+                            "location": [
+                                9.19717,
+                                48.789872
+                            ]
+                        }
+                    ],
+                    "driving_side": "right",
+                    "geometry": "i`|`|AixipPhIyLnBuC",
+                    "mode": "cycling",
+                    "maneuver": {
+                        "bearing_after": 137,
+                        "bearing_before": 47,
+                        "location": [
+                            9.196949,
+                            48.790037
+                        ],
+                        "modifier": "right",
+                        "type": "turn",
+                        "instruction": "Turn right"
+                    },
+                    "weight": 7.9,
+                    "duration": 7.9,
+                    "name": "",
+                    "distance": 32.8
+                },
+                {
+                    "intersections": [
+                        {
+                            "in": 0,
+                            "entry": [
+                                true
+                            ],
+                            "bearings": [
+                                319
+                            ],
+                            "location": [
+                                9.197245,
+                                48.789816
+                            ]
+                        }
+                    ],
+                    "driving_side": "right",
+                    "geometry": "or{`|AyjjpP",
+                    "mode": "cycling",
+                    "maneuver": {
+                        "bearing_after": 0,
+                        "bearing_before": 139,
+                        "location": [
+                            9.197245,
+                            48.789816
+                        ],
+                        "type": "arrive",
+                        "instruction": "You have arrived at your destination"
+                    },
+                    "weight": 0,
+                    "duration": 0,
+                    "name": "",
+                    "distance": 0
+                }
+            ],
+            "distance": 2767.3
+        }
+    ],
+    "weight_name": "cyclability",
+    "weight": 878.2,
+    "duration": 945,
+    "distance": 2767.3
+}

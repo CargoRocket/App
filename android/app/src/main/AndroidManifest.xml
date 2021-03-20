@@ -2,6 +2,7 @@
   package="com.cargorocketapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
       android:name=".MainApplication"
@@ -10,6 +11,8 @@
       android:roundIcon="@mipmap/ic_launcher_round"
       android:allowBackup="false"
       android:theme="@style/AppTheme">
+      <meta-data android:name="MAPBOX_ACCESS_TOKEN"
+        android:value="pk.eyJ1IjoiY2FyZ29yb2NrZXQiLCJhIjoiY2tsZ29kZmJjMmF4YjJwczhpZ240bm4wcyJ9.igY6WtbE2DODEvSSBxouEA" />
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"
