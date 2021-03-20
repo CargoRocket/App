@@ -20,6 +20,19 @@ export const Map = ({start, changeStart, destination, changeDestination}) => {
     map: {
       flex: 1,
     },
+    marker: {
+      height: 30,
+      width: 30,
+      borderRadius: 50,
+      borderColor: '#fff',
+      borderWidth: 3,
+    },
+    markerStart: {
+      backgroundColor: theme['color-info-300'],
+    },
+    markerDestination: {
+      backgroundColor: theme['color-warning-300'],
+    },
   });
 
   const StartMarker = () => {
@@ -33,12 +46,8 @@ export const Map = ({start, changeStart, destination, changeDestination}) => {
           }}>
           <View
             style={{
-              height: 30,
-              width: 30,
-              backgroundColor: theme['color-info-300'],
-              borderRadius: 50, 
-              borderColor: '#fff',
-              borderWidth: 3,
+              ...styles.marker,
+              ...styles.markerStart,
             }}
           />
         </MapboxGL.PointAnnotation>
@@ -57,12 +66,8 @@ export const Map = ({start, changeStart, destination, changeDestination}) => {
           }}>
           <View
             style={{
-              height: 30,
-              width: 30,
-              backgroundColor: theme['color-warning-300'],
-              borderRadius: 50, 
-              borderColor: '#fff',
-              borderWidth: 3,
+              ...styles.marker,
+              ...styles.markerDestination,
             }}
           />
         </MapboxGL.PointAnnotation>
