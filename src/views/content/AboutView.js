@@ -1,30 +1,14 @@
 import React from 'react';
 import {SafeAreaView} from 'react-native';
-import {
-  Divider,
-  Icon,
-  Layout,
-  Text,
-  TopNavigation,
-  TopNavigationAction,
-} from '@ui-kitten/components';
+import {WebView} from 'react-native-webview';
 
-const BackIcon = (props) => <Icon {...props} name="arrow-back" />;
-
-export const AboutView = ({navigation}) => {
-  const navigateBack = () => {
-    navigation.goBack();
-  };
-
-  const BackAction = () => (
-    <TopNavigationAction icon={BackIcon} onPress={navigateBack}/>
-  );
-
+export const AboutView = () => {
   return (
     <SafeAreaView style={{flex: 1}}>
-      <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text category="h1">DETAILS</Text>
-      </Layout>
+      <WebView
+        style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+        source={{uri: 'https://cargorocket.de/'}}
+      />
     </SafeAreaView>
   );
 };

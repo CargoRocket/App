@@ -48,7 +48,7 @@ export const StartView = ({navigation}) => {
           shakeIconRef.current.startAnimation();
           navigation.navigate('Content');
         }}>
-        GO DRIVING
+        GO CYCLING
       </Button>
     </Layout>
   );
