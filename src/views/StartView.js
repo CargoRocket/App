@@ -24,7 +24,7 @@ export const StartView = ({navigation}) => {
     text: {
       textAlign: 'center',
     },
-    likeButton: {
+    startButton: {
       marginVertical: 16,
     },
   });
@@ -42,7 +42,7 @@ export const StartView = ({navigation}) => {
         Intelligent obstacle avoidance based on community experience.
       </Text>
       <Button
-        style={styles.likeButton}
+        style={styles.startButton}
         accessoryLeft={ChevronIcon}
         onPress={() => {
           shakeIconRef.current.startAnimation();
