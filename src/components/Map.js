@@ -2,10 +2,11 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import {accessToken} from '../res/config';
+import {default as theme} from '../res/custom-theme.json';
 
 MapboxGL.setAccessToken(accessToken);
 
-export const Map = () => {
+export const Map = ({start, changeStart, destination, changeDestination}) => {
   const styles = StyleSheet.create({
     page: {
       position: 'absolute',
@@ -21,6 +22,54 @@ export const Map = () => {
     },
   });
 
+  const StartMarker = () => {
+    if (start) {
+      return (
+        <MapboxGL.PointAnnotation
+          coordinate={start.center}
+          // draggable={true}
+          onDragEnd={() => {
+            // Do Something
+          }}>
+          <View
+            style={{
+              height: 30,
+              width: 30,
+              backgroundColor: theme['color-info-300'],
+              borderRadius: 50, 
+              borderColor: '#fff',
+              borderWidth: 3,
+            }}
+          />
+        </MapboxGL.PointAnnotation>
+      );
+    }
+  };
+
+  const DestinationMarker = () => {
+    if (destination) {
+      return (
+        <MapboxGL.PointAnnotation
+          coordinate={destination.center}
+          // draggable={true}
+          onDragEnd={() => {
+            // Do Something
+          }}>
+          <View
+            style={{
+              height: 30,
+              width: 30,
+              backgroundColor: theme['color-warning-300'],
+              borderRadius: 50, 
+              borderColor: '#fff',
+              borderWidth: 3,
+            }}
+          />
+        </MapboxGL.PointAnnotation>
+      );
+    }
+  };
+
   return (
     <View style={styles.page}>
       <View style={styles.container}>
@@ -30,8 +79,11 @@ export const Map = () => {
           compassEnabled={false}
           onLongPress={() => {
             // Do something
-          }}
-        />
+          }}>
+          <MapboxGL.Camera zoomLevel={4} centerCoordinate={[12.59, 51.64]} />
+          {StartMarker()}
+          {DestinationMarker()}
+        </MapboxGL.MapView>
       </View>
     </View>
   );

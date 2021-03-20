@@ -68,7 +68,7 @@ export const RoutingInput = ({navigation}) => {
           {loading ? 'Loading' : 'Navigate'}
         </Button>
       </Card>
-      <Map />
+      <Map start={start} destination={destination} />
     </View>
   );
 };
