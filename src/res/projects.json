@@ -1,0 +1,22 @@
+{
+  "projects": [
+    {
+      "title": "Cargo-bike-riders Survey",
+      "description":"Welche Hindernisse gibt es für Lastenräder und wie unterscheiden diese sich zu normalen Fahrrädern? Gibt es Unterschiede in unterschiedlichen Städten, für verschiedene Nutzungstypen und Lastenradtypen? All das möchten wir mit dieser Umfrage herausfinden. ",
+      "image": "survey_bike.jpg",
+      "url": "https://cargorocket.typeform.com/to/fTmr4EC2"
+    },
+    {
+      "title": "Cargobike Obstacle Map",
+      "description":"A Map showing obstacles for cargobike-routes.",
+      "image": "Map_Boler.png",
+      "url": "https://map.cargorocket.de/"
+    },
+    {
+      "title": "Cargobike Index 1.0",
+      "description":"Our first version og the Cargobike Index (CAUTION! Long loading time ahead!)",
+      "image": "Stuttgart_CI1.png",
+      "url": "https://stuttgart.xatellite.io/"
+    }
+  ]
+}

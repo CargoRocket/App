@@ -10,15 +10,8 @@ export const RoutingInput = ({navigation}) => {
   const [destination, setDestination] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
 
-  const shakeIconRef = React.useRef();
-
   const ChevronIcon = (props) => (
-    <Icon
-      {...props}
-      name="chevron-right-outline"
-      ref={shakeIconRef}
-      animation="shake"
-    />
+    <Icon {...props} name="chevron-right-outline" animation="shake" />
   );
 
   const styles = StyleSheet.create({
