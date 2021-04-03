@@ -42,7 +42,7 @@ export const RoutingInput = ({navigation}) => {
             const startPoint = start.center;
             const endPoint = destination.center;
             fetch(
-              `https://api.mapbox.com/directions/v5/mapbox/cycling/${startPoint[0]}%2C${startPoint[1]}%3B${endPoint[0]}%2C${endPoint[1]}.json?geometries=polyline6&steps=true&overview=full&language=en&access_token=${accessToken}`
+              `https://api.cargorocket.de/route-mb?from=[${startPoint[1]},${startPoint[0]}]&to=[${endPoint[1]},${endPoint[0]}]&access_token=${accessToken}`,
             )
               .then((rawData) => rawData.json())
               .then((routesResponse) => {
@@ -50,7 +50,13 @@ export const RoutingInput = ({navigation}) => {
                 console.log(routesResponse);
                 console.log(routesResponse.routes[0]);
                 navigation.navigate('Navigating', {
-                  routeResponse: routesResponse.routes[0],
+                  routeResponse: {
+                    duration: routesResponse.routes[0].duration,
+                    distance: routesResponse.routes[0].distance,
+                    geometry: routesResponse.routes[0].geometry,
+                    weight: routesResponse.routes[0].weight,
+                    legs: routesResponse.routes[0].legs,
+                  },
                 });
               })
               .catch((error) => {
