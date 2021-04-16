@@ -12,11 +12,13 @@
   "dependencies": {
     "@cargorocket/react-native-mapbox-navigation": "../MapboxNavigation/react-native-mapbox-navigation",
     "@eva-design/eva": "2.0.0",
+    "@mapbox/polyline": "^1.1.1",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-mapbox-gl/maps": "^8.2.0-beta1",
     "@react-navigation/bottom-tabs": "^5.11.8",
     "@react-navigation/native": "^5.9.3",
     "@react-navigation/stack": "^5.14.3",
+    "@turf/helpers": "^6.3.0",
     "@ui-kitten/components": "5.0.0",
     "@ui-kitten/eva-icons": "5.0.0",
     "react": "16.11.0",

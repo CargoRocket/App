@@ -1,12 +1,20 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Platform} from 'react-native';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import {accessToken} from '../res/config';
 import {default as theme} from '../res/custom-theme.json';
+import polyline from '@mapbox/polyline';
+import {lineString as makeLineString} from '@turf/helpers';
 
 MapboxGL.setAccessToken(accessToken);
 
-export const Map = ({start, changeStart, destination, changeDestination}) => {
+export const Map = ({
+  start,
+  changeStart,
+  destination,
+  changeDestination,
+  routes,
+}) => {
   const styles = StyleSheet.create({
     page: {
       position: 'absolute',
@@ -35,14 +43,15 @@ export const Map = ({start, changeStart, destination, changeDestination}) => {
     },
   });
 
-  const StartMarker = () => {
+  const renderStartMarker = () => {
     if (start) {
       return (
         <MapboxGL.PointAnnotation
-          coordinate={start.center}
-          // draggable={true}
-          onDragEnd={() => {
-            // Do Something
+          id="start-marker"
+          coordinate={start}
+          draggable={true}
+          onDragEnd={(point) => {
+            changeStart(point.geometry.coordinates);
           }}>
           <View
             style={{
@@ -55,14 +64,15 @@ export const Map = ({start, changeStart, destination, changeDestination}) => {
     }
   };
 
-  const DestinationMarker = () => {
+  const renderDestinationMarker = () => {
     if (destination) {
       return (
         <MapboxGL.PointAnnotation
-          coordinate={destination.center}
-          // draggable={true}
-          onDragEnd={() => {
-            // Do Something
+          id="destination-marker"
+          coordinate={destination}
+          draggable={true}
+          onDragEnd={(point) => {
+            changeDestination(point.geometry.coordinates);
           }}>
           <View
             style={{
@@ -71,6 +81,40 @@ export const Map = ({start, changeStart, destination, changeDestination}) => {
             }}
           />
         </MapboxGL.PointAnnotation>
+      );
+    }
+  };
+
+  const renderRoutes = () => {
+    if (routes) {
+      const bikeRoute = routes.bike.routes[0].geometry;
+      return (
+        <MapboxGL.ShapeSource
+          id="bike-route-source"
+          shape={polyline.toGeoJSON(bikeRoute, 6)}>
+          <MapboxGL.LineLayer
+            id="bike-route-line"
+            sourceID="bike-route-source"
+            style={{lineWidth: 5, lineJoin: 'bevel', lineColor: '#ffffff'}}
+          />
+        </MapboxGL.ShapeSource>
+      );
+    }
+  };
+
+  const renderCargoBikeRoutes = () => {
+    if (routes) {
+      const cargobikeRoute = routes.cargobike.routes[0].geometry;
+      return (
+        <MapboxGL.ShapeSource
+          id="cargobike-route-source"
+          shape={polyline.toGeoJSON(cargobikeRoute, 6)}>
+          <MapboxGL.LineLayer
+            id="cargobike-route-line"
+            sourceID="cargobike-route-source"
+            style={{lineWidth: 5, lineJoin: 'bevel', lineColor: '#515555'}}
+          />
+        </MapboxGL.ShapeSource>
       );
     }
   };
@@ -86,8 +130,10 @@ export const Map = ({start, changeStart, destination, changeDestination}) => {
             // Do something
           }}>
           <MapboxGL.Camera zoomLevel={4} centerCoordinate={[12.59, 51.64]} />
-          {StartMarker()}
-          {DestinationMarker()}
+          {renderStartMarker()}
+          {renderDestinationMarker()}
+          {renderRoutes()}
+          {renderCargoBikeRoutes()}
         </MapboxGL.MapView>
       </View>
     </View>

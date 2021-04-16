@@ -59,8 +59,6 @@ export const ProjectWebView = ({route}) => {
         ref={webViewRef}
         onNavigationStateChange={(navState) => {
           // Keep track of going back navigation within component
-          console.log('check');
-          console.log(navState.canGoBack);
           setBack(navState.canGoBack);
         }}
         allowsBackForwardNavigationGestures={true}

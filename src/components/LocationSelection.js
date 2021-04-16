@@ -9,7 +9,7 @@ export const LocationSelect = ({onChange, placeholder}) => {
 
   const onSelect = (index) => {
     setValue(data[index].place_name);
-    onChange(data[index]);
+    onChange(data[index].center);
   };
 
   const onChangeText = (query) => {
@@ -22,7 +22,6 @@ export const LocationSelect = ({onChange, placeholder}) => {
       .then((response) => {
         if (response.features) {
           setData(response.features);
-          console.log(data);
         }
       });
   };

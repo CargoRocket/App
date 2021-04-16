@@ -16,7 +16,7 @@ export const NavigatingView = ({navigation, route}) => {
       <MapboxNavigation
         origin={[9.177383, 48.776167]}
         destination={[9.116016, 48.823405]}
-        shouldSimulateRoute={true}
+        shouldSimulateRoute={false}
         routes={JSON.stringify(routeResponse)}
         onLocationChange={(event) => {
           const {latitude, longitude} = event.nativeEvent;
