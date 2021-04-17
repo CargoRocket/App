@@ -1,10 +1,11 @@
 import React from 'react';
-import {StyleSheet, View, Platform} from 'react-native';
+import {StyleSheet, View, Text} from 'react-native';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import {accessToken} from '../res/config';
 import {default as theme} from '../res/custom-theme.json';
 import polyline from '@mapbox/polyline';
-import {lineString as makeLineString} from '@turf/helpers';
+// import markerOne from '../res/images/marker1.png';
+// import markerTwo from '../res/images/marker2.png';
 
 MapboxGL.setAccessToken(accessToken);
 
@@ -14,6 +15,8 @@ export const Map = ({
   destination,
   changeDestination,
   routes,
+  mapCenter,
+  mapZoom,
 }) => {
   const styles = StyleSheet.create({
     page: {
@@ -43,6 +46,43 @@ export const Map = ({
     },
   });
 
+  const renderRoutes = () => {
+    if (routes && routes.bike.routes) {
+      const bikeRoute = routes.bike.routes[0].geometry;
+      return (
+        <MapboxGL.ShapeSource
+          id="bike-route-source"
+          shape={polyline.toGeoJSON(bikeRoute, 6)}>
+          <MapboxGL.LineLayer
+            id="bike-route-line"
+            layerIndex={150}
+            sourceID="bike-route-source"
+            style={{lineWidth: 5, lineJoin: 'bevel', lineColor: '#ffffff'}}
+          />
+        </MapboxGL.ShapeSource>
+      );
+    }
+  };
+
+  const renderCargoBikeRoutes = () => {
+    if (routes && routes.cargobike.routes) {
+      const cargobikeRoute = routes.cargobike.routes[0].geometry;
+      return (
+        <MapboxGL.ShapeSource
+          id="cargobike-route-source"
+          shape={polyline.toGeoJSON(cargobikeRoute, 6)}>
+          <MapboxGL.LineLayer
+            id="cargobike-route-line"
+            sourceID="cargobike-route-source"
+            layerIndex={150}
+            style={{lineWidth: 5, lineJoin: 'bevel', lineColor: '#515555'}}>
+            <Text>Test</Text>
+          </MapboxGL.LineLayer>
+        </MapboxGL.ShapeSource>
+      );
+    }
+  };
+
   const renderStartMarker = () => {
     if (start) {
       return (
@@ -60,6 +100,26 @@ export const Map = ({
             }}
           />
         </MapboxGL.PointAnnotation>
+        // <MapboxGL.ShapeSource
+        //   id="symbolLayerSource-1"
+        //   shape={{
+        //     type: 'Feature',
+        //     geometry: {
+        //       type: 'Point',
+        //       coordinates: start,
+        //     },
+        //     properties: {},
+        //   }}>
+        //   <MapboxGL.SymbolLayer
+        //     id="symbol-1"
+        //     aboveLayerID="cargobike-route-line"
+        //     style={{
+        //       iconImage: markerOne,
+        //       iconSize: 1,
+        //       iconAllowOverlap: true,
+        //     }}
+        //   />
+        // </MapboxGL.ShapeSource>
       );
     }
   };
@@ -81,40 +141,26 @@ export const Map = ({
             }}
           />
         </MapboxGL.PointAnnotation>
-      );
-    }
-  };
-
-  const renderRoutes = () => {
-    if (routes) {
-      const bikeRoute = routes.bike.routes[0].geometry;
-      return (
-        <MapboxGL.ShapeSource
-          id="bike-route-source"
-          shape={polyline.toGeoJSON(bikeRoute, 6)}>
-          <MapboxGL.LineLayer
-            id="bike-route-line"
-            sourceID="bike-route-source"
-            style={{lineWidth: 5, lineJoin: 'bevel', lineColor: '#ffffff'}}
-          />
-        </MapboxGL.ShapeSource>
-      );
-    }
-  };
-
-  const renderCargoBikeRoutes = () => {
-    if (routes) {
-      const cargobikeRoute = routes.cargobike.routes[0].geometry;
-      return (
-        <MapboxGL.ShapeSource
-          id="cargobike-route-source"
-          shape={polyline.toGeoJSON(cargobikeRoute, 6)}>
-          <MapboxGL.LineLayer
-            id="cargobike-route-line"
-            sourceID="cargobike-route-source"
-            style={{lineWidth: 5, lineJoin: 'bevel', lineColor: '#515555'}}
-          />
-        </MapboxGL.ShapeSource>
+        // <MapboxGL.ShapeSource
+        //   id="symbolLayerSource-2"
+        //   shape={{
+        //     type: 'Feature',
+        //     geometry: {
+        //       type: 'Point',
+        //       coordinates: destination,
+        //     },
+        //     properties: {},
+        //   }}>
+        //   <MapboxGL.SymbolLayer
+        //     id="symbol-2"
+        //     aboveLayerID="cargobike-route-line"
+        //     style={{
+        //       iconImage: markerTwo,
+        //       iconSize: 1,
+        //       iconAllowOverlap: true,
+        //     }}
+        //   />
+        // </MapboxGL.ShapeSource>
       );
     }
   };
@@ -129,11 +175,11 @@ export const Map = ({
           onLongPress={() => {
             // Do something
           }}>
-          <MapboxGL.Camera zoomLevel={4} centerCoordinate={[12.59, 51.64]} />
-          {renderStartMarker()}
-          {renderDestinationMarker()}
+          <MapboxGL.Camera zoomLevel={mapZoom} centerCoordinate={mapCenter} />
           {renderRoutes()}
           {renderCargoBikeRoutes()}
+          {renderStartMarker()}
+          {renderDestinationMarker()}
         </MapboxGL.MapView>
       </View>
     </View>

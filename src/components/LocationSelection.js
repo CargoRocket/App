@@ -1,6 +1,7 @@
 import React from 'react';
-import {Autocomplete, AutocompleteItem} from '@ui-kitten/components';
+import {Autocomplete, AutocompleteItem, Icon} from '@ui-kitten/components';
 import {accessToken} from '../res/config';
+// import Geolocation from '@react-native-community/geolocation';
 
 export const LocationSelect = ({onChange, placeholder}) => {
   const [value, setValue] = React.useState(null);
@@ -10,6 +11,11 @@ export const LocationSelect = ({onChange, placeholder}) => {
   const onSelect = (index) => {
     setValue(data[index].place_name);
     onChange(data[index].center);
+  };
+
+  const handleCurrentPosition = () => {
+    // Geolocation.getCurrentPosition((info) => console.log(info));
+    setValue('Your current Position');
   };
 
   const onChangeText = (query) => {
@@ -26,6 +32,14 @@ export const LocationSelect = ({onChange, placeholder}) => {
       });
   };
 
+  const ChevronIcon = (props) => (
+    <Icon
+      {...props}
+      name="radio-button-on-outline"
+      onPress={handleCurrentPosition}
+    />
+  );
+
   const renderOption = (item, index) => (
     <AutocompleteItem key={index} title={item.place_name} />
   );
@@ -35,7 +49,8 @@ export const LocationSelect = ({onChange, placeholder}) => {
       placeholder={placeholder}
       value={value}
       onSelect={onSelect}
-      onChangeText={onChangeText}>
+      onChangeText={onChangeText}
+      accessoryRight={ChevronIcon}>
       {data.map(renderOption)}
     </Autocomplete>
   );
