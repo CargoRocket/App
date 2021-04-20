@@ -15,9 +15,26 @@ export const Map = ({
   destination,
   changeDestination,
   routes,
-  mapCenter,
-  mapZoom,
 }) => {
+  const bounds =
+    destination && start
+      ? {
+          ne: destination,
+          sw: start,
+          paddingTop: 200,
+          paddingLeft: 200,
+          paddingRight: 200,
+          paddingBottom: 200,
+        }
+      : {
+          ne: [11.106090200587593, 46.94990650185683],
+          sw: [9.595923969628181, 55.010052465795454],
+          paddingTop: 200,
+          paddingLeft: 200,
+          paddingRight: 200,
+          paddingBottom: 200,
+        };
+
   const styles = StyleSheet.create({
     page: {
       position: 'absolute',
@@ -175,7 +192,7 @@ export const Map = ({
           onLongPress={() => {
             // Do something
           }}>
-          <MapboxGL.Camera zoomLevel={mapZoom} centerCoordinate={mapCenter} />
+          <MapboxGL.Camera bounds={bounds} />
           {renderRoutes()}
           {renderCargoBikeRoutes()}
           {renderStartMarker()}
