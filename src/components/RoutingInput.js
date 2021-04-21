@@ -88,6 +88,7 @@ export const RoutingInput = ({navigation}) => {
                   weight: routes.cargobike.routes[0].weight,
                   legs: routes.cargobike.routes[0].legs,
                 },
+                destination: destination,
               });
             }}>
             {loading || !routes ? 'Loading' : 'Navigate'}
