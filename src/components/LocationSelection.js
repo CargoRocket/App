@@ -33,11 +33,7 @@ export const LocationSelect = ({onChange, placeholder}) => {
   };
 
   const ChevronIcon = (props) => (
-    <Icon
-      {...props}
-      name="radio-button-on-outline"
-      onPress={handleCurrentPosition}
-    />
+    <Icon {...props} name="pin-outline" onPress={handleCurrentPosition} />
   );
 
   const renderOption = (item, index) => (
@@ -50,7 +46,7 @@ export const LocationSelect = ({onChange, placeholder}) => {
       value={value}
       onSelect={onSelect}
       onChangeText={onChangeText}
-      accessoryRight={ChevronIcon}>
+      accessoryLeft={ChevronIcon}>
       {data.map(renderOption)}
     </Autocomplete>
   );

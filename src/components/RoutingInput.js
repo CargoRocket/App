@@ -4,12 +4,36 @@ import {StyleSheet, View} from 'react-native';
 import {LocationSelect} from './LocationSelection';
 import {Map} from './Map';
 import {accessToken, cargorocketAPIKey} from '../res/config';
+import RNLocation from 'react-native-location';
 
 export const RoutingInput = ({navigation}) => {
   const [start, setStart] = React.useState(null);
   const [destination, setDestination] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
   const [routes, setRoutes] = React.useState(null);
+
+  // ToDo Should be cleared on unmount.
+  let locationSubscription;
+
+  RNLocation.configure({
+    distanceFilter: 5.0,
+  });
+
+  RNLocation.requestPermission({
+    ios: 'whenInUse',
+    android: {
+      detail: 'coarse',
+    },
+  }).then((granted) => {
+    if (granted) {
+      locationSubscription = RNLocation.subscribeToLocationUpdates(
+        (locations) => {
+          console.log(locations);
+          setStart([locations[0].longitude, locations[0].latitude]);
+        },
+      );
+    }
+  });
 
   React.useEffect(() => {
     if (start && destination) {
@@ -62,7 +86,6 @@ export const RoutingInput = ({navigation}) => {
         <Text category="h5" style={styles.title} position="center">
           Bike-Navigation
         </Text>
-        <LocationSelect onChange={setStart} placeholder="Start" />
         <LocationSelect onChange={setDestination} placeholder="Destination" />
         {destination && start ? (
           <Button

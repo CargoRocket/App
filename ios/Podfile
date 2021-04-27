@@ -54,6 +54,8 @@ target 'CargoRocketApp' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
+  pod 'react-native-location', :path => '../node_modules/react-native-location'
+
   target 'CargoRocketAppTests' do
     inherit! :complete
     # Pods for testing
