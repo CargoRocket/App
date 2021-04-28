@@ -63,3 +63,5 @@ buck-out/
 /ios/Pods/
 
 src/res/config.js
+
+*.hprof

@@ -2,12 +2,12 @@ package com.cargorocketapp;
 
 import android.app.Application;
 import android.content.Context;
-// import com.ammarahmed.mmkv.RNMMKVJSIModulePackage; 
+import com.ammarahmed.mmkv.RNMMKVJSIModulePackage; 
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.github.reactnativecommunity.location.RNLocationPackage;
 import com.facebook.react.ReactInstanceManager;
-// import com.facebook.react.bridge.JSIModulePackage;
+import com.facebook.react.bridge.JSIModulePackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
@@ -38,10 +38,10 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
           return "index";
         }
 
-        // @Override
-        // protected JSIModulePackage getJSIModulePackage() {
-        //     return new RNMMKVJSIModulePackage();
-        // }
+        @Override
+        protected JSIModulePackage getJSIModulePackage() {
+            return new RNMMKVJSIModulePackage();
+        }
       };
 
   @Override

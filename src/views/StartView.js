@@ -2,9 +2,24 @@ import React from 'react';
 import {Button, Layout, Text, Icon} from '@ui-kitten/components';
 import {StyleSheet} from 'react-native';
 import Logo from '../res/images/logo.svg';
+import MMKVStorage from 'react-native-mmkv-storage';
+import {UiContext} from '../context/UiContext';
 
 export const StartView = ({navigation}) => {
+  const [isOnBoarded, setIsOnBoarded] = React.useContext(UiContext);
   const shakeIconRef = React.useRef();
+  const MMKV = new MMKVStorage.Loader().initialize();
+
+  const setOnBoarded = (value) => {
+    MMKV.setBool('isOnBoarded', value, (error, result) => {
+      if (error) {
+        // Todo Figure out how to handle this in the future.
+        console.error(error);
+        return;
+      }
+    });
+    setIsOnBoarded(MMKV.getBool('isOnBoarded'));
+  };
 
   const ChevronIcon = (props) => (
     <Icon
@@ -46,7 +61,8 @@ export const StartView = ({navigation}) => {
         accessoryLeft={ChevronIcon}
         onPress={() => {
           shakeIconRef.current.startAnimation();
-          navigation.navigate('Content');
+          setOnBoarded(true);
+          // navigation.navigate('Content');
         }}>
         GO CYCLING
       </Button>
