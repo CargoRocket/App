@@ -1,9 +1,9 @@
 import React from 'react';
 import {Button, Layout, Text, Icon} from '@ui-kitten/components';
 import {StyleSheet} from 'react-native';
-import Logo from '../res/images/logo.svg';
+import Logo from '../../res/images/logo.svg';
 
-export const SelectBikes = ({navigation}) => {
+export const StartView = ({navigation}) => {
   const shakeIconRef = React.useRef();
 
   const ChevronIcon = (props) => (
@@ -46,7 +46,8 @@ export const SelectBikes = ({navigation}) => {
         accessoryLeft={ChevronIcon}
         onPress={() => {
           shakeIconRef.current.startAnimation();
-          navigation.navigate('Content');
+          // setOnBoarded(true);
+          navigation.navigate('SelectUse');
         }}>
         GO CYCLING
       </Button>

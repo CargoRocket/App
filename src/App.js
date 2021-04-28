@@ -16,9 +16,9 @@ import {EvaIconsPack} from '@ui-kitten/eva-icons';
 import * as eva from '@eva-design/eva';
 import {default as theme} from './res/custom-theme.json';
 import {Views} from './views/Views';
-import {UiContext} from './context/UiContext';
+import {UiContext, SettingsContext} from './context';
 import MMKVStorage from 'react-native-mmkv-storage';
-
+import {makePersistent} from './helpers/persistantState';
 
 /**
  * Use any valid `name` property from eva icons (e.g `github`, or `heart-outline`)
@@ -27,15 +27,35 @@ import MMKVStorage from 'react-native-mmkv-storage';
 
 export const App = () => {
   const MMKV = new MMKVStorage.Loader().initialize();
-  const [isOnBoarded, setOnBoarded] = React.useState(
-    MMKV.getBool('isOnBoarded'),
+  // Setting up UI types
+  const onBoarding = makePersistent(
+    React.useState(false), // MMKV.getBool('isOnBoarded')),
+    'isOnBoarded',
+    MMKV,
+    'bool',
   );
+
+  // Setting up Setting types
+  const use = makePersistent(
+    React.useState(MMKV.getString('use')),
+    'use',
+    MMKV,
+  );
+
+  const bikeType = makePersistent(
+    React.useState(MMKV.getString('bikeType')),
+    'bikeType',
+    MMKV,
+  );
+
   return (
-    <UiContext.Provider value={[isOnBoarded, setOnBoarded]}>
-      <IconRegistry icons={EvaIconsPack} />
-      <ApplicationProvider {...eva} theme={{...eva.light, ...theme}}>
-        <Views />
-      </ApplicationProvider>
+    <UiContext.Provider value={{onBoarding}}>
+      <SettingsContext.Provider value={{use, bikeType}}>
+        <IconRegistry icons={EvaIconsPack} />
+        <ApplicationProvider {...eva} theme={{...eva.light, ...theme}}>
+          <Views />
+        </ApplicationProvider>
+      </SettingsContext.Provider>
     </UiContext.Provider>
   );
 };

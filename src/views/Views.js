@@ -1,21 +1,22 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {StartView} from './StartView';
-import {SelectUse} from './SelectUse';
-import {SelectBikes} from './SelectBikes';
 import {NavigatingView} from './NavigatingView';
 import {Content} from './content/Content';
 import {ProjectWebView} from './ProjectWebView';
-import {UiContext} from '../context/UiContext';
+import {UiContext} from '../context';
+
+import {StartView} from './onboarding/StartView';
+import {SelectUse} from './onboarding/SelectUse';
+import {SelectBike} from './onboarding/SelectBike';
 
 const {Navigator, Screen} = createStackNavigator();
 
 export const Views = () => {
-  console.log(React.useContext(UiContext));
-  const [isOnBoarded, setOnBoarded] = React.useContext(UiContext);
+  const {
+    onBoarding: [isOnBoarded, setOnBoarded],
+  } = React.useContext(UiContext);
 
-  // const isOnBoarded = false;
   return (
     <NavigationContainer>
       <Navigator headerMode="none">
@@ -29,7 +30,7 @@ export const Views = () => {
           <>
             <Screen name="Start" component={StartView} />
             <Screen name="SelectUse" component={SelectUse} />
-            <Screen name="SelectBikes" component={SelectBikes} />
+            <Screen name="SelectBike" component={SelectBike} />
           </>
         )}
       </Navigator>
