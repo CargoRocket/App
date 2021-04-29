@@ -1,16 +1,18 @@
 import React from 'react';
-import {Card, Button, Icon, Text, Spinner} from '@ui-kitten/components';
-import {StyleSheet, View} from 'react-native';
+import {Card, Icon, Spinner} from '@ui-kitten/components';
+import {StyleSheet} from 'react-native';
 import {LocationSelect} from './LocationSelection';
-import {Map} from './Map';
+import {RoutingContext} from '../../src/context';
 import {accessToken, cargorocketAPIKey} from '../res/config';
 import RNLocation from 'react-native-location';
 
 export const RoutingInput = ({navigation}) => {
-  const [start, setStart] = React.useState(null);
-  const [destination, setDestination] = React.useState(null);
+  const {
+    destination: [destination, setDestination],
+    start: [start, setStart],
+    routes: [routes, setRoutes],
+  } = React.useContext(RoutingContext);
   const [loading, setLoading] = React.useState(false);
-  const [routes, setRoutes] = React.useState(null);
 
   // ToDo Should be cleared on unmount.
   let locationSubscription;
@@ -55,7 +57,7 @@ export const RoutingInput = ({navigation}) => {
           setLoading(false);
         });
     }
-  }, [start, destination]);
+  }, [start, destination, setRoutes]);
 
   const ChevronIcon = (props) =>
     loading ? (
@@ -81,50 +83,38 @@ export const RoutingInput = ({navigation}) => {
   });
 
   return (
-    <View>
-      <Card style={styles.routingMenu}>
-        <Text category="h5" style={styles.title} position="center">
-          Bike-Navigation
-        </Text>
-        <LocationSelect onChange={setDestination} placeholder="Destination" />
-        {destination && start ? (
-          <Button
-            accessoryLeft={ChevronIcon}
-            onPress={() => {
-              if (!destination) {
-                // ToDo handle here!
-                return;
-              }
-              if (!start) {
-                // ToDo handle here!
-                return;
-              }
-              if (!routes) {
-                // ToDo handle here!
-                return;
-              }
-              navigation.navigate('Navigating', {
-                routeResponse: {
-                  duration: routes.cargobike.routes[0].duration,
-                  distance: routes.cargobike.routes[0].distance,
-                  geometry: routes.cargobike.routes[0].geometry,
-                  weight: routes.cargobike.routes[0].weight,
-                  legs: routes.cargobike.routes[0].legs,
-                },
-                destination: destination,
-              });
-            }}>
-            {loading || !routes ? 'Loading' : 'Navigate'}
-          </Button>
-        ) : null}
-      </Card>
-      <Map
-        start={start}
-        changeStart={setStart}
-        destination={destination}
-        changeDestination={setDestination}
-        routes={routes}
-      />
-    </View>
+    <Card style={styles.routingMenu}>
+      <LocationSelect onChange={setDestination} placeholder="Destination" />
+      {/* {destination && start ? (
+        <Button
+          accessoryLeft={ChevronIcon}
+          onPress={() => {
+            if (!destination) {
+              // ToDo handle here!
+              return;
+            }
+            if (!start) {
+              // ToDo handle here!
+              return;
+            }
+            if (!routes) {
+              // ToDo handle here!
+              return;
+            }
+            navigation.navigate('Navigating', {
+              routeResponse: {
+                duration: routes.cargobike.routes[0].duration,
+                distance: routes.cargobike.routes[0].distance,
+                geometry: routes.cargobike.routes[0].geometry,
+                weight: routes.cargobike.routes[0].weight,
+                legs: routes.cargobike.routes[0].legs,
+              },
+              destination: destination,
+            });
+          }}>
+          {loading || !routes ? 'Loading' : 'Navigate'}
+        </Button>
+      ) : null} */}
+    </Card>
   );
 };

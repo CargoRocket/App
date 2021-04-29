@@ -4,18 +4,19 @@ import MapboxGL from '@react-native-mapbox-gl/maps';
 import {accessToken} from '../res/config';
 import {default as theme} from '../res/custom-theme.json';
 import polyline from '@mapbox/polyline';
+import {RoutingContext} from '../context';
 // import markerOne from '../res/images/marker1.png';
 // import markerTwo from '../res/images/marker2.png';
 
 MapboxGL.setAccessToken(accessToken);
 
-export const Map = ({
-  start,
-  changeStart,
-  destination,
-  changeDestination,
-  routes,
-}) => {
+export const Map = () => {
+  const {
+    destination: [destination, setDestination],
+    start: [start, setStart],
+    routes: [routes, setRoutes],
+  } = React.useContext(RoutingContext);
+
   const bounds =
     destination && start
       ? {
@@ -108,7 +109,7 @@ export const Map = ({
           coordinate={start}
           draggable={true}
           onDragEnd={(point) => {
-            changeStart(point.geometry.coordinates);
+            setStart(point.geometry.coordinates);
           }}>
           <View
             style={{
@@ -117,26 +118,6 @@ export const Map = ({
             }}
           />
         </MapboxGL.PointAnnotation>
-        // <MapboxGL.ShapeSource
-        //   id="symbolLayerSource-1"
-        //   shape={{
-        //     type: 'Feature',
-        //     geometry: {
-        //       type: 'Point',
-        //       coordinates: start,
-        //     },
-        //     properties: {},
-        //   }}>
-        //   <MapboxGL.SymbolLayer
-        //     id="symbol-1"
-        //     aboveLayerID="cargobike-route-line"
-        //     style={{
-        //       iconImage: markerOne,
-        //       iconSize: 1,
-        //       iconAllowOverlap: true,
-        //     }}
-        //   />
-        // </MapboxGL.ShapeSource>
       );
     }
   };
@@ -149,7 +130,7 @@ export const Map = ({
           coordinate={destination}
           draggable={true}
           onDragEnd={(point) => {
-            changeDestination(point.geometry.coordinates);
+            setDestination(point.geometry.coordinates);
           }}>
           <View
             style={{
@@ -158,26 +139,6 @@ export const Map = ({
             }}
           />
         </MapboxGL.PointAnnotation>
-        // <MapboxGL.ShapeSource
-        //   id="symbolLayerSource-2"
-        //   shape={{
-        //     type: 'Feature',
-        //     geometry: {
-        //       type: 'Point',
-        //       coordinates: destination,
-        //     },
-        //     properties: {},
-        //   }}>
-        //   <MapboxGL.SymbolLayer
-        //     id="symbol-2"
-        //     aboveLayerID="cargobike-route-line"
-        //     style={{
-        //       iconImage: markerTwo,
-        //       iconSize: 1,
-        //       iconAllowOverlap: true,
-        //     }}
-        //   />
-        // </MapboxGL.ShapeSource>
       );
     }
   };

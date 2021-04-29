@@ -27,7 +27,7 @@ import {makePersistent} from './helpers/persistantState';
 
 export const App = () => {
   const MMKV = new MMKVStorage.Loader().initialize();
-  // Setting up UI types
+  // Setting up UI Context
   const popupMessage = React.useState(null);
   const onBoarding = makePersistent(
     React.useState(MMKV.getBool('isOnBoarded')),
@@ -36,13 +36,12 @@ export const App = () => {
     'bool',
   );
 
-  // Setting up Setting types
+  // Setting up Setting Context
   const use = makePersistent(
     React.useState(MMKV.getString('use')),
     'use',
     MMKV,
   );
-
   const bikeType = makePersistent(
     React.useState(MMKV.getString('bikeType')),
     'bikeType',

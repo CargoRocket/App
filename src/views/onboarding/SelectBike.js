@@ -39,9 +39,6 @@ export const SelectBike = ({navigation}) => {
 
   const {
     onBoarding: [isOnBoarded, setOnBoarded],
-  } = React.useContext(UiContext);
-
-  const {
     popupMessage: [popupMessage, setPopupMessage],
   } = React.useContext(UiContext);
 
