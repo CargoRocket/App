@@ -30,13 +30,10 @@ export const SelectUse = ({navigation}) => {
     use: [use, setUse],
   } = React.useContext(SettingsContext);
 
-  const checkMarkIcon = (props) => (
-    <Icon
-      {...props}
-      fill={use ? theme['color-primary-500'] : 'auto'}
-      name="checkmark"
-    />
-  );
+  const checkMarkIcon = (props) =>
+    use ? (
+      <Icon {...props} fill={theme['color-primary-500']} name="checkmark" />
+    ) : null;
 
   const renderCheckAction = () => (
     <TopNavigationAction

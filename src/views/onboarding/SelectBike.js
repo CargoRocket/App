@@ -41,13 +41,14 @@ export const SelectBike = ({navigation}) => {
     onBoarding: [isOnBoarded, setOnBoarded],
   } = React.useContext(UiContext);
 
-  const checkMarkIcon = (props) => (
-    <Icon
-      {...props}
-      fill={bikeType ? theme['color-primary-500'] : 'inherit'}
-      name="checkmark"
-    />
-  );
+  const {
+    popupMessage: [popupMessage, setPopupMessage],
+  } = React.useContext(UiContext);
+
+  const checkMarkIcon = (props) =>
+    bikeType ? (
+      <Icon {...props} fill={theme['color-primary-500']} name="checkmark" />
+    ) : null;
 
   const renderCheckAction = () => (
     <TopNavigationAction
@@ -55,6 +56,11 @@ export const SelectBike = ({navigation}) => {
       onPress={() => {
         if (bikeType) {
           setOnBoarded(true);
+          setPopupMessage({
+            message: 'test',
+            status: 'success',
+            title: 'test',
+          });
         }
       }}
     />

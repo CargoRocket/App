@@ -28,8 +28,9 @@ import {makePersistent} from './helpers/persistantState';
 export const App = () => {
   const MMKV = new MMKVStorage.Loader().initialize();
   // Setting up UI types
+  const popupMessage = React.useState(null);
   const onBoarding = makePersistent(
-    React.useState(false), // MMKV.getBool('isOnBoarded')),
+    React.useState(MMKV.getBool('isOnBoarded')),
     'isOnBoarded',
     MMKV,
     'bool',
@@ -49,7 +50,7 @@ export const App = () => {
   );
 
   return (
-    <UiContext.Provider value={{onBoarding}}>
+    <UiContext.Provider value={{onBoarding, popupMessage}}>
       <SettingsContext.Provider value={{use, bikeType}}>
         <IconRegistry icons={EvaIconsPack} />
         <ApplicationProvider {...eva} theme={{...eva.light, ...theme}}>
