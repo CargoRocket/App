@@ -1,8 +1,27 @@
 import React from 'react';
-import {Autocomplete, AutocompleteItem, Icon} from '@ui-kitten/components';
+import {
+  Autocomplete,
+  AutocompleteItem,
+  Icon,
+  Button,
+} from '@ui-kitten/components';
 import {accessToken} from '../res/config';
+import RNLocation from 'react-native-location';
+import {default as theme} from '../res/custom-theme.json';
 
-export const LocationSelect = ({value, onChange, placeholder}) => {
+const styles = {
+  locationButton: {
+    width: 20,
+    margin: -10,
+  },
+};
+
+export const LocationSelect = ({
+  value,
+  onChange,
+  placeholder,
+  liveLocation,
+}) => {
   // [{}] is a workaround. As an empty array leads to no data presented.
   const [data, setData] = React.useState([{}]);
   const [input, setInput] = React.useState('');
@@ -28,11 +47,51 @@ export const LocationSelect = ({value, onChange, placeholder}) => {
       });
   };
 
+  const setCurrentLocation = () => {
+    RNLocation.configure({
+      distanceFilter: 5.0,
+    });
+    RNLocation.requestPermission({
+      ios: 'whenInUse',
+      android: {
+        detail: 'fine',
+      },
+    });
+    RNLocation.getLatestLocation({timeout: 60000})
+      .then((latestLocation) => {
+        console.log(latestLocation);
+        onChange({
+          name: 'Your Location',
+          coordinates: [latestLocation.longitude, latestLocation.latitude],
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const PinIcon = (props) => <Icon {...props} name="pin-outline" />;
+
+  const locationIcon = (props) => (
+    <Icon
+      {...props}
+      fill={theme['color-info-500']}
+      name="radio-button-on-outline"
+    />
+  );
 
   const renderOption = (item, index) => (
     <AutocompleteItem key={index} title={item.place_name} />
   );
+
+  const renderLiveLocation = () => liveLocation ? (
+      <Button
+        appearance="ghost"
+        onPress={setCurrentLocation}
+        style={styles.locationButton}
+        accessoryLeft={locationIcon}
+      />
+    ) : null;
 
   return (
     <Autocomplete
@@ -46,6 +105,7 @@ export const LocationSelect = ({value, onChange, placeholder}) => {
         setActive(false);
       }}
       onChangeText={onChangeText}
+      accessoryRight={renderLiveLocation}
       accessoryLeft={PinIcon}>
       {data.map(renderOption)}
     </Autocomplete>

@@ -13,6 +13,7 @@ export const Map = () => {
     destination: [destination, setDestination],
     start: [start, setStart],
     routes: [routes, setRoutes],
+    selectedRoute: [selectedRoute, setSelectedRoute],
   } = React.useContext(RoutingContext);
 
   const bounds =
@@ -62,41 +63,21 @@ export const Map = () => {
     },
   });
 
-  const renderRoutes = () => {
-    if (routes && routes.bike.routes) {
-      const bikeRoute = routes.bike.routes[0].geometry;
-      return (
-        <MapboxGL.ShapeSource
-          id="bike-route-source"
-          shape={polyline.toGeoJSON(bikeRoute, 6)}>
-          <MapboxGL.LineLayer
-            id="bike-route-line"
-            layerIndex={150}
-            sourceID="bike-route-source"
-            style={{lineWidth: 5, lineJoin: 'bevel', lineColor: '#ffffff'}}
-          />
-        </MapboxGL.ShapeSource>
-      );
-    }
-  };
-
-  const renderCargoBikeRoutes = () => {
-    if (routes && routes.cargobike.routes) {
-      const cargobikeRoute = routes.cargobike.routes[0].geometry;
-      return (
-        <MapboxGL.ShapeSource
-          id="cargobike-route-source"
-          shape={polyline.toGeoJSON(cargobikeRoute, 6)}>
-          <MapboxGL.LineLayer
-            id="cargobike-route-line"
-            sourceID="cargobike-route-source"
-            layerIndex={150}
-            style={{lineWidth: 5, lineJoin: 'bevel', lineColor: '#515555'}}>
-            <Text>Test</Text>
-          </MapboxGL.LineLayer>
-        </MapboxGL.ShapeSource>
-      );
-    }
+  const renderRoute = (route, index) => {
+    const geometry = route.routes[0].geometry;
+    return (
+      <MapboxGL.ShapeSource
+        id={`cargobike-route-source-${index}`}
+        shape={polyline.toGeoJSON(geometry, 6)}>
+        <MapboxGL.LineLayer
+          id={`cargobike-route-line-${index}`}
+          sourceID={`cargobike-route-source-${index}`}
+          layerIndex={150}
+          style={{lineWidth: 5, lineJoin: 'bevel', lineColor: `${selectedRoute === index ? '#515555' : '#ffffff'}` }}>
+          <Text>Test</Text>
+        </MapboxGL.LineLayer>
+      </MapboxGL.ShapeSource>
+    );
   };
 
   const renderStartMarker = () => {
@@ -161,8 +142,7 @@ export const Map = () => {
             // Do something
           }}>
           <MapboxGL.Camera bounds={bounds} />
-          {renderRoutes()}
-          {renderCargoBikeRoutes()}
+          {routes ? routes.map((route, index) => renderRoute(route, index)) : null}
           {renderStartMarker()}
           {renderDestinationMarker()}
         </MapboxGL.MapView>
