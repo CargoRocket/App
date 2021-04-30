@@ -1,6 +1,6 @@
 import React from 'react';
-import {Card, Icon, Spinner} from '@ui-kitten/components';
-import {StyleSheet} from 'react-native';
+import {Card, Icon, Layout, Spinner, Button} from '@ui-kitten/components';
+import {StyleSheet, View} from 'react-native';
 import {LocationSelect} from './LocationSelection';
 import {RoutingContext} from '../../src/context';
 import {accessToken, cargorocketAPIKey} from '../res/config';
@@ -14,9 +14,6 @@ export const RoutingInput = ({navigation}) => {
   } = React.useContext(RoutingContext);
   const [loading, setLoading] = React.useState(false);
 
-  // ToDo Should be cleared on unmount.
-  let locationSubscription;
-
   RNLocation.configure({
     distanceFilter: 5.0,
   });
@@ -24,24 +21,15 @@ export const RoutingInput = ({navigation}) => {
   RNLocation.requestPermission({
     ios: 'whenInUse',
     android: {
-      detail: 'coarse',
+      detail: 'fine',
     },
-  }).then((granted) => {
-    if (granted) {
-      locationSubscription = RNLocation.subscribeToLocationUpdates(
-        (locations) => {
-          console.log(locations);
-          setStart([locations[0].longitude, locations[0].latitude]);
-        },
-      );
-    }
   });
 
   React.useEffect(() => {
     if (start && destination) {
       setLoading(true);
       fetch(
-        `https://api.cargorocket.de/route?from=[${start[1]},${start[0]}]&to=[${destination[1]},${destination[0]}]&access_token=${accessToken}&key=${cargorocketAPIKey}&format=mapbox`,
+        `https://api.cargorocket.de/route?from=[${start.coordinates[1]},${start.coordinates[0]}]&to=[${destination.coordinates[1]},${destination.coordinates[0]}]&access_token=${accessToken}&key=${cargorocketAPIKey}&format=mapbox`,
       )
         .then((rawData) => rawData.json())
         .then((routesResponse) => {
@@ -51,6 +39,7 @@ export const RoutingInput = ({navigation}) => {
             return;
           }
           setLoading(false);
+          console.log(routesResponse);
           setRoutes(routesResponse);
         })
         .catch((error) => {
@@ -59,20 +48,45 @@ export const RoutingInput = ({navigation}) => {
     }
   }, [start, destination, setRoutes]);
 
-  const ChevronIcon = (props) =>
-    loading ? (
-      <Spinner />
-    ) : (
-      <Icon {...props} name="chevron-right-outline" animation="shake" />
-    );
+  const setCurrentLocation = () => {
+    RNLocation.getLatestLocation({timeout: 60000})
+      .then((latestLocation) => {
+        console.log(latestLocation);
+        setStart({
+          name: 'Your Location',
+          coordinates: [latestLocation.longitude, latestLocation.latitude],
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // const ChevronIcon = (props) =>
+  //   loading ? (
+  //     <Spinner />
+  //   ) : (
+  //     <Icon {...props} name="chevron-right-outline" animation="shake" />
+  //   );
 
   const styles = StyleSheet.create({
     routingMenu: {
       position: 'absolute',
-      top: 4,
-      left: '2.5%',
-      width: '95%',
-      backgroundColor: '#fff',
+      width: '100%',
+      backgroundColor: '#ffffff',
+      borderRadius: 0,
+      borderColor: 'transparent',
+    },
+    layoutRow: {
+      flex: 1,
+      flexDirection: 'row',
+    },
+    searchBars: {
+      flex: 1,
+    },
+    locationButton: {
+      height: '40%',
+      width: 20,
     },
     title: {
       fontWeight: 'bold',
@@ -82,9 +96,34 @@ export const RoutingInput = ({navigation}) => {
     },
   });
 
+  const locationIcon = (props) => (
+    <Icon {...props} fill="#8F9BB3" name="radio-button-on-outline" />
+  );
+
   return (
     <Card style={styles.routingMenu}>
-      <LocationSelect onChange={setDestination} placeholder="Destination" />
+      <View style={styles.layoutRow}>
+        <View style={styles.searchBars}>
+          <LocationSelect
+            onChange={setStart}
+            value={start}
+            placeholder="Start"
+          />
+          <LocationSelect
+            onChange={setDestination}
+            value={destination}
+            placeholder="Destination"
+          />
+        </View>
+        <View style={styles.layout}>
+          <Button
+            appearance="ghost"
+            onPress={setCurrentLocation}
+            style={styles.locationButton}
+            accessoryLeft={locationIcon}
+          />
+        </View>
+      </View>
       {/* {destination && start ? (
         <Button
           accessoryLeft={ChevronIcon}

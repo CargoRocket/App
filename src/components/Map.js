@@ -5,8 +5,6 @@ import {accessToken} from '../res/config';
 import {default as theme} from '../res/custom-theme.json';
 import polyline from '@mapbox/polyline';
 import {RoutingContext} from '../context';
-// import markerOne from '../res/images/marker1.png';
-// import markerTwo from '../res/images/marker2.png';
 
 MapboxGL.setAccessToken(accessToken);
 
@@ -18,10 +16,10 @@ export const Map = () => {
   } = React.useContext(RoutingContext);
 
   const bounds =
-    destination && start
+    destination && start && destination.coordinates && start.coordinates
       ? {
-          ne: destination,
-          sw: start,
+          ne: destination.coordinates,
+          sw: start.coordinates,
           paddingTop: 200,
           paddingLeft: 200,
           paddingRight: 200,
@@ -102,14 +100,20 @@ export const Map = () => {
   };
 
   const renderStartMarker = () => {
-    if (start) {
+    if (start && start.coordinates) {
       return (
         <MapboxGL.PointAnnotation
           id="start-marker"
-          coordinate={start}
+          coordinate={start.coordinates}
           draggable={true}
           onDragEnd={(point) => {
-            setStart(point.geometry.coordinates);
+            const lat = Math.round(point.geometry.coordinates[0], 2);
+            console.log(lat);
+            setStart({
+              name: `${point.geometry.coordinates[0].toFixed(4)},
+                ${point.geometry.coordinates[1].toFixed(4)}`,
+              coordinates: point.geometry.coordinates,
+            });
           }}>
           <View
             style={{
@@ -123,14 +127,17 @@ export const Map = () => {
   };
 
   const renderDestinationMarker = () => {
-    if (destination) {
+    if (destination && destination.coordinates) {
       return (
         <MapboxGL.PointAnnotation
           id="destination-marker"
-          coordinate={destination}
+          coordinate={destination.coordinates}
           draggable={true}
           onDragEnd={(point) => {
-            setDestination(point.geometry.coordinates);
+            setDestination({
+              name: `${point.geometry.coordinates[0].toFixed(4)}, ${point.geometry.coordinates[1].toFixed(4)}`,
+              coordinates: point.geometry.coordinates,
+            });
           }}>
           <View
             style={{

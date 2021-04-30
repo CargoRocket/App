@@ -1,28 +1,24 @@
 import React from 'react';
 import {Autocomplete, AutocompleteItem, Icon} from '@ui-kitten/components';
 import {accessToken} from '../res/config';
-// import Geolocation from '@react-native-community/geolocation';
 
-export const LocationSelect = ({onChange, placeholder}) => {
-  const [value, setValue] = React.useState(null);
+export const LocationSelect = ({value, onChange, placeholder}) => {
   // [{}] is a workaround. As an empty array leads to no data presented.
   const [data, setData] = React.useState([{}]);
+  const [input, setInput] = React.useState('');
+  const [active, setActive] = React.useState(false);
 
   const onSelect = (index) => {
-    setValue(data[index].place_name);
-    onChange(data[index].center);
-  };
-
-  const handleCurrentPosition = () => {
-    // Geolocation.getCurrentPosition((info) => console.log(info));
-    setValue('Your current Position');
+    onChange({
+      name: data[index].place_name,
+      coordinates: data[index].center,
+    });
   };
 
   const onChangeText = (query) => {
-    setValue(query);
-    // Do request -> Update List
+    setInput(query);
     fetch(
-      `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${accessToken}`,
+      `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${accessToken}&country=DE`,
     )
       .then((rawData) => rawData.json())
       .then((response) => {
@@ -32,9 +28,7 @@ export const LocationSelect = ({onChange, placeholder}) => {
       });
   };
 
-  const ChevronIcon = (props) => (
-    <Icon {...props} name="pin-outline" onPress={handleCurrentPosition} />
-  );
+  const PinIcon = (props) => <Icon {...props} name="pin-outline" />;
 
   const renderOption = (item, index) => (
     <AutocompleteItem key={index} title={item.place_name} />
@@ -43,10 +37,16 @@ export const LocationSelect = ({onChange, placeholder}) => {
   return (
     <Autocomplete
       placeholder={placeholder}
-      value={value}
+      value={active ? input : value ? value.name : ''}
       onSelect={onSelect}
+      onFocus={() => {
+        setActive(true);
+      }}
+      onBlur={() => {
+        setActive(false);
+      }}
       onChangeText={onChangeText}
-      accessoryLeft={ChevronIcon}>
+      accessoryLeft={PinIcon}>
       {data.map(renderOption)}
     </Autocomplete>
   );
