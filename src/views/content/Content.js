@@ -2,7 +2,7 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationView} from './NavigationView';
 import {ProjectView} from './ProjectView';
-import {ProjectWebView} from '../ProjectWebView';
+import {SettingsView} from './SettingsView';
 import {AppMenu} from '../../components/AppMenu';
 
 const {Navigator, Screen} = createBottomTabNavigator();
@@ -15,9 +15,9 @@ const ContentNavigator = () => (
     <Screen name="Project" component={ProjectView} />
     <Screen name="Navigation" component={NavigationView} />
     <Screen
-      name="About"
-      component={ProjectWebView}
-      initialParams={{url: 'https://cargorocket.de/'}}
+      name="Settings"
+      component={SettingsView}
+      // initialParams={{url: 'https://cargorocket.de/'}}
     />
   </Navigator>
 );

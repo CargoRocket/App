@@ -24,7 +24,7 @@ export const Map = () => {
           paddingTop: 200,
           paddingLeft: 200,
           paddingRight: 200,
-          paddingBottom: 200,
+          paddingBottom: 350,
         }
       : {
           ne: [11.106090200587593, 46.94990650185683],
@@ -73,7 +73,7 @@ export const Map = () => {
           id={`cargobike-route-line-${index}`}
           sourceID={`cargobike-route-source-${index}`}
           layerIndex={150}
-          style={{lineWidth: 5, lineJoin: 'bevel', lineColor: `${selectedRoute === index ? '#515555' : '#ffffff'}` }}>
+          style={{lineWidth: 5, lineJoin: 'bevel', lineColor: `${selectedRoute === index ? '#515555' : '#f6f6f6'}` }}>
           <Text>Test</Text>
         </MapboxGL.LineLayer>
       </MapboxGL.ShapeSource>

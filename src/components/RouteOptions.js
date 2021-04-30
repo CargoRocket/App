@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   radio: {
+    marginTop: 2,
     marginLeft: 5,
     marginRight: 5,
     backgroundColor: '#fff',
