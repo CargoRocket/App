@@ -22,7 +22,7 @@ export const ProjectView = ({navigation}) => {
       header={(headerProps) => renderItemHeader(headerProps, info)}
       footer={(footerProps) => renderItemFooter(footerProps, info)}
       onPress={() => {
-        navigation.navigate('ProjectWebView', {url: info.item.url});
+        navigation.navigate('ProjectWebView', {uri: info.item.uri});
       }}>
       <Text category="h5">
         {info.item.title} {info.index + 1}

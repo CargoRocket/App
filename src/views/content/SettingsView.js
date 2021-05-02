@@ -1,6 +1,8 @@
 import {Divider, Icon, Text, Layout, Card} from '@ui-kitten/components';
 import React from 'react';
 import {SafeAreaView, ScrollView} from 'react-native';
+import AboutHtml from '../../res/about.js';
+import PrivacyPolicyHtml from '../../res/privacyPolicy';
 
 const styles = {
   settingsEntry: {
@@ -53,14 +55,24 @@ export const SettingsView = ({navigation}) => {
           'Project Website',
           'subtitle',
           'ProjectWebView',
-          {url: 'https://cargorocket.de'},
+          {uri: 'https://cargorocket.de'},
         )}
         <Divider />
         {SettingsEntry('options-2-outline', 'Bike Settings', 'subtitle', '')}
         <Divider />
-        {SettingsEntry('at-outline', 'About', 'subtitle', '')}
+        {SettingsEntry('at-outline', 'About', 'subtitle', 'ProjectWebView', {
+          html: AboutHtml.html,
+        })}
         <Divider />
-        {SettingsEntry('info-outline', 'Privacy Policy', 'subtitle', '')}
+        {SettingsEntry(
+          'info-outline',
+          'Privacy Policy',
+          'subtitle',
+          'ProjectWebView',
+          {
+            html: PrivacyPolicyHtml.html,
+          },
+        )}
         <Divider />
       </ScrollView>
     </SafeAreaView>

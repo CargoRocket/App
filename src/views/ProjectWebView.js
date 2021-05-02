@@ -5,7 +5,8 @@ import {WebView} from 'react-native-webview';
 import {Icon, TopNavigation, TopNavigationAction} from '@ui-kitten/components';
 
 export const ProjectWebView = ({navigation, route}) => {
-  const [currentURI, setURI] = React.useState(route.params.url);
+  console.log('params', route.params);
+  const [currentURI, setURI] = React.useState(route.params);
   const [back, setBack] = React.useState([]);
   const webViewRef = React.useRef();
 
@@ -48,14 +49,16 @@ export const ProjectWebView = ({navigation, route}) => {
     />
   );
 
-  const Navigation = () => <TopNavigation accessoryLeft={BackAction} title="Go Back" />;
+  const Navigation = () => (
+    <TopNavigation accessoryLeft={BackAction} title="Go Back" />
+  );
 
   return (
     <SafeAreaView style={{flex: 1}}>
       {Navigation()}
       <WebView
         style={styles.webView}
-        source={{uri: currentURI}}
+        source={currentURI}
         renderLoading={Loader}
         ref={webViewRef}
         onNavigationStateChange={(navState) => {
@@ -65,7 +68,7 @@ export const ProjectWebView = ({navigation, route}) => {
         allowsBackForwardNavigationGestures={true}
         onShouldStartLoadWithRequest={(request) => {
           // If we're loading the current URI, allow it to load
-          if (request.url === currentURI) {
+          if (request.url === currentURI.uri) {
             return true;
           }
           // We're loading a new URL -- change state first
