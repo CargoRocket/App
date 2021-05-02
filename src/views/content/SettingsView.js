@@ -17,31 +17,44 @@ const styles = {
   },
 };
 
-const SettingsEntry = (icon, title, subtitle, link) => (
-  <Card style={styles.settingsEntry}>
-    <Layout style={styles.settingsEntryRow}>
-      <Icon
-        style={styles.icons}
-        name={icon}
-        height={20}
-        width={20}
-        fill="#818888"
-      />
-      <Layout>
-        <Text category="h6">{title}</Text>
-        <Text appearance="hint">{subtitle}</Text>
+export const SettingsView = ({navigation}) => {
+  const SettingsEntry = (icon, title, subtitle, link, props = {}) => (
+    <Card
+      style={styles.settingsEntry}
+      onPress={() => navigation.navigate(link, props)}>
+      <Layout style={styles.settingsEntryRow}>
+        <Icon
+          style={styles.icons}
+          name={icon}
+          height={20}
+          width={20}
+          fill="#818888"
+        />
+        <Layout>
+          <Text category="h6">{title}</Text>
+          <Text appearance="hint">{subtitle}</Text>
+        </Layout>
       </Layout>
-    </Layout>
-  </Card>
-);
+    </Card>
+  );
 
-export const SettingsView = () => {
   return (
     <SafeAreaView>
       <ScrollView>
-        {SettingsEntry('message-circle-outline', 'Feedback', 'subtitle', '')}
+        {SettingsEntry(
+          'message-circle-outline',
+          'Feedback',
+          'subtitle',
+          'Feedback',
+        )}
         <Divider />
-        {SettingsEntry('globe-outline', 'Project Website', 'subtitle', '')}
+        {SettingsEntry(
+          'globe-outline',
+          'Project Website',
+          'subtitle',
+          'ProjectWebView',
+          {url: 'https://cargorocket.de'},
+        )}
         <Divider />
         {SettingsEntry('options-2-outline', 'Bike Settings', 'subtitle', '')}
         <Divider />

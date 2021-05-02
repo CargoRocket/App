@@ -4,7 +4,7 @@ import {StyleSheet, SafeAreaView, View} from 'react-native';
 import {WebView} from 'react-native-webview';
 import {Icon, TopNavigation, TopNavigationAction} from '@ui-kitten/components';
 
-export const ProjectWebView = ({route}) => {
+export const ProjectWebView = ({navigation, route}) => {
   const [currentURI, setURI] = React.useState(route.params.url);
   const [back, setBack] = React.useState([]);
   const webViewRef = React.useRef();
@@ -39,15 +39,16 @@ export const ProjectWebView = ({route}) => {
     <TopNavigationAction
       icon={BackIcon}
       onPress={() => {
-        webViewRef.current.goBack();
+        if (back) {
+          webViewRef.current.goBack();
+          return;
+        }
+        navigation.goBack();
       }}
     />
   );
-  const Navigation = () => {
-    if (back) {
-      return <TopNavigation accessoryLeft={BackAction} title="Go Back" />;
-    }
-  };
+
+  const Navigation = () => <TopNavigation accessoryLeft={BackAction} title="Go Back" />;
 
   return (
     <SafeAreaView style={{flex: 1}}>

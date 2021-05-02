@@ -4,21 +4,23 @@ import {NavigationView} from './NavigationView';
 import {ProjectView} from './ProjectView';
 import {SettingsView} from './SettingsView';
 import {AppMenu} from '../../components/AppMenu';
+import {FeedbackView} from './FeedbackView';
 
 const {Navigator, Screen} = createBottomTabNavigator();
 
-const ContentNavigator = () => (
+const ContentNavigator = (props) => (
   <Navigator
     headerMode="none"
-    tabBar={(props) => <AppMenu {...props} />}
+    tabBar={(propsTab) => <AppMenu {...propsTab} />}
     initialRouteName="Navigation">
     <Screen name="Project" component={ProjectView} />
     <Screen name="Navigation" component={NavigationView} />
     <Screen
       name="Settings"
       component={SettingsView}
-      // initialParams={{url: 'https://cargorocket.de/'}}
+      initialParams={{...props}}
     />
+    <Screen name="Feedback" component={FeedbackView} />
   </Navigator>
 );
 
