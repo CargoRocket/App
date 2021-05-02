@@ -34,7 +34,9 @@ export const SelectBike = ({navigation}) => {
   });
 
   const {
-    bikeType: [bikeType, serBikeType],
+    bikeType: [bikeType, setBikeType],
+    bikeLength: [length, setLength],
+    bikeWidth: [width, setWidth],
   } = React.useContext(SettingsContext);
 
   const checkMarkIcon = (props) =>
@@ -68,7 +70,11 @@ export const SelectBike = ({navigation}) => {
             ? {...styles.option, ...styles.optionSelected}
             : styles.option
         }
-        onPress={() => serBikeType('delivery')}>
+        onPress={() => {
+          setBikeType('delivery');
+          setWidth(0.7);
+          setLength(1.7);
+        }}>
         <Lieferbike height={100} width={100} />
       </Card>
       <Card
@@ -77,7 +83,11 @@ export const SelectBike = ({navigation}) => {
             ? {...styles.option, ...styles.optionSelected}
             : styles.option
         }
-        onPress={() => serBikeType('longjohn')}>
+        onPress={() => {
+          setBikeType('longjohn');
+          setWidth(0.8);
+          setLength(2.0);
+        }}>
         <LongJohn height={100} width={100} />
       </Card>
       <Card
@@ -86,7 +96,11 @@ export const SelectBike = ({navigation}) => {
             ? {...styles.option, ...styles.optionSelected}
             : styles.option
         }
-        onPress={() => serBikeType('longtail')}>
+        onPress={() => {
+          setBikeType('longtail');
+          setWidth(0.8);
+          setLength(2.0);
+        }}>
         <LongTail height={100} width={100} />
       </Card>
       <Card
@@ -95,7 +109,11 @@ export const SelectBike = ({navigation}) => {
             ? {...styles.option, ...styles.optionSelected}
             : styles.option
         }
-        onPress={() => serBikeType('heavy')}>
+        onPress={() => {
+          setBikeType('heavy');
+          setWidth(1.2);
+          setLength(2.0);
+        }}>
         <Schwertransporter height={100} width={100} />
       </Card>
       <Card
@@ -104,7 +122,11 @@ export const SelectBike = ({navigation}) => {
             ? {...styles.option, ...styles.optionSelected}
             : styles.option
         }
-        onPress={() => serBikeType('trike')}>
+        onPress={() => {
+          setBikeType('trike');
+          setWidth(1.0);
+          setLength(2.0);
+        }}>
         <Trike height={100} width={100} />
       </Card>
     </Layout>
