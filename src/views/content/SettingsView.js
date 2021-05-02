@@ -3,6 +3,7 @@ import React from 'react';
 import {SafeAreaView, ScrollView} from 'react-native';
 import AboutHtml from '../../res/about.js';
 import PrivacyPolicyHtml from '../../res/privacyPolicy';
+import {UiContext} from '../../context';
 
 const styles = {
   settingsEntry: {
@@ -20,10 +21,39 @@ const styles = {
 };
 
 export const SettingsView = ({navigation}) => {
+  const {
+    bikeSettingsShown: [isBikeSettingsShown, setBikeSettingsShown],
+  } = React.useContext(UiContext);
+
   const SettingsEntry = (icon, title, subtitle, link, props = {}) => (
     <Card
       style={styles.settingsEntry}
       onPress={() => navigation.navigate(link, props)}>
+      <Layout style={styles.settingsEntryRow}>
+        <Icon
+          style={styles.icons}
+          name={icon}
+          height={20}
+          width={20}
+          fill="#818888"
+        />
+        <Layout>
+          <Text category="h6">{title}</Text>
+          <Text appearance="hint">{subtitle}</Text>
+        </Layout>
+      </Layout>
+    </Card>
+  );
+
+  const BikeSettings = (icon, title, subtitle) => (
+    <Card
+      style={styles.settingsEntry}
+      onPress={() => {
+        console.log('check', isBikeSettingsShown);
+        setBikeSettingsShown(true);
+        // setOnBoarded();
+        // navigation.navigate('InputBikeSize');
+      }}>
       <Layout style={styles.settingsEntryRow}>
         <Icon
           style={styles.icons}
@@ -58,7 +88,7 @@ export const SettingsView = ({navigation}) => {
           {uri: 'https://cargorocket.de'},
         )}
         <Divider />
-        {SettingsEntry('options-2-outline', 'Bike Settings', 'subtitle', '')}
+        {BikeSettings('options-2-outline', 'Bike Settings', 'subtitle')}
         <Divider />
         {SettingsEntry('at-outline', 'About', 'subtitle', 'ProjectWebView', {
           html: AboutHtml.html,

@@ -9,18 +9,22 @@ import {UiContext} from '../context';
 import {StartView} from './onboarding/StartView';
 import {SelectUse} from './onboarding/SelectUse';
 import {SelectBike} from './onboarding/SelectBike';
+import {InputBikeSize} from './onboarding/InputBikeSize';
 
 const {Navigator, Screen} = createStackNavigator();
 
 export const Views = () => {
   const {
     onBoarding: [isOnBoarded, setOnBoarded],
+    bikeSettingsShown: [isBikeSettingsShown, setBikeSettingsShown],
   } = React.useContext(UiContext);
 
   return (
-    <NavigationContainer>
-      <Navigator headerMode="none">
-        {isOnBoarded ? (
+    <NavigationContainer key={`nav-container-${isBikeSettingsShown}`}>
+      <Navigator
+        headerMode="none"
+        initialRouteName={isBikeSettingsShown ? 'SelectBike' : null}>
+        {isOnBoarded && !isBikeSettingsShown ? (
           <>
             <Screen name="Content" component={Content} />
             <Screen name="Navigating" component={NavigatingView} />
@@ -31,6 +35,7 @@ export const Views = () => {
             <Screen name="Start" component={StartView} />
             <Screen name="SelectUse" component={SelectUse} />
             <Screen name="SelectBike" component={SelectBike} />
+            <Screen name="InputBikeSize" component={InputBikeSize} />
           </>
         )}
       </Navigator>

@@ -29,6 +29,7 @@ export const App = () => {
   const MMKV = new MMKVStorage.Loader().initialize();
   // Setting up UI Context
   const popupMessage = React.useState(null);
+  const bikeSettingsShown = React.useState(false);
   const onBoarding = makePersistent(
     React.useState(MMKV.getBool('isOnBoarded')),
     'isOnBoarded',
@@ -47,10 +48,21 @@ export const App = () => {
     'bikeType',
     MMKV,
   );
+  const bikeLength = makePersistent(
+    React.useState(MMKV.getString('length')),
+    'length',
+    MMKV,
+  );
+
+  const bikeWidth = makePersistent(
+    React.useState(MMKV.getString('width')),
+    'width',
+    MMKV,
+  );
 
   return (
-    <UiContext.Provider value={{onBoarding, popupMessage}}>
-      <SettingsContext.Provider value={{use, bikeType}}>
+    <UiContext.Provider value={{onBoarding, popupMessage, bikeSettingsShown}}>
+      <SettingsContext.Provider value={{use, bikeType, bikeLength, bikeWidth}}>
         <IconRegistry icons={EvaIconsPack} />
         <ApplicationProvider {...eva} theme={{...eva.light, ...theme}}>
           <Views />

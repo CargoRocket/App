@@ -8,7 +8,7 @@ import {
   Card,
 } from '@ui-kitten/components';
 import {StyleSheet} from 'react-native';
-import {SettingsContext, UiContext} from '../../context';
+import {SettingsContext} from '../../context';
 import theme from '../../res/custom-theme.json';
 
 // Icons
@@ -37,11 +37,6 @@ export const SelectBike = ({navigation}) => {
     bikeType: [bikeType, serBikeType],
   } = React.useContext(SettingsContext);
 
-  const {
-    onBoarding: [isOnBoarded, setOnBoarded],
-    popupMessage: [popupMessage, setPopupMessage],
-  } = React.useContext(UiContext);
-
   const checkMarkIcon = (props) =>
     bikeType ? (
       <Icon {...props} fill={theme['color-primary-500']} name="checkmark" />
@@ -52,12 +47,7 @@ export const SelectBike = ({navigation}) => {
       icon={checkMarkIcon}
       onPress={() => {
         if (bikeType) {
-          setOnBoarded(true);
-          setPopupMessage({
-            message: 'test',
-            status: 'success',
-            title: 'test',
-          });
+          navigation.navigate('InputBikeSize');
         }
       }}
     />

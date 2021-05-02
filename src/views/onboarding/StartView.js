@@ -1,10 +1,15 @@
 import React from 'react';
 import {Button, Layout, Text, Icon} from '@ui-kitten/components';
 import {StyleSheet} from 'react-native';
+import {UiContext} from '../../context';
 import Logo from '../../res/images/logo.svg';
 
 export const StartView = ({navigation}) => {
   const shakeIconRef = React.useRef();
+
+  const {
+    onBoarding: [isOnBoarded, setOnBoarded],
+  } = React.useContext(UiContext);
 
   const ChevronIcon = (props) => (
     <Icon
@@ -46,7 +51,6 @@ export const StartView = ({navigation}) => {
         accessoryLeft={ChevronIcon}
         onPress={() => {
           shakeIconRef.current.startAnimation();
-          // setOnBoarded(true);
           navigation.navigate('SelectUse');
         }}>
         GO CYCLING
