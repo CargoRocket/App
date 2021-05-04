@@ -3,12 +3,13 @@ import React from 'react';
 import {StyleSheet, SafeAreaView, View} from 'react-native';
 import {WebView} from 'react-native-webview';
 import {Icon, TopNavigation, TopNavigationAction} from '@ui-kitten/components';
+import {LanguageContext} from '../context';
 
 export const ProjectWebView = ({navigation, route}) => {
-  console.log('params', route.params);
   const [currentURI, setURI] = React.useState(route.params);
   const [back, setBack] = React.useState([]);
   const webViewRef = React.useRef();
+  const i18n = React.useContext(LanguageContext);
 
   const styles = StyleSheet.create({
     activityContainer: {
@@ -50,7 +51,7 @@ export const ProjectWebView = ({navigation, route}) => {
   );
 
   const Navigation = () => (
-    <TopNavigation accessoryLeft={BackAction} title="Go Back" />
+    <TopNavigation accessoryLeft={BackAction} title={i18n.goBack} />
   );
 
   return (

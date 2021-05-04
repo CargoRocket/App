@@ -8,44 +8,47 @@ import {
   Text,
 } from '@ui-kitten/components';
 import {StyleSheet, TextInput} from 'react-native';
-import {SettingsContext, UiContext} from '../../context';
+import {SettingsContext, LanguageContext, UiContext} from '../../context';
 import theme from '../../res/custom-theme.json';
 import BikeIcon from '../../res/images/bike_settings.svg';
 
+const styles = StyleSheet.create({
+  container: {
+    height: '100%',
+    alignItems: 'center',
+    padding: 20,
+  },
+  topNavigation: {
+    width: '100%',
+  },
+  inputs: {
+    width: '100%',
+  },
+  icon: {
+    marginTop: 10,
+    marginBottom: 20,
+    flex: 1,
+  },
+  input: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  TextInputStyle: {
+    width: '100%',
+    borderRadius: 5,
+    borderColor: '#E4E9F2',
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 6,
+    paddingBottom: 6,
+    borderWidth: 1,
+    color: '#2E3A59',
+    backgroundColor: '#F7F9FC',
+  },
+});
+
 export const InputBikeSize = ({navigation}) => {
-  const styles = StyleSheet.create({
-    container: {
-      height: '100%',
-      alignItems: 'center',
-      padding: 20,
-    },
-    topNavigation: {
-      width: '100%',
-    },
-    inputs: {
-      width: '100%',
-    },
-    icon: {
-      marginTop: 10,
-      marginBottom: 20,
-    },
-    input: {
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-    TextInputStyle: {
-      width: '100%',
-      borderRadius: 5,
-      borderColor: '#E4E9F2',
-      paddingLeft: 20,
-      paddingRight: 20,
-      paddingTop: 6,
-      paddingBottom: 6,
-      borderWidth: 1,
-      color: '#2E3A59',
-      backgroundColor: '#F7F9FC',
-    },
-  });
+  const i18n = React.useContext(LanguageContext);
 
   const {
     bikeLength: [length, setLength],
@@ -88,17 +91,6 @@ export const InputBikeSize = ({navigation}) => {
     />
   );
 
-  const validateFloat = (value, callback) => {
-    try {
-      if (parseFloat(value)) {
-        callback(parseFloat(value));
-      }
-    } catch {
-      console.log('check');
-      return;
-    }
-  };
-
   return (
     <Layout>
       <TopNavigation
@@ -115,33 +107,37 @@ export const InputBikeSize = ({navigation}) => {
           <TextInput
             underlineColorAndroid="transparent"
             style={styles.TextInputStyle}
-            placeholder="Width in meter"
+            placeholder="Width in millimeters"
             keyboardType={'numeric'}
-            value={width}
+            value={`${width}mm`}
             placeholderTextColor="#8F9BB3"
             onChangeText={(value) => {
-              console.log('width', value);
-              setWidth(value);
+              if (value.length > 2) {
+                setWidth(parseInt([...value].filter(Number).join('')));
+              } else {
+                setWidth(0);
+              }
             }}
           />
           <Text appearance="hint">Bike length (L):</Text>
           <TextInput
             underlineColorAndroid="transparent"
             style={styles.TextInputStyle}
-            placeholder="Length in meter"
+            placeholder="Length in millimeters"
             placeholderTextColor="#8F9BB3"
             keyboardType={'numeric'}
-            value={length}
+            value={`${length}mm`}
             onChangeText={(value) => {
-              console.log('length', value);
-              setLength(value);
+              if (value.length > 2) {
+                setLength(parseInt([...value].filter(Number).join('')));
+              } else {
+                setLength(0);
+              }
             }}
           />
         </Layout>
         <BikeIcon width={300} height={250} style={styles.icon} />
-        <Text appearance="hint">
-          We estimated your bikes dimensions. If you dont know your exact bike dimensions don't worrie. You can change these values later in the Settings view.
-        </Text>
+        <Text appearance="hint">{i18n.weEstimatedYourBikeDimensions}</Text>
       </Layout>
     </Layout>
   );

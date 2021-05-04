@@ -90,7 +90,6 @@ export const Map = () => {
           draggable={true}
           onDragEnd={(point) => {
             const lat = Math.round(point.geometry.coordinates[0], 2);
-            console.log(lat);
             setStart({
               name: `${point.geometry.coordinates[0].toFixed(4)},
                 ${point.geometry.coordinates[1].toFixed(4)}`,

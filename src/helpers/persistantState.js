@@ -1,33 +1,40 @@
 export const makePersistent = (state, key, MMKV, type = 'string') => {
   const updateState = (value) => {
-    switch (type) {
-      case 'bool':
-        MMKV.setBoolAsync(key, value, (error, result) => {
-          if (error) {
-            // Todo Figure out how to handle this in the future.
-            console.error(error);
-            return;
+    try {
+      switch (type) {
+        case 'bool':
+          MMKV.setBool(key, value, (error, result) => {
+            if (error) {
+              // Todo Figure out how to handle this in the future.
+              console.error(error);
+              return;
+            }
+          });
+          break;
+        case 'int':
+          if (isNaN(parseInt(value))) {
+            break;
           }
-        });
-        break;
-      case 'int':
-        MMKV.setIntAsync(key, value, (error, result) => {
-          if (error) {
-            // Todo Figure out how to handle this in the future.
-            console.error(error);
-            return;
-          }
-        });
-        break;
-      case 'string':
-      default:
-        MMKV.setStringAsync(key, value, (error, result) => {
-          if (error) {
-            // Todo Figure out how to handle this in the future.
-            console.error(error);
-            return;
-          }
-        });
+          MMKV.setInt(key, value, (error, result) => {
+            if (error) {
+              // Todo Figure out how to handle this in the future.
+              console.error(error);
+              return;
+            }
+          });
+          break;
+        case 'string':
+        default:
+          MMKV.setString(key, value, (error, result) => {
+            if (error) {
+              // Todo Figure out how to handle this in the future.
+              console.error(error);
+              return;
+            }
+          });
+      }
+    } catch (e) {
+      console.error(e);
     }
     state[1](value);
   };

@@ -1,0 +1,12 @@
+{
+  "goBack": "Go Back",
+  "title": "Cargobike Routing App",
+  "subtitle": "Finding the best for you and your cargo-bike.",
+  "description": "Intelligent obstacle avoidance based on community experience.",
+  "goCycling": "GO CYCLING",
+  "yourUseCase": "Your Usecase",
+  "private": "private",
+  "bikeType": "Bike Type",
+  "howDoesYourBikeLookLike": "How does your bike look like?",
+  "weEstimatedYourBikeDimensions": "We estimated your bikes dimensions. If you dont know your exact bike dimensions don't worrie. You can change these values later in the Settings view."
+}

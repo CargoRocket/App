@@ -23,7 +23,6 @@ export const NavigatingView = ({navigation, route}) => {
         routes={JSON.stringify(routeResponse)}
         onLocationChange={(event) => {
           const {latitude, longitude} = event.nativeEvent;
-          console.log('locationChanged', latitude, longitude);
         }}
         onRouteProgressChange={(event) => {
           const {
@@ -61,15 +60,18 @@ export const NavigatingView = ({navigation, route}) => {
                 console.error(error);
               });
           }
-          console.log('offRoute', event.nativeEvent);
         }}
         onCancelNavigation={() => {
           // User tapped the "X" cancel button in the nav UI
           // or canceled via the OS system tray on android.
           // Do whatever you need to here.
+          // ToDo Show message?! -> feedback?!
+          navigation.goBack();
         }}
         onArrive={() => {
           // Called when you arrive at the destination.
+          // ToDo Show message!
+          navigation.goBack();
         }}
       />
     </View>

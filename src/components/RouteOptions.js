@@ -53,8 +53,6 @@ export const RouteOptions = ({navigation}) => {
   } = React.useContext(RoutingContext);
 
   const startNavigation = (route) => {
-    console.log('Check');
-    console.log(route);
     navigation.navigate('Navigating', {
       routeResponse: {
         duration: route.routes[0].duration,

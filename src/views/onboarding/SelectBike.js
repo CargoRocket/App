@@ -8,7 +8,7 @@ import {
   Card,
 } from '@ui-kitten/components';
 import {StyleSheet} from 'react-native';
-import {SettingsContext} from '../../context';
+import {SettingsContext, LanguageContext} from '../../context';
 import theme from '../../res/custom-theme.json';
 
 // Icons
@@ -18,21 +18,22 @@ import LongTail from '../../res/images/longtail.svg';
 import Schwertransporter from '../../res/images/schwertransporter.svg';
 import Trike from '../../res/images/trike.svg';
 
-export const SelectBike = ({navigation}) => {
-  const styles = StyleSheet.create({
-    option: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      margin: 20,
-    },
-    optionSelected: {
-      textAlign: 'center',
-      borderColor: theme['color-primary-500'],
-      borderWidth: 2,
-    },
-  });
+const styles = StyleSheet.create({
+  option: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 20,
+  },
+  optionSelected: {
+    textAlign: 'center',
+    borderColor: theme['color-primary-500'],
+    borderWidth: 2,
+  },
+});
 
+export const SelectBike = ({navigation}) => {
+  const i18n = React.useContext(LanguageContext);
   const {
     bikeType: [bikeType, setBikeType],
     bikeLength: [length, setLength],
@@ -58,9 +59,9 @@ export const SelectBike = ({navigation}) => {
   return (
     <Layout style={{flex: 1}}>
       <TopNavigation
-        title="Bike Type"
+        title={i18n.bikeType}
         alignment="center"
-        subtitle="How does your bike look like?"
+        subtitle={i18n.howDoesYourBikeLookLike}
         accessoryRight={renderCheckAction}
       />
       <Divider />
@@ -73,8 +74,8 @@ export const SelectBike = ({navigation}) => {
         onPress={() => {
           setBikeType('delivery');
           if (!width) {
-            setWidth(0.7);
-            setLength(1.7);
+            setWidth(70);
+            setLength(170);
           }
         }}>
         <Lieferbike height={100} width={100} />
@@ -88,8 +89,8 @@ export const SelectBike = ({navigation}) => {
         onPress={() => {
           setBikeType('longjohn');
           if (!width) {
-            setWidth(0.8);
-            setLength(2.0);
+            setWidth(80);
+            setLength(200);
           }
         }}>
         <LongJohn height={100} width={100} />
@@ -103,8 +104,8 @@ export const SelectBike = ({navigation}) => {
         onPress={() => {
           setBikeType('longtail');
           if (!width) {
-            setWidth(0.8);
-            setLength(2.0);
+            setWidth(80);
+            setLength(200);
           }
         }}>
         <LongTail height={100} width={100} />
@@ -118,8 +119,8 @@ export const SelectBike = ({navigation}) => {
         onPress={() => {
           setBikeType('heavy');
           if (!width) {
-            setWidth(1.2);
-            setLength(2.0);
+            setWidth(120);
+            setLength(200);
           }
         }}>
         <Schwertransporter height={100} width={100} />
@@ -133,8 +134,8 @@ export const SelectBike = ({navigation}) => {
         onPress={() => {
           setBikeType('trike');
           if (!width) {
-            setWidth(1.0);
-            setLength(2.0);
+            setWidth(100);
+            setLength(200);
           }
         }}>
         <Trike height={100} width={100} />

@@ -59,7 +59,6 @@ export const LocationSelect = ({
     });
     RNLocation.getLatestLocation({timeout: 60000})
       .then((latestLocation) => {
-        console.log(latestLocation);
         onChange({
           name: 'Your Location',
           coordinates: [latestLocation.longitude, latestLocation.latitude],
@@ -84,7 +83,8 @@ export const LocationSelect = ({
     <AutocompleteItem key={index} title={item.place_name} />
   );
 
-  const renderLiveLocation = () => liveLocation ? (
+  const renderLiveLocation = () =>
+    liveLocation ? (
       <Button
         appearance="ghost"
         onPress={setCurrentLocation}
@@ -99,6 +99,7 @@ export const LocationSelect = ({
       value={active ? input : value ? value.name : ''}
       onSelect={onSelect}
       onFocus={() => {
+        setInput('');
         setActive(true);
       }}
       onBlur={() => {

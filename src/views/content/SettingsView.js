@@ -49,7 +49,6 @@ export const SettingsView = ({navigation}) => {
     <Card
       style={styles.settingsEntry}
       onPress={() => {
-        console.log('check', isBikeSettingsShown);
         setBikeSettingsShown(true);
         // setOnBoarded();
         // navigation.navigate('InputBikeSize');

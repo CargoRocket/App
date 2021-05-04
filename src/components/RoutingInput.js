@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, Icon, Layout, Text, Spinner, Button} from '@ui-kitten/components';
+import {Card, Spinner} from '@ui-kitten/components';
 import {StyleSheet, View} from 'react-native';
 import {LocationSelect} from './LocationSelection';
 import {RoutingContext} from '../../src/context';
@@ -16,7 +16,6 @@ export const RoutingInput = ({navigation}) => {
   React.useEffect(() => {
     if (start && destination) {
       setLoading(true);
-      console.log('TEST1', start);
       const requestStart = JSON.stringify(start);
       const requestEnd = JSON.stringify(destination);
       fetch(
@@ -24,18 +23,15 @@ export const RoutingInput = ({navigation}) => {
       )
         .then((rawData) => rawData.json())
         .then((routesResponse) => {
-          console.log('TEST2', start);
           if (
             requestStart === JSON.stringify(start) &&
             requestEnd === JSON.stringify(destination)
           ) {
-            console.log(routesResponse);
             if (routesResponse.name && routesResponse.name === 'Error') {
               setLoading(false);
               return;
             }
             setLoading(false);
-            console.log(routesResponse);
             setRoutes([
               {...routesResponse.cargobike, name: 'Cargo-Bike'},
               {...routesResponse.bike, name: 'Classic Bike'},

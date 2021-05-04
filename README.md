@@ -1,1 +1,1 @@
-CargoRocketApp
+CargoRocket

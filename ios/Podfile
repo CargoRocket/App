@@ -21,8 +21,8 @@ def flipper_post_install(installer)
   end
 end
 
-target 'CargoRocketApp' do
-  # Pods for CargoRocketApp
+target 'CargoRocket' do
+  # Pods for CargoRocket
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
   pod 'FBReactNativeSpec', :path => "../node_modules/react-native/Libraries/FBReactNativeSpec"
   pod 'RCTRequired', :path => "../node_modules/react-native/Libraries/RCTRequired"
@@ -56,7 +56,7 @@ target 'CargoRocketApp' do
 
   pod 'react-native-location', :path => '../node_modules/react-native-location'
 
-  target 'CargoRocketAppTests' do
+  target 'CargoRocketTests' do
     inherit! :complete
     # Pods for testing
   end
@@ -73,10 +73,10 @@ target 'CargoRocketApp' do
   end
 end
 
-target 'CargoRocketApp-tvOS' do
-  # Pods for CargoRocketApp-tvOS
+target 'CargoRocket-tvOS' do
+  # Pods for CargoRocket-tvOS
 
-  target 'CargoRocketApp-tvOSTests' do
+  target 'CargoRocket-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end

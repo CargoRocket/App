@@ -129,7 +129,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.cargorocketapp"
+        applicationId "de.cargorocket"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

@@ -8,27 +8,28 @@ import {
   Card,
 } from '@ui-kitten/components';
 import {StyleSheet, Text} from 'react-native';
-import {SettingsContext} from '../../context';
+import {SettingsContext, LanguageContext} from '../../context';
 import theme from '../../res/custom-theme.json';
 
-export const SelectUse = ({navigation}) => {
-  const styles = StyleSheet.create({
-    option: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      margin: 20,
-    },
-    optionSelected: {
-      textAlign: 'center',
-      borderColor: theme['color-primary-500'],
-      borderWidth: 2,
-    },
-  });
+const styles = StyleSheet.create({
+  option: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 20,
+  },
+  optionSelected: {
+    textAlign: 'center',
+    borderColor: theme['color-primary-500'],
+    borderWidth: 2,
+  },
+});
 
+export const SelectUse = ({navigation}) => {
   const {
     use: [use, setUse],
   } = React.useContext(SettingsContext);
+  const i18n = React.useContext(LanguageContext);
 
   const checkMarkIcon = (props) =>
     use ? (
@@ -49,7 +50,7 @@ export const SelectUse = ({navigation}) => {
   return (
     <Layout style={{flex: 1}}>
       <TopNavigation
-        title="Your Usecase"
+        title={i18n.yourUseCase}
         alignment="center"
         subtitle="What do you use your bike mainly for?"
         accessoryRight={renderCheckAction}
@@ -62,7 +63,7 @@ export const SelectUse = ({navigation}) => {
             : styles.option
         }
         onPress={() => setUse('private')}>
-        <Text>Private</Text>
+        <Text>{i18n.private}</Text>
       </Card>
       <Card
         style={

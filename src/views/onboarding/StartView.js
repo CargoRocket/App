@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Layout, Text, Icon} from '@ui-kitten/components';
 import {StyleSheet} from 'react-native';
-import {UiContext} from '../../context';
+import {LanguageContext, UiContext} from '../../context';
 import Logo from '../../res/images/logo.svg';
 
 export const StartView = ({navigation}) => {
@@ -10,6 +10,7 @@ export const StartView = ({navigation}) => {
   const {
     onBoarding: [isOnBoarded, setOnBoarded],
   } = React.useContext(UiContext);
+  const i18n = React.useContext(LanguageContext);
 
   const ChevronIcon = (props) => (
     <Icon
@@ -38,13 +39,13 @@ export const StartView = ({navigation}) => {
     <Layout style={styles.container}>
       <Logo width={200} height={100} />
       <Text style={styles.text} category="h1">
-        Cargobike Routing App
+        {i18n.title}
       </Text>
       <Text style={styles.text} category="s1">
-        Finding the best for you and your cargo-bike.
+        {i18n.subtitle}
       </Text>
       <Text style={styles.text} appearance="hint">
-        Intelligent obstacle avoidance based on community experience.
+        {i18n.description}
       </Text>
       <Button
         style={styles.startButton}
@@ -53,7 +54,7 @@ export const StartView = ({navigation}) => {
           shakeIconRef.current.startAnimation();
           navigation.navigate('SelectUse');
         }}>
-        GO CYCLING
+        {i18n.goCycling}
       </Button>
     </Layout>
   );
