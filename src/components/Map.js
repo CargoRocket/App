@@ -39,11 +39,12 @@ export const Map = () => {
     page: {
       position: 'absolute',
       zIndex: -2,
-      flex: 1,
+      height: '100%',
+      width: '100%',
     },
     container: {
-      height: 700,
-      width: 500,
+      height: '100%',
+      width: '100%',
     },
     map: {
       flex: 1,
