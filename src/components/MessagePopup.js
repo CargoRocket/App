@@ -9,7 +9,6 @@ export const MessagePopup = () => {
     popupMessage: [message, setMessage],
   } = React.useContext(UiContext);
 
-  console.log(message);
   return (
     <Modal
       visible={message !== null}

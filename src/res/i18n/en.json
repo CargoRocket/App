@@ -36,7 +36,7 @@
     "about": "About",
     "aboutSubtitle": "subtitle",
     "privacyPolicy": "Privacy Policy",
-    "privacyPolicySubtitle": "subtitle"
+    "privacyPolicySubtitle": "subtitle",
   },
   "navigation": {
     "start": "Start",
@@ -66,6 +66,9 @@
     "navigationErrorMessage": "Something went wrong! Feel free to leave feedback for our developers.",
 
     "locationErrorTitle": "Location could not be determined",
-    "locationErrorMessage": "Please check your location service is enabled and the correct access rights have been provided for this application."
+    "locationErrorMessage": "Please check your location service is enabled and the correct access rights have been provided for this application.",
+
+    "feedbackSendTitle": "Feedback Sent",
+    "feedbackSendMessage": "Thank you for your support! We will try to implement your suggestions as fast as possible."
   }
 }

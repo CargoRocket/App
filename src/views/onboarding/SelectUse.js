@@ -72,7 +72,7 @@ export const SelectUse = ({navigation}) => {
             : styles.option
         }
         onPress={() => setUse('commercial')}>
-        <Text>{i18n.onboarding.yourUseCaseSubtitle}</Text>
+        <Text>{i18n.onboarding.commercial}</Text>
       </Card>
     </Layout>
   );

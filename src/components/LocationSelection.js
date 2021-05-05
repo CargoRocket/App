@@ -70,7 +70,7 @@ export const LocationSelect = ({
         });
       })
       .catch((error) => {
-        console.log(error);
+        console.log('locationError', error);
         setPopupMessage({
           title: i18n.modals.locationErrorTitle,
           message: i18n.modals.locationErrorMessage,
