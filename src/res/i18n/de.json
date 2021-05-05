@@ -1,3 +1,71 @@
 {
-  "goBack": "Zurück"
+  "goBack": "Zurück",
+  "onboarding": {
+    "title": "Cargobike Routing App",
+    "subtitle": "Wir bringen dich und dein Rad entspannt ans Ziel!",
+    "description": "Intelligent obstacle avoidance based on community experience.",
+    "goCycling": "Los Gehts!",
+
+    "yourUseCase": "Verwendungszweck",
+    "yourUseCaseSubtitle": "Wie setzt du dein Rad ein?",
+    "commercial": "Kommerzielle Fahrten",
+    "private": "Privat",
+
+    "bikeType": "Dein Bike",
+    "howDoesYourBikeLookLike": "Welchen Typ Lastenrad fährst du?",
+
+    "bikeDimensions": "Dimensionen",
+    "bikeDimensionsSubtitle": "Abmässungen deines Lastenrads",
+    "widthInMillimeters": "Breite in Millimetern",
+    "bikeWidth": "Fahrrad Breite (W):",
+    "bikeLength": "Fahrrad Länge (L):",
+    "lengthInMillimeters": "Länge in Millimetern",
+    "weEstimatedYourBikeDimensions": "Wir haben die Dimensionen deines Fahrrads nach unseren Erfahrungswerten geschätzt. Wenn du gerade keinen Maßstab zu hand hast, kannst du diesen Schritt überspringen und später diese Einstellungen in den Settings nachtragen."
+  },
+  "settings": {
+    "email": "E-mail (Optional)",
+    "yourMessageToUs": "DEINE NACHRICHT. Schreib uns deine Gedanken zur App, zum Projekt, Cargobike-Index, Routing etc.",
+    "send": "Senden",
+
+    "feedback": "Feedback",
+    "feedbackSubtitle": "Schreibe uns!",
+    "projectWebsite": "Projekt Webseite",
+    "projectWebsiteSubtitle": "Mehr zum Projekt und unserem Blog",
+    "bikeSettings": "Bike Settings",
+    "bikeSettingsSubtitle": "Radeinstellungen neu vornehmen",
+    "about": "Impressum",
+    "aboutSubtitle": "",
+    "privacyPolicy": "Privacy Policy",
+    "privacyPolicySubtitle": ""
+  },
+  "navigation": {
+    "start": "Start",
+    "destination": "Ziel",
+    "yourLocation": "Dein Standort",
+    "cargoBikeRoute": "Lastenrad-Route",
+    "cargoBikeRouteDescription": "für dein Fahrrad optimiert",
+    "classicBikeRoute": "Klassische Farrad-Route",
+    "classicBikeRouteDescription": "zum Vergleich die normale Route"
+  },
+  "menu": {
+    "project": "Projekt",
+    "navigation": "Navigation",
+    "settings": "Einstellungen"
+  },
+  "modals": {
+    "settingsUpdatedTitle": "Fahrrad Updated",
+    "settingsUpdatedMessage": "Dein Fahrrad wurde erfolgreich geupdated. Wir nutzen deine Rad-dimensionen um Hindernisse auf deiner Route zu vermeiden.",
+    
+    "welcomeTitle": "Wilkommen",
+    "welcomeMessage": "Die CargoRocket App ist dein Begleiter auf dem Lastenrad. Hier findest du nützliche Informationen zum Project und ein routing speziell für dein Lastenrad.",
+    
+    "routeCompleteTitle": "Route Abgeschlossen",
+    "routeCompleteMessage": "Du hast deine Tour erfolgreich beendet!",
+
+    "navigationErrorTitle": "Oh Dam!",
+    "navigationErrorMessage": "Hier ist wohl etwas schief gelaufen... Schicke uns gerne Feedback",
+
+    "locationErrorTitle": "Dein Standort konnte nicht ermittelt werden",
+    "locationErrorMessage": "Bitte überprüfe das deine Standortermittlung aktiv ist und die App die nötigen Berechtigungen besitzt"
+  }
 }

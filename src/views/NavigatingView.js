@@ -42,7 +42,7 @@ export const NavigatingView = ({navigation, route}) => {
           setPopupMessage({
             title: i18n.modals.navigationErrorTitle,
             message: i18n.modals.navigationErrorMessage,
-            status: 'success',
+            status: 'error',
           });
           navigation.goBack();
         }}

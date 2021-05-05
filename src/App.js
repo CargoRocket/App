@@ -38,7 +38,7 @@ export const App = () => {
   // Setting up UI Context
   const popupMessage = React.useState(null);
   const bikeSettingsShown = React.useState(false);
-  const language = React.useState(deviceLanguage.slice(0, 2));
+  const [language, setLanguage] = React.useState(deviceLanguage.slice(0, 2));
   const onBoarding = makePersistent(
     React.useState(MMKV.getBool('isOnBoarded')),
     'isOnBoarded',
