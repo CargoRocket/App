@@ -7,7 +7,7 @@ import {
   Divider,
   Text,
 } from '@ui-kitten/components';
-import {StyleSheet, TextInput} from 'react-native';
+import {StyleSheet, TextInput, View} from 'react-native';
 import {SettingsContext, LanguageContext, UiContext} from '../../context';
 import theme from '../../res/custom-theme.json';
 import BikeIcon from '../../res/images/bike_settings.svg';
@@ -109,7 +109,7 @@ export const InputBikeSize = ({navigation}) => {
             style={styles.TextInputStyle}
             placeholder={i18n.onboarding.widthInMillimeters}
             keyboardType={'numeric'}
-            value={`${width}mm`}
+            value={`${width}cm`}
             placeholderTextColor="#8F9BB3"
             onChangeText={(value) => {
               if (value.length > 2) {
@@ -126,7 +126,7 @@ export const InputBikeSize = ({navigation}) => {
             placeholder={i18n.onboarding.lengthInMillimeters}
             placeholderTextColor="#8F9BB3"
             keyboardType={'numeric'}
-            value={`${length}mm`}
+            value={`${length}cm`}
             onChangeText={(value) => {
               if (value.length > 2) {
                 setLength(parseInt([...value].filter(Number).join('')));
@@ -136,8 +136,10 @@ export const InputBikeSize = ({navigation}) => {
             }}
           />
         </Layout>
-        <BikeIcon width={300} height={250} style={styles.icon} />
-        <Text appearance="hint">
+        <View style={styles.icon}>
+          <BikeIcon width={300} height={250} />
+        </View>
+        <Text style={{flex: 1}} appearance="hint">
           {i18n.onboarding.weEstimatedYourBikeDimensions}
         </Text>
       </Layout>

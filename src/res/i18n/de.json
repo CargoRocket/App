@@ -3,8 +3,8 @@
   "onboarding": {
     "title": "Cargobike Routing App",
     "subtitle": "Wir bringen dich und dein Rad entspannt ans Ziel!",
-    "description": "Intelligent obstacle avoidance based on community experience.",
-    "goCycling": "Los Gehts!",
+    "description": "",
+    "goCycling": "Los Geht's!",
 
     "yourUseCase": "Verwendungszweck",
     "yourUseCaseSubtitle": "Wie setzt du dein Rad ein?",
@@ -15,12 +15,12 @@
     "howDoesYourBikeLookLike": "Welchen Typ Lastenrad fährst du?",
 
     "bikeDimensions": "Dimensionen",
-    "bikeDimensionsSubtitle": "Abmässungen deines Lastenrads",
-    "widthInMillimeters": "Breite in Millimetern",
+    "bikeDimensionsSubtitle": "Abmessungen deines Lastenrads",
+    "widthInMillimeters": "Breite in Zentimeter",
     "bikeWidth": "Fahrrad Breite (W):",
     "bikeLength": "Fahrrad Länge (L):",
-    "lengthInMillimeters": "Länge in Millimetern",
-    "weEstimatedYourBikeDimensions": "Wir haben die Dimensionen deines Fahrrads nach unseren Erfahrungswerten geschätzt. Wenn du gerade keinen Maßstab zu hand hast, kannst du diesen Schritt überspringen und später diese Einstellungen in den Settings nachtragen."
+    "lengthInMillimeters": "Länge in Zentimeter",
+    "weEstimatedYourBikeDimensions": "Wir haben die Dimensionen deines Fahrrads nach unseren Erfahrungswerten geschätzt. Wenn du gerade keinen Maßstab zu hand hast, kannst du diesen Schritt überspringen und später diese Einstellungen in den Einstellungen nachtragen."
   },
   "settings": {
     "email": "E-mail (Optional)",
@@ -31,11 +31,11 @@
     "feedbackSubtitle": "Schreibe uns!",
     "projectWebsite": "Projekt Webseite",
     "projectWebsiteSubtitle": "Mehr zum Projekt und unserem Blog",
-    "bikeSettings": "Bike Settings",
+    "bikeSettings": "Fahrrad Eigenschaften",
     "bikeSettingsSubtitle": "Radeinstellungen neu vornehmen",
     "about": "Impressum",
     "aboutSubtitle": "",
-    "privacyPolicy": "Privacy Policy",
+    "privacyPolicy": "Datenschutz",
     "privacyPolicySubtitle": ""
   },
   "navigation": {
@@ -44,7 +44,7 @@
     "yourLocation": "Dein Standort",
     "cargoBikeRoute": "Lastenrad-Route",
     "cargoBikeRouteDescription": "für dein Fahrrad optimiert",
-    "classicBikeRoute": "Klassische Farrad-Route",
+    "classicBikeRoute": "Klassische Fahrrad-Route",
     "classicBikeRouteDescription": "zum Vergleich die normale Route"
   },
   "menu": {
@@ -54,10 +54,10 @@
   },
   "modals": {
     "settingsUpdatedTitle": "Fahrrad Updated",
-    "settingsUpdatedMessage": "Dein Fahrrad wurde erfolgreich geupdated. Wir nutzen deine Rad-dimensionen um Hindernisse auf deiner Route zu vermeiden.",
+    "settingsUpdatedMessage": "Dein Fahrrad wurde erfolgreich geupdated. Wir nutzen deine Rad-Dimensionen um Hindernisse auf deiner Route zu vermeiden.",
     
-    "welcomeTitle": "Wilkommen",
-    "welcomeMessage": "Die CargoRocket App ist dein Begleiter auf dem Lastenrad. Hier findest du nützliche Informationen zum Project und ein routing speziell für dein Lastenrad.",
+    "welcomeTitle": "Willkommen",
+    "welcomeMessage": "Die CargoRocket App ist dein Begleiter auf dem Lastenrad. Hier findest du nützliche Informationen zum Projekt und Navigation speziell für dein Lastenrad.",
     
     "routeCompleteTitle": "Route Abgeschlossen",
     "routeCompleteMessage": "Du hast deine Tour erfolgreich beendet!",

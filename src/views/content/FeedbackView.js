@@ -50,6 +50,7 @@ export const FeedbackView = ({navigation}) => {
           message: i18n.modals.feedbackSendMessage,
           status: 'info',
         });
+        setMessage('');
         navigation.goBack();
         setLoading(false);
       })
