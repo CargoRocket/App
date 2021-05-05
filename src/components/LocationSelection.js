@@ -8,6 +8,7 @@ import {
 import {accessToken} from '../res/config';
 import RNLocation from 'react-native-location';
 import {default as theme} from '../res/custom-theme.json';
+import {LanguageContext, UiContext} from '../../src/context';
 
 const styles = {
   locationButton: {
@@ -26,6 +27,10 @@ export const LocationSelect = ({
   const [data, setData] = React.useState([{}]);
   const [input, setInput] = React.useState('');
   const [active, setActive] = React.useState(false);
+  const i18n = React.useContext(LanguageContext);
+  const {
+    popupMessage: [popupMessage, setPopupMessage],
+  } = React.useContext(UiContext);
 
   const onSelect = (index) => {
     onChange({
@@ -60,12 +65,17 @@ export const LocationSelect = ({
     RNLocation.getLatestLocation({timeout: 60000})
       .then((latestLocation) => {
         onChange({
-          name: 'Your Location',
+          name: i18n.navigation.yourLocation,
           coordinates: [latestLocation.longitude, latestLocation.latitude],
         });
       })
       .catch((error) => {
         console.log(error);
+        setPopupMessage({
+          title: i18n.modals.locationErrorTitle,
+          message: i18n.modals.locationErrorMessage,
+          status: 'error',
+        });
       });
   };
 

@@ -1,6 +1,13 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Card, Text, ViewPager, Button, Icon, Radio} from '@ui-kitten/components';
+import {
+  Card,
+  Text,
+  ViewPager,
+  Button,
+  Icon,
+  Radio,
+} from '@ui-kitten/components';
 import {RoutingContext} from '../context';
 
 const styles = StyleSheet.create({
@@ -17,8 +24,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 10,
     width: '100%',
-    // marginRight: -30,
-    // marginLeft: -30,
   },
   radios: {
     alignSelf: 'center',
@@ -73,8 +78,8 @@ export const RouteOptions = ({navigation}) => {
     return (
       <View style={styles.tab}>
         <Card style={styles.route} level="1">
-          <Text category="h5">{`${route.name} Route`} </Text>
-          <Text appearance="hint">optimized for your bike</Text>
+          <Text category="h5">{route.name} </Text>
+          <Text appearance="hint">{route.description}</Text>
           <View style={styles.spacer} />
           <Text category="h6">
             {hours ? `${hours}h ${minutes} min` : `${minutes} min`}

@@ -3,7 +3,7 @@ import React from 'react';
 import {SafeAreaView, ScrollView} from 'react-native';
 import AboutHtml from '../../res/about.js';
 import PrivacyPolicyHtml from '../../res/privacyPolicy';
-import {UiContext} from '../../context';
+import {UiContext, LanguageContext} from '../../context';
 
 const styles = {
   settingsEntry: {
@@ -24,6 +24,7 @@ export const SettingsView = ({navigation}) => {
   const {
     bikeSettingsShown: [isBikeSettingsShown, setBikeSettingsShown],
   } = React.useContext(UiContext);
+  const i18n = React.useContext(LanguageContext);
 
   const SettingsEntry = (icon, title, subtitle, link, props = {}) => (
     <Card
@@ -74,29 +75,37 @@ export const SettingsView = ({navigation}) => {
       <ScrollView>
         {SettingsEntry(
           'message-circle-outline',
-          'Feedback',
-          'subtitle',
+          i18n.settings.feedback,
+          i18n.settings.feedbackSubtitle,
           'Feedback',
         )}
         <Divider />
         {SettingsEntry(
           'globe-outline',
-          'Project Website',
-          'subtitle',
+          i18n.settings.projectWebsite,
+          i18n.settings.projectWebsiteSubtitle,
           'ProjectWebView',
           {uri: 'https://cargorocket.de'},
         )}
         <Divider />
-        {BikeSettings('options-2-outline', 'Bike Settings', 'subtitle')}
+        {BikeSettings(
+          'options-2-outline',
+          i18n.settings.bikeSettings,
+          i18n.settings.bikeSettingsSubtitle,
+        )}
         <Divider />
-        {SettingsEntry('at-outline', 'About', 'subtitle', 'ProjectWebView', {
-          html: AboutHtml.html,
-        })}
+        {SettingsEntry(
+          'at-outline',
+          i18n.settings.about,
+          i18n.settings.aboutSubtitle,
+          'ProjectWebView',
+          {html: AboutHtml.html},
+        )}
         <Divider />
         {SettingsEntry(
           'info-outline',
-          'Privacy Policy',
-          'subtitle',
+          i18n.settings.privacyPolicy,
+          i18n.settings.privacyPolicySubtitle,
           'ProjectWebView',
           {
             html: PrivacyPolicyHtml.html,

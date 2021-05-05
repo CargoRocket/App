@@ -2,7 +2,7 @@ import React from 'react';
 import {Card, Spinner} from '@ui-kitten/components';
 import {StyleSheet, View} from 'react-native';
 import {LocationSelect} from './LocationSelection';
-import {RoutingContext} from '../../src/context';
+import {RoutingContext, LanguageContext} from '../../src/context';
 import {accessToken, cargorocketAPIKey} from '../res/config';
 
 export const RoutingInput = ({navigation}) => {
@@ -12,6 +12,7 @@ export const RoutingInput = ({navigation}) => {
     routes: [routes, setRoutes],
   } = React.useContext(RoutingContext);
   const [loading, setLoading] = React.useState(false);
+  const i18n = React.useContext(LanguageContext);
 
   React.useEffect(() => {
     if (start && destination) {
@@ -33,8 +34,16 @@ export const RoutingInput = ({navigation}) => {
             }
             setLoading(false);
             setRoutes([
-              {...routesResponse.cargobike, name: 'Cargo-Bike'},
-              {...routesResponse.bike, name: 'Classic Bike'},
+              {
+                ...routesResponse.cargobike,
+                name: i18n.navigation.cargoBikeRoute,
+                description: i18n.navigation.cargoBikeRouteDescription,
+              },
+              {
+                ...routesResponse.bike,
+                name: i18n.navigation.classicBikeRoute,
+                description: i18n.navigation.classicBikeRouteDescription,
+              },
             ]);
           }
         })
@@ -78,13 +87,13 @@ export const RoutingInput = ({navigation}) => {
         <LocationSelect
           onChange={setStart}
           value={start}
-          placeholder="Start"
+          placeholder={i18n.navigation.start}
           liveLocation={true}
         />
         <LocationSelect
           onChange={setDestination}
           value={destination}
-          placeholder="Destination"
+          placeholder={i18n.navigation.destination}
         />
       </Card>
       {loading ? (

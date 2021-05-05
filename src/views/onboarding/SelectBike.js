@@ -59,9 +59,9 @@ export const SelectBike = ({navigation}) => {
   return (
     <Layout style={{flex: 1}}>
       <TopNavigation
-        title={i18n.bikeType}
+        title={i18n.onboarding.bikeType}
         alignment="center"
-        subtitle={i18n.howDoesYourBikeLookLike}
+        subtitle={i18n.onboarding.howDoesYourBikeLookLike}
         accessoryRight={renderCheckAction}
       />
       <Divider />

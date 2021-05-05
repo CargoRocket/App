@@ -50,9 +50,9 @@ export const SelectUse = ({navigation}) => {
   return (
     <Layout style={{flex: 1}}>
       <TopNavigation
-        title={i18n.yourUseCase}
+        title={i18n.onboarding.yourUseCase}
         alignment="center"
-        subtitle="What do you use your bike mainly for?"
+        subtitle={i18n.onboarding.yourUseCaseSubtitle}
         accessoryRight={renderCheckAction}
       />
       <Divider />
@@ -63,7 +63,7 @@ export const SelectUse = ({navigation}) => {
             : styles.option
         }
         onPress={() => setUse('private')}>
-        <Text>{i18n.private}</Text>
+        <Text>{i18n.onboarding.private}</Text>
       </Card>
       <Card
         style={
@@ -72,7 +72,7 @@ export const SelectUse = ({navigation}) => {
             : styles.option
         }
         onPress={() => setUse('commercial')}>
-        <Text>Commercial Delivery</Text>
+        <Text>{i18n.onboarding.yourUseCaseSubtitle}</Text>
       </Card>
     </Layout>
   );

@@ -9,6 +9,7 @@ export const MessagePopup = () => {
     popupMessage: [message, setMessage],
   } = React.useContext(UiContext);
 
+  console.log(message);
   return (
     <Modal
       visible={message !== null}
@@ -18,7 +19,7 @@ export const MessagePopup = () => {
       }}>
       {message !== null ? (
         <Card disabled={true} style={styles.message}>
-          {message.type === 'info' ? (
+          {message.status === 'info' ? (
             <Icon
               fill={theme['color-info-500']}
               style={styles.icon}
@@ -26,14 +27,14 @@ export const MessagePopup = () => {
             />
           ) : null}
 
-          {message.type === 'error' ? (
+          {message.status === 'error' ? (
             <Icon
               fill={theme['color-danger-500']}
               style={styles.icon}
               name="alert-triangle-outline"
             />
           ) : null}
-          {message.type === 'success' ? (
+          {message.status === 'success' ? (
             <Icon
               fill={theme['color-primary-500']}
               style={styles.icon}

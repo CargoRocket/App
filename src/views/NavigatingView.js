@@ -1,9 +1,15 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import MapboxNavigation from '@cargorocket/react-native-mapbox-navigation';
+import {UiContext, LanguageContext} from '../context';
 import {accessToken, cargorocketAPIKey} from '../res/config';
 
 export const NavigatingView = ({navigation, route}) => {
+  const {
+    popupMessage: [popupMessage, setPopupMessage],
+  } = React.useContext(UiContext);
+  const i18n = React.useContext(LanguageContext);
+
   const navigationRef = React.useRef();
   const styles = StyleSheet.create({
     container: {
@@ -33,7 +39,12 @@ export const NavigatingView = ({navigation, route}) => {
           } = event.nativeEvent;
         }}
         onError={(event) => {
-          console.error(event.nativeEvent);
+          setPopupMessage({
+            title: i18n.modals.navigationErrorTitle,
+            message: i18n.modals.navigationErrorMessage,
+            status: 'success',
+          });
+          navigation.goBack();
         }}
         onUserOffRoute={(event) => {
           if (
@@ -70,7 +81,11 @@ export const NavigatingView = ({navigation, route}) => {
         }}
         onArrive={() => {
           // Called when you arrive at the destination.
-          // ToDo Show message!
+          setPopupMessage({
+            title: i18n.modals.routeCompleteTitle,
+            message: i18n.modals.routeCompleteMessage,
+            status: 'success',
+          });
           navigation.goBack();
         }}
       />

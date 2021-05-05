@@ -39,7 +39,6 @@ export const App = () => {
   const popupMessage = React.useState(null);
   const bikeSettingsShown = React.useState(false);
   const language = React.useState(deviceLanguage.slice(0, 2));
-  console.log(language);
   const onBoarding = makePersistent(
     React.useState(MMKV.getBool('isOnBoarded')),
     'isOnBoarded',
@@ -59,14 +58,14 @@ export const App = () => {
     MMKV,
   );
   const bikeLength = makePersistent(
-    React.useState(MMKV.getString('length')),
+    React.useState(MMKV.getInt('length')),
     'length',
     MMKV,
     'int',
   );
 
   const bikeWidth = makePersistent(
-    React.useState(MMKV.getString('width')),
+    React.useState(MMKV.getInt('width')),
     'width',
     MMKV,
     'int',

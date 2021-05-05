@@ -1,12 +1,71 @@
 {
   "goBack": "Go Back",
-  "title": "Cargobike Routing App",
-  "subtitle": "Finding the best for you and your cargo-bike.",
-  "description": "Intelligent obstacle avoidance based on community experience.",
-  "goCycling": "GO CYCLING",
-  "yourUseCase": "Your Usecase",
-  "private": "private",
-  "bikeType": "Bike Type",
-  "howDoesYourBikeLookLike": "How does your bike look like?",
-  "weEstimatedYourBikeDimensions": "We estimated your bikes dimensions. If you dont know your exact bike dimensions don't worrie. You can change these values later in the Settings view."
+  "onboarding": {
+    "title": "Cargobike Routing App",
+    "subtitle": "Finding the best for you and your cargo-bike.",
+    "description": "Intelligent obstacle avoidance based on community experience.",
+    "goCycling": "GO CYCLING",
+
+    "yourUseCase": "Your Usecase",
+    "yourUseCaseSubtitle": "What do you use your bike mainly for?",
+    "commercial": "Commercial Delivery",
+    "private": "private",
+
+    "bikeType": "Bike Type",
+    "howDoesYourBikeLookLike": "How does your bike look like?",
+
+    "bikeDimensions":"Bike Dimensions",
+    "bikeDimensionsSubtitle": "subtitle",
+    "widthInMillimeters": "Width in millimeters",
+    "bikeWidth": "Bike width (W):",
+    "bikeLength": "Bike length (L):",
+    "lengthInMillimeters": "Length in millimeters",
+    "weEstimatedYourBikeDimensions": "We estimated your bikes dimensions. If you dont know your exact bike dimensions don't worrie. You can change these values later in the Settings view."
+  },
+  "settings": {
+    "email": "E-mail (Optional)",
+    "yourMessageToUs": "YOUR MESSAGE TO US. Feel free to provide us any thought you have about the project, cargobike-index, routing etc.",
+    "send": "Send",
+
+    "feedback": "Feedback",
+    "feedbackSubtitle": "subtitle",
+    "projectWebsite": "Project Website",
+    "projectWebsiteSubtitle": "subtitle",
+    "bikeSettings": "Bike Settings",
+    "bikeSettingsSubtitle": "subitle",
+    "about": "About",
+    "aboutSubtitle": "subtitle",
+    "privacyPolicy": "Privacy Policy",
+    "privacyPolicySubtitle": "subtitle"
+  },
+  "navigation": {
+    "start": "Start",
+    "destination": "Destination",
+    "yourLocation": "Your Location",
+    "cargoBikeRoute": "Cargo-Bike Route",
+    "cargoBikeRouteDescription": "optimized for your bike",
+    "classicBikeRoute": "Classic Bike Route",
+    "classicBikeRouteDescription": "standard bike route"
+  },
+  "menu": {
+    "project": "Project",
+    "navigation": "Navigation",
+    "settings": "Settings"
+  },
+  "modals": {
+    "settingsUpdatedTitle": "Bike Settings Updated",
+    "settingsUpdatedMessage": "You have successfully updated your bike settings. Now we can provide you routes to make your ride as smooth as possible! ",
+    
+    "welcomeTitle": "Welcome Cyclist!",
+    "welcomeMessage": "The CargoRocket App provides you navigation and project insights. We aim to make your ride as smooth as possible!",
+    
+    "routeCompleteTitle": "Route Completed",
+    "routeCompleteMessage": "You successfully finished your ride!",
+
+    "navigationErrorTitle": "Oh Dam!",
+    "navigationErrorMessage": "Something went wrong! Feel free to leave feedback for our developers.",
+
+    "locationErrorTitle": "Location could not be determined",
+    "locationErrorMessage": "Please check your location service is enabled and the correct access rights have been provided for this application."
+  }
 }

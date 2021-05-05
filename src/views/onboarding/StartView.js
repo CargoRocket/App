@@ -39,13 +39,13 @@ export const StartView = ({navigation}) => {
     <Layout style={styles.container}>
       <Logo width={200} height={100} />
       <Text style={styles.text} category="h1">
-        {i18n.title}
+        {i18n.onboarding.title}
       </Text>
       <Text style={styles.text} category="s1">
-        {i18n.subtitle}
+        {i18n.onboarding.subtitle}
       </Text>
       <Text style={styles.text} appearance="hint">
-        {i18n.description}
+        {i18n.onboarding.description}
       </Text>
       <Button
         style={styles.startButton}
@@ -54,7 +54,7 @@ export const StartView = ({navigation}) => {
           shakeIconRef.current.startAnimation();
           navigation.navigate('SelectUse');
         }}>
-        {i18n.goCycling}
+        {i18n.onboarding.goCycling}
       </Button>
     </Layout>
   );

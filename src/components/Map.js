@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import {accessToken} from '../res/config';
 import {default as theme} from '../res/custom-theme.json';
@@ -21,33 +21,26 @@ export const Map = () => {
       ? {
           ne: destination.coordinates,
           sw: start.coordinates,
-          paddingTop: 200,
-          paddingLeft: 200,
-          paddingRight: 200,
-          paddingBottom: 350,
+          paddingTop: 80,
+          paddingLeft: 40,
+          paddingRight: 40,
+          paddingBottom: 40,
         }
       : {
           ne: [11.106090200587593, 46.94990650185683],
           sw: [9.595923969628181, 55.010052465795454],
-          paddingTop: 200,
-          paddingLeft: 200,
-          paddingRight: 200,
-          paddingBottom: 200,
+          paddingTop: 150,
+          paddingLeft: 40,
+          paddingRight: 40,
+          paddingBottom: 40,
         };
 
   const styles = StyleSheet.create({
-    page: {
+    map: {
+      height: '100%',
+      width: '100%',
       position: 'absolute',
       zIndex: -2,
-      height: '100%',
-      width: '100%',
-    },
-    container: {
-      height: '100%',
-      width: '100%',
-    },
-    map: {
-      flex: 1,
     },
     marker: {
       height: 30,
@@ -74,9 +67,7 @@ export const Map = () => {
           id={`cargobike-route-line-${index}`}
           sourceID={`cargobike-route-source-${index}`}
           layerIndex={150}
-          style={{lineWidth: 5, lineJoin: 'bevel', lineColor: `${selectedRoute === index ? '#515555' : '#f6f6f6'}` }}>
-          <Text>Test</Text>
-        </MapboxGL.LineLayer>
+          style={{lineWidth: 5, lineJoin: 'bevel', lineColor: `${selectedRoute === index ? '#515555' : '#f6f6f6'}` }} />
       </MapboxGL.ShapeSource>
     );
   };
@@ -132,21 +123,19 @@ export const Map = () => {
   };
 
   return (
-    <View style={styles.page}>
-      <View style={styles.container}>
-        <MapboxGL.MapView
-          style={styles.map}
-          pitchEnabled={false}
-          compassEnabled={false}
-          onLongPress={() => {
-            // Do something
-          }}>
-          <MapboxGL.Camera bounds={bounds} />
-          {routes ? routes.map((route, index) => renderRoute(route, index)) : null}
-          {renderStartMarker()}
-          {renderDestinationMarker()}
-        </MapboxGL.MapView>
-      </View>
-    </View>
+    <MapboxGL.MapView
+      style={styles.map}
+      pitchEnabled={false}
+      compassEnabled={false}
+      onLongPress={() => {
+        // Do something
+      }}>
+      <MapboxGL.Camera bounds={bounds} />
+      {routes
+        ? routes.map((route, index) => renderRoute(route, index))
+        : null}
+      {renderStartMarker()}
+      {renderDestinationMarker()}
+    </MapboxGL.MapView>
   );
 };

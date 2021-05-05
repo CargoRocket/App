@@ -74,17 +74,17 @@ export const InputBikeSize = ({navigation}) => {
           if (isBikeSettingsShown) {
             setBikeSettingsShown(false);
             setPopupMessage({
-              message: 'Updated',
+              title: i18n.modals.settingsUpdatedTitle,
+              message: i18n.modals.settingsUpdatedMessage,
               status: 'success',
-              title: 'test',
             });
             return;
           }
           setOnBoarded(true);
           setPopupMessage({
-            message: 'test',
+            title: i18n.modals.welcomeTitle,
+            message: i18n.modals.welcomeMessage,
             status: 'success',
-            title: 'test',
           });
         }
       }}
@@ -94,20 +94,20 @@ export const InputBikeSize = ({navigation}) => {
   return (
     <Layout>
       <TopNavigation
-        title="Bike Dimensions"
+        title={i18n.onboarding.bikeDimensions}
         alignment="center"
-        subtitle="subtitle"
+        subtitle={i18n.onboarding.bikeDimensionsSubtitle}
         style={styles.topNavigation}
         accessoryRight={renderCheckAction}
       />
       <Divider style={styles.topNavigation} />
       <Layout style={styles.container}>
         <Layout style={styles.inputs}>
-          <Text appearance="hint">Bike width (W):</Text>
+          <Text appearance="hint">{i18n.onboarding.bikeWidth}</Text>
           <TextInput
             underlineColorAndroid="transparent"
             style={styles.TextInputStyle}
-            placeholder="Width in millimeters"
+            placeholder={i18n.onboarding.widthInMillimeters}
             keyboardType={'numeric'}
             value={`${width}mm`}
             placeholderTextColor="#8F9BB3"
@@ -119,11 +119,11 @@ export const InputBikeSize = ({navigation}) => {
               }
             }}
           />
-          <Text appearance="hint">Bike length (L):</Text>
+          <Text appearance="hint">{i18n.onboarding.bikeLength}</Text>
           <TextInput
             underlineColorAndroid="transparent"
             style={styles.TextInputStyle}
-            placeholder="Length in millimeters"
+            placeholder={i18n.onboarding.lengthInMillimeters}
             placeholderTextColor="#8F9BB3"
             keyboardType={'numeric'}
             value={`${length}mm`}
@@ -137,7 +137,9 @@ export const InputBikeSize = ({navigation}) => {
           />
         </Layout>
         <BikeIcon width={300} height={250} style={styles.icon} />
-        <Text appearance="hint">{i18n.weEstimatedYourBikeDimensions}</Text>
+        <Text appearance="hint">
+          {i18n.onboarding.weEstimatedYourBikeDimensions}
+        </Text>
       </Layout>
     </Layout>
   );
