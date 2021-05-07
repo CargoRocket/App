@@ -25,6 +25,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     margin: 20,
   },
+  actionButton: {
+    backgroundColor: theme['color-primary-500'],
+    padding: 10,
+    borderRadius: 50,
+  },
   optionSelected: {
     textAlign: 'center',
     borderColor: theme['color-primary-500'],
@@ -41,13 +46,12 @@ export const SelectBike = ({navigation}) => {
   } = React.useContext(SettingsContext);
 
   const checkMarkIcon = (props) =>
-    bikeType ? (
-      <Icon {...props} fill={theme['color-primary-500']} name="checkmark" />
-    ) : null;
+    bikeType ? <Icon {...props} fill="#fff" name="checkmark" /> : null;
 
   const renderCheckAction = () => (
     <TopNavigationAction
       icon={checkMarkIcon}
+      style={styles.actionButton}
       onPress={() => {
         if (bikeType) {
           navigation.navigate('InputBikeSize');

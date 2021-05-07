@@ -1,7 +1,7 @@
 {
   "goBack": "Go Back",
   "onboarding": {
-    "title": "Cargobike Routing App",
+    "title": "CargoRocket",
     "subtitle": "Finding the best ways for you and your cargo-bike.",
     "description": "Intelligent obstacle avoidance based on community experience.",
     "goCycling": "GO CYCLING",
@@ -70,5 +70,36 @@
 
     "feedbackSendTitle": "Feedback Sent",
     "feedbackSendMessage": "Thank you for your support! We will try to implement your suggestions as fast as possible."
+  },
+  "project": {
+    "theProject": "The Project",
+    "description": "CargoRocket was formed in December 2020, at the MobiData Hackathon. Our mission is to provide insights into the needs of cargo-bike drivers and an overview of the current infrastructure. Based on this information we generate Reports, Indexes and provide routing solutions",
+
+    "projects": [
+      {
+        "title": "Mapathon",
+        "description":"Help us getting more accurate data about your region at Baden-Württemberg",
+        "image": "mapathon.jpg",
+        "uri": "https://cargorocket.de/2021/04/17/mapping-tutorial.html"
+      },
+      {
+        "title": "Cargobike Index",
+        "description":"Our Cargobike Index for Stuttgart (CAUTION! Long loading time ahead!)",
+        "image": "Stuttgart_CI1.png",
+        "uri": "https://cargorocket.shinyapps.io/index_stuttgart/"
+      },
+      {
+        "title": "Commercial Collaboration",
+        "description":"You want to share ideas, data or need expert insights into cargo-bike infrastructure related topics? Please contact us!",
+        "image": "survey_bike.jpg",
+        "uri": "https://cargorocket.de/"
+      },
+      {
+        "title": "Blog",
+        "description":"For more insights into the project idea, progress and innovations feel free to check ot our Blog!",
+        "image": "team_image.jpg",
+        "uri": "https://cargorocket.de/blog"
+      }
+    ]
   }
 }

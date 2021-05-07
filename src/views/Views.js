@@ -7,7 +7,6 @@ import {ProjectWebView} from './ProjectWebView';
 import {UiContext} from '../context';
 
 import {StartView} from './onboarding/StartView';
-import {SelectUse} from './onboarding/SelectUse';
 import {SelectBike} from './onboarding/SelectBike';
 import {InputBikeSize} from './onboarding/InputBikeSize';
 
@@ -33,7 +32,6 @@ export const Views = () => {
         ) : (
           <>
             <Screen name="Start" component={StartView} />
-            <Screen name="SelectUse" component={SelectUse} />
             <Screen name="SelectBike" component={SelectBike} />
             <Screen name="InputBikeSize" component={InputBikeSize} />
           </>

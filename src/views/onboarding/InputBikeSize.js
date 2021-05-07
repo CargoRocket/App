@@ -18,6 +18,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
   },
+  actionButton: {
+    backgroundColor: theme['color-primary-500'],
+    padding: 10,
+    borderRadius: 50,
+  },
   topNavigation: {
     width: '100%',
   },
@@ -62,13 +67,12 @@ export const InputBikeSize = ({navigation}) => {
   } = React.useContext(UiContext);
 
   const checkMarkIcon = (props) =>
-    length && width ? (
-      <Icon {...props} fill={theme['color-primary-500']} name="checkmark" />
-    ) : null;
+    length && width ? <Icon {...props} fill="#fff" name="checkmark" /> : null;
 
   const renderCheckAction = () => (
     <TopNavigationAction
       icon={checkMarkIcon}
+      style={styles.actionButton}
       onPress={() => {
         if (length && width) {
           if (isBikeSettingsShown) {
