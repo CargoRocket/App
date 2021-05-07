@@ -73,7 +73,7 @@ export const ProjectWebView = ({navigation, route}) => {
             return true;
           }
           // We're loading a new URL -- change state first
-          setURI(request.url);
+          setURI({uri: request.url});
           return false;
         }}
       />

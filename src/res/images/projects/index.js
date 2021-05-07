@@ -4,4 +4,5 @@ export default {
   'Map_Boler.png': require('./Map_Boler.png'),
   'mapathon.jpg': require('./mapathon.jpg'),
   'team_image.jpg': require('./team_image2.jpg'),
+  'index_2.png': require('./index_2.png'),
 };
