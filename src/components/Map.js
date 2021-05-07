@@ -127,7 +127,19 @@ export const Map = () => {
       style={styles.map}
       pitchEnabled={false}
       compassEnabled={false}
-      onLongPress={() => {
+      onLongPress={(point) => {
+        console.log(point);
+        if (!start) {
+          setStart({
+            name: `${point.geometry.coordinates[0].toFixed(4)}, ${point.geometry.coordinates[1].toFixed(4)}`,
+            coordinates: point.geometry.coordinates,
+          });
+        } else {
+          setDestination({
+            name: `${point.geometry.coordinates[0].toFixed(4)}, ${point.geometry.coordinates[1].toFixed(4)}`,
+            coordinates: point.geometry.coordinates,
+          });
+        }
         // Do something
       }}>
       <MapboxGL.Camera bounds={bounds} />

@@ -51,7 +51,7 @@ export const SelectBike = ({navigation}) => {
   const renderCheckAction = () => (
     <TopNavigationAction
       icon={checkMarkIcon}
-      style={styles.actionButton}
+      style={bikeType ? styles.actionButton : ''}
       onPress={() => {
         if (bikeType) {
           navigation.navigate('InputBikeSize');

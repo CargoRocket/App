@@ -13,14 +13,21 @@ export const RoutingInput = ({navigation}) => {
   } = React.useContext(RoutingContext);
   const [loading, setLoading] = React.useState(false);
   const i18n = React.useContext(LanguageContext);
+  let lastAbortController = React.useRef(null);
 
   React.useEffect(() => {
     if (start && destination) {
       setLoading(true);
       const requestStart = JSON.stringify(start);
       const requestEnd = JSON.stringify(destination);
+      if (lastAbortController.current) {
+        lastAbortController.current.abort();
+      }
+      lastAbortController.current = new window.AbortController();
+      // abortController.abort();
       fetch(
         `https://api.cargorocket.de/route?from=[${start.coordinates[1]},${start.coordinates[0]}]&to=[${destination.coordinates[1]},${destination.coordinates[0]}]&access_token=${accessToken}&key=${cargorocketAPIKey}&format=mapbox`,
+        {signal: lastAbortController.current.signal},
       )
         .then((rawData) => rawData.json())
         .then((routesResponse) => {
