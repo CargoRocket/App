@@ -18,8 +18,8 @@ export const RoutingInput = ({navigation}) => {
   React.useEffect(() => {
     if (start && destination) {
       setLoading(true);
-      const requestStart = JSON.stringify(start);
-      const requestEnd = JSON.stringify(destination);
+      // const requestStart = JSON.stringify(start);
+      // const requestEnd = JSON.stringify(destination);
       if (lastAbortController.current) {
         lastAbortController.current.abort();
       }
@@ -31,30 +31,33 @@ export const RoutingInput = ({navigation}) => {
       )
         .then((rawData) => rawData.json())
         .then((routesResponse) => {
-          if (
-            requestStart === JSON.stringify(start) &&
-            requestEnd === JSON.stringify(destination)
-          ) {
-            if (routesResponse.name && routesResponse.name === 'Error') {
-              setLoading(false);
-              return;
-            }
+          // if (
+          //   requestStart === JSON.stringify(start) &&
+          //   requestEnd === JSON.stringify(destination)
+          // ) {
+          if (routesResponse.name && routesResponse.name === 'Error') {
+            console.log(routesResponse);
             setLoading(false);
-            setRoutes([
-              {
-                ...routesResponse.cargobike,
-                name: i18n.navigation.cargoBikeRoute,
-                description: i18n.navigation.cargoBikeRouteDescription,
-              },
-              {
-                ...routesResponse.bike,
-                name: i18n.navigation.classicBikeRoute,
-                description: i18n.navigation.classicBikeRouteDescription,
-              },
-            ]);
+            return;
           }
+          setLoading(false);
+          console.log(routesResponse);
+          setRoutes([
+            {
+              ...routesResponse.cargobike,
+              name: i18n.navigation.cargoBikeRoute,
+              description: i18n.navigation.cargoBikeRouteDescription,
+            },
+            {
+              ...routesResponse.bike,
+              name: i18n.navigation.classicBikeRoute,
+              description: i18n.navigation.classicBikeRouteDescription,
+            },
+          ]);
+          // }
         })
         .catch((error) => {
+          console.log(error);
           setLoading(false);
         });
     }

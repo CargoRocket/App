@@ -17,7 +17,7 @@ import {EvaIconsPack} from '@ui-kitten/eva-icons';
 import * as eva from '@eva-design/eva';
 import {default as theme} from './res/custom-theme.json';
 import {Views} from './views/Views';
-import {UiContext, SettingsContext, LanguageContext} from './context';
+import {UiContext, SettingsContext, LanguageContext, RoutingContext} from './context';
 import MMKVStorage from 'react-native-mmkv-storage';
 import {makePersistent} from './helpers/persistantState';
 import {LanguageProvider} from './helpers/LanguageProvider';
@@ -71,14 +71,22 @@ export const App = () => {
     'int',
   );
 
+  const start = React.useState(null);
+  const destination = React.useState(null);
+  const routes = React.useState(null);
+  const selectedRoute = React.useState(null);
+
   return (
     <UiContext.Provider value={{onBoarding, popupMessage, bikeSettingsShown}}>
       <SettingsContext.Provider value={{use, bikeType, bikeLength, bikeWidth}}>
         <LanguageContext.Provider value={LanguageProvider(language)}>
-          <IconRegistry icons={EvaIconsPack} />
-          <ApplicationProvider {...eva} theme={{...eva.light, ...theme}}>
-            <Views />
-          </ApplicationProvider>
+          <RoutingContext.Provider
+            value={{start, destination, routes, selectedRoute}}>
+            <IconRegistry icons={EvaIconsPack} />
+            <ApplicationProvider {...eva} theme={{...eva.light, ...theme}}>
+              <Views />
+            </ApplicationProvider>
+          </RoutingContext.Provider>
         </LanguageContext.Provider>
       </SettingsContext.Provider>
     </UiContext.Provider>

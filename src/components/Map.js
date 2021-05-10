@@ -126,6 +126,7 @@ export const Map = () => {
     <MapboxGL.MapView
       style={styles.map}
       pitchEnabled={false}
+      // styleURL={'mapbox://styles/thenewcivilian/ck6qr6ho60ypw1irod1yw005m'}
       compassEnabled={false}
       onLongPress={(point) => {
         console.log(point);

@@ -66,7 +66,10 @@
     "navigationErrorMessage": "Hier ist wohl etwas schief gelaufen... Schicke uns gerne Feedback",
 
     "locationErrorTitle": "Dein Standort konnte nicht ermittelt werden",
-    "locationErrorMessage": "Bitte überprüfe das deine Standortermittlung aktiv ist und die App die nötigen Berechtigungen besitzt"
+    "locationErrorMessage": "Bitte überprüfe das deine Standortermittlung aktiv ist und die App die nötigen Berechtigungen besitzt",
+
+    "feedbackSendTitle": "Feedback Gesendet",
+    "feedbackSendMessage": "Danke für deine Nachricht an uns! Wir werden so schnell es geht deine Hinweise in das Projekt einfließen lassen."
   },
   "project": {
     "theProject": "Das Projekt",

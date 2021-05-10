@@ -10,7 +10,6 @@
     "lint": "eslint . --ext .js,.jsx"
   },
   "dependencies": {
-    "@cargorocket/react-native-mapbox-navigation": "../MapboxNavigation/react-native-mapbox-navigation",
     "@eva-design/eva": "2.0.0",
     "@mapbox/polyline": "^1.1.1",
     "@react-native-community/masked-view": "^0.1.10",

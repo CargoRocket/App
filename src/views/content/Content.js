@@ -6,6 +6,7 @@ import {SettingsView} from './SettingsView';
 import {AppMenu} from '../../components/AppMenu';
 import {FeedbackView} from './FeedbackView';
 import {SelectBike} from '../onboarding/SelectBike';
+import {RoutingContext} from '../../context';
 import {InputBikeSize} from '../onboarding/InputBikeSize';
 
 const {Navigator, Screen} = createBottomTabNavigator();

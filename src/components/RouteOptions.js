@@ -59,13 +59,7 @@ export const RouteOptions = ({navigation}) => {
 
   const startNavigation = (route) => {
     navigation.navigate('Navigating', {
-      routeResponse: {
-        duration: route.routes[0].duration,
-        distance: route.routes[0].distance,
-        geometry: route.routes[0].geometry,
-        weight: route.routes[0].weight,
-        legs: route.routes[0].legs,
-      },
+      route: route.routes[0],
     });
   };
 
