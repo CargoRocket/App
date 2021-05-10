@@ -77,10 +77,8 @@ export const SelectBike = ({navigation}) => {
         }
         onPress={() => {
           setBikeType('delivery');
-          if (!width) {
-            setWidth(70);
-            setLength(170);
-          }
+          setWidth(70);
+          setLength(170);
         }}>
         <Lieferbike height={100} width={100} />
       </Card>
@@ -92,10 +90,8 @@ export const SelectBike = ({navigation}) => {
         }
         onPress={() => {
           setBikeType('longjohn');
-          if (!width) {
-            setWidth(80);
-            setLength(200);
-          }
+          setWidth(80);
+          setLength(200);
         }}>
         <LongJohn height={100} width={100} />
       </Card>
@@ -107,10 +103,8 @@ export const SelectBike = ({navigation}) => {
         }
         onPress={() => {
           setBikeType('longtail');
-          if (!width) {
-            setWidth(80);
-            setLength(200);
-          }
+          setWidth(80);
+          setLength(200);
         }}>
         <LongTail height={100} width={100} />
       </Card>
@@ -122,10 +116,8 @@ export const SelectBike = ({navigation}) => {
         }
         onPress={() => {
           setBikeType('heavy');
-          if (!width) {
-            setWidth(120);
-            setLength(200);
-          }
+          setWidth(120);
+          setLength(200);
         }}>
         <Schwertransporter height={100} width={100} />
       </Card>
@@ -137,10 +129,8 @@ export const SelectBike = ({navigation}) => {
         }
         onPress={() => {
           setBikeType('trike');
-          if (!width) {
-            setWidth(100);
-            setLength(200);
-          }
+          setWidth(100);
+          setLength(200);
         }}>
         <Trike height={100} width={100} />
       </Card>
