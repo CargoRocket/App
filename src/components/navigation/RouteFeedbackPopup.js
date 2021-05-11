@@ -108,9 +108,13 @@ export const RouteFeedbackPopup = ({
           style={styles.icon}
           name="pin-outline"
         />
-        <Text category="h4">How cargobike friendly is the route here?</Text>
-        <Text appearance="hint">Are there any opsticals for cargo bikes?</Text>
-        <Text style={styles.ratingTitle}>How would you rate this section?</Text>
+        <Text category="h4">
+          {i18n.routeFeedback.howBikeFriendlyIsTheWayRoute}
+        </Text>
+        <Text appearance="hint">{i18n.routeFeedback.areThereOpsticals}</Text>
+        <Text style={styles.ratingTitle}>
+          {i18n.routeFeedback.howWouldYouRate}
+        </Text>
         <View style={styles.buttonGroup}>
           <Button
             style={{...styles.button, ...styles.buttonLeft}}
@@ -146,11 +150,11 @@ export const RouteFeedbackPopup = ({
           multiline={true}
           style={styles.messageInputContainer}
           textStyle={styles.messageInput}
-          placeholder={'Why would you give this section this rating (Optional)'}
+          placeholder={i18n.routeFeedback.whyDoYouRate}
           value={message}
           onChangeText={setMessage}
         />
-        <Button onPress={sendFeedback}>Send</Button>
+        <Button onPress={sendFeedback}>{i18n.routeFeedback.send}</Button>
       </Card>
     </Modal>
   );
