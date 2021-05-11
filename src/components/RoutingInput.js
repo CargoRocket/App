@@ -18,6 +18,7 @@ export const RoutingInput = ({navigation}) => {
   React.useEffect(() => {
     if (start && destination) {
       setLoading(true);
+      setRoutes(null);
       if (lastAbortController.current) {
         lastAbortController.current.abort();
       }

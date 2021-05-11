@@ -8,7 +8,12 @@ import {
   Icon,
   Radio,
 } from '@ui-kitten/components';
-import {RoutingContext} from '../context';
+import {
+  RoutingContext,
+  SettingsContext,
+  UiContext,
+  LanguageContext,
+} from '../context';
 
 const styles = StyleSheet.create({
   tab: {
@@ -57,11 +62,30 @@ export const RouteOptions = ({navigation}) => {
     selectedRoute: [selectedRoute, setSelectedRoute],
   } = React.useContext(RoutingContext);
 
-  const startNavigation = (route) => {
-    navigation.navigate('Navigating');
-  };
+  const {
+    popupMessage: [message, setMessage],
+  } = React.useContext(UiContext);
+
+  const {
+    userLocationConsent: [userLocationConsent, setUserLocationConsent],
+  } = React.useContext(SettingsContext);
+  const i18n = React.useContext(LanguageContext);
 
   const navigationIcon = (props) => <Icon {...props} name="navigation" />;
+
+  const startNavigation = () => {
+    console.log(userLocationConsent);
+    if (!userLocationConsent) {
+      setMessage({
+        title: i18n.modals.locationConsentTitle,
+        message: i18n.modals.locationConsentMessage,
+        status: 'info',
+      });
+      setUserLocationConsent(true);
+    } else {
+      navigation.navigate('Navigating');
+    }
+  };
 
   const renderRoute = (route) => {
     const minutes = Math.round((route.routes[0].duration % 3600) / 60);
@@ -69,7 +93,7 @@ export const RouteOptions = ({navigation}) => {
 
     return (
       <View style={styles.tab}>
-        <Card style={styles.route} level="1">
+        <Card style={styles.route} level="1" onPress={() => startNavigation()}>
           <Text category="h5">{route.name} </Text>
           <Text appearance="hint">{route.description}</Text>
           <View style={styles.spacer} />
@@ -80,7 +104,7 @@ export const RouteOptions = ({navigation}) => {
           <Button
             style={styles.navigationButton}
             accessoryLeft={navigationIcon}
-            onPress={() => startNavigation(route)}
+            onPress={() => startNavigation()}
           />
         </Card>
       </View>

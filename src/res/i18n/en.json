@@ -54,10 +54,10 @@
   },
   "modals": {
     "settingsUpdatedTitle": "Bike Settings Updated",
-    "settingsUpdatedMessage": "You have successfully updated your bike settings. Now we can provide you routes to make your ride as smooth as possible! ",
+    "settingsUpdatedMessage": "You have successfully updated your bike settings. Now we can provide you routes to make your ride as smooth as possible!",
     
     "welcomeTitle": "Welcome Cyclist!",
-    "welcomeMessage": "The CargoRocket App provides you navigation and project insights. We aim to make your ride as smooth as possible!",
+    "welcomeMessage": "You have successfully setup your bike settings. Now we can provide you routes to make your ride as smooth as possible, while avoiding obstacles specifically for your bike!",
     
     "routeCompleteTitle": "Route Completed",
     "routeCompleteMessage": "You successfully finished your ride!",
@@ -69,7 +69,10 @@
     "locationErrorMessage": "Please check your location service is enabled and the correct access rights have been provided for this application.",
 
     "feedbackSendTitle": "Feedback Sent",
-    "feedbackSendMessage": "Thank you for your support! We will try to implement your suggestions as fast as possible."
+    "feedbackSendMessage": "Thank you for your support! We will try to implement your suggestions as fast as possible.",
+
+    "locationConsentTitle": "Start Navigation",
+    "locationConsentMessage": "For Turn-to-Turn Navigation we make use of your current location. This requires the location service to be active in the background. Please see our Privacy Policy (Application Settings > Privacy Policy) for further information. To start the navigation just press the navigation button again."
   },
   "project": {
     "theProject": "The Project",
@@ -101,5 +104,12 @@
         "uri": "https://cargorocket.de/blog"
       }
     ]
+  },
+  "routeFeedback": {
+    "howBikeFriendlyIsTheWayRoute": "How cargobike friendly is the way here?",
+    "areThereOpsticals": "Are there any opsticals for cargo bikes?",
+    "howWouldYouRate": "How would you rate this section?",
+    "whyDoYouRate": "Why do you give this section this rating? (Optional)",
+    "send": "Send"
   }
 }

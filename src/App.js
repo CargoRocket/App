@@ -71,6 +71,13 @@ export const App = () => {
     'int',
   );
 
+  const userLocationConsent = makePersistent(
+    React.useState(MMKV.getBool('userLocationConsent')),
+    'userLocationConsent',
+    MMKV,
+    'bool',
+  );
+
   const start = React.useState(null);
   const destination = React.useState(null);
   const routes = React.useState(null);
@@ -78,7 +85,7 @@ export const App = () => {
 
   return (
     <UiContext.Provider value={{onBoarding, popupMessage, bikeSettingsShown}}>
-      <SettingsContext.Provider value={{use, bikeType, bikeLength, bikeWidth}}>
+      <SettingsContext.Provider value={{use, bikeType, bikeLength, bikeWidth, userLocationConsent}}>
         <LanguageContext.Provider value={LanguageProvider(language)}>
           <RoutingContext.Provider
             value={{start, destination, routes, selectedRoute}}>

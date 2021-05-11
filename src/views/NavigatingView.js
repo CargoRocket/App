@@ -8,6 +8,7 @@ import polyline from '@mapbox/polyline';
 import {RoutingContext, UiContext, LanguageContext} from '../context';
 import {accessToken, cargorocketAPIKey} from '../res/config';
 import RNLocation from 'react-native-location';
+import {RouteFeedbackPopup} from '../components/navigation/RouteFeedbackPopup';
 import {NavigationHeader} from '../components/navigation/NavigationHeader';
 
 const styles = StyleSheet.create({
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
     margin: 10,
     height: 80,
     width: 80,
-    backgroundColor: '#F7F9FC',
+    // backgroundColor: '#F7F9FC',
     borderRadius: 80,
   },
   marker: {
@@ -67,6 +68,9 @@ const styles = StyleSheet.create({
 export const NavigatingView = ({navigation}) => {
   const rerouteingMargin = 0.5;
   const {
+    popupMessage: [popupMessage, setPopupMessage],
+  } = React.useContext(UiContext);
+  const {
     destination: [destination, setDestination],
     start: [start, setStart],
     routes: [routes, setRoutes],
@@ -76,9 +80,7 @@ export const NavigatingView = ({navigation}) => {
   const route = routes[selectedRoute].routes[0];
   const legs = route.legs;
 
-  const {
-    popupMessage: [popupMessage, setPopupMessage],
-  } = React.useContext(UiContext);
+  const [feedbackShown, setFeedbackShown] = React.useState(false);
 
   const [currentStepId, setCurrentStepId] = React.useState(0);
   const [currentLocation, setCurrentLocation] = React.useState(start[0]);
@@ -259,11 +261,11 @@ export const NavigatingView = ({navigation}) => {
   };
 
   const renderStartMarker = () => {
-    if (currentLocationOnRoute) {
+    if (currentLocation) {
       return (
         <MapboxGL.PointAnnotation
           id="start-marker"
-          coordinate={currentLocationOnRoute}
+          coordinate={[currentLocation.longitude, currentLocation.latitude]}
           onDragEnd={(point) => {
             setStart({
               name: `${point.geometry.coordinates[0].toFixed(4)},
@@ -330,6 +332,11 @@ export const NavigatingView = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.view}>
+      <RouteFeedbackPopup
+        feedbackShown={feedbackShown}
+        setFeedbackShown={setFeedbackShown}
+        currentLocation={currentLocation}
+      />
       <MapboxGL.MapView
         style={styles.map}
         // styleURL={'mapbox://styles/thenewcivilian/ck6qr6ho60ypw1irod1yw005m'}
@@ -351,7 +358,12 @@ export const NavigatingView = ({navigation}) => {
         currentStepId={currentStepId}
       />
       {renderBottomBox()}
-      <Button appearance='outline' style={styles.feedbackButton} accessoryLeft={feedbackIcon} />
+      <Button
+        // appearance="outline"
+        onPress={() => setFeedbackShown(true)}
+        style={styles.feedbackButton}
+        accessoryLeft={feedbackIcon}
+      />
     </SafeAreaView>
   );
 };

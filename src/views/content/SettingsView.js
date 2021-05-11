@@ -108,7 +108,7 @@ export const SettingsView = ({navigation}) => {
           i18n.settings.privacyPolicySubtitle,
           'ProjectWebView',
           {
-            html: PrivacyPolicyHtml.html,
+            uri: 'https://cargorocket.de/app_privacy_policy',
           },
         )}
         <Divider />
