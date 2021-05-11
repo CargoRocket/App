@@ -18,23 +18,16 @@ export const RoutingInput = ({navigation}) => {
   React.useEffect(() => {
     if (start && destination) {
       setLoading(true);
-      // const requestStart = JSON.stringify(start);
-      // const requestEnd = JSON.stringify(destination);
       if (lastAbortController.current) {
         lastAbortController.current.abort();
       }
       lastAbortController.current = new window.AbortController();
-      // abortController.abort();
       fetch(
         `https://api.cargorocket.de/route?from=[${start.coordinates[1]},${start.coordinates[0]}]&to=[${destination.coordinates[1]},${destination.coordinates[0]}]&access_token=${accessToken}&key=${cargorocketAPIKey}&format=mapbox`,
         {signal: lastAbortController.current.signal},
       )
         .then((rawData) => rawData.json())
         .then((routesResponse) => {
-          // if (
-          //   requestStart === JSON.stringify(start) &&
-          //   requestEnd === JSON.stringify(destination)
-          // ) {
           if (routesResponse.name && routesResponse.name === 'Error') {
             console.log(routesResponse);
             setLoading(false);
@@ -54,7 +47,6 @@ export const RoutingInput = ({navigation}) => {
               description: i18n.navigation.classicBikeRouteDescription,
             },
           ]);
-          // }
         })
         .catch((error) => {
           console.log(error);

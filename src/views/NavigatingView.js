@@ -1,25 +1,14 @@
 import * as React from 'react';
 import {StyleSheet, View, SafeAreaView} from 'react-native';
-import {
-  Layout,
-  Text,
-  Icon,
-  Button,
-  Divider,
-  Spinner,
-} from '@ui-kitten/components';
+import {Layout, Text, Icon, Button} from '@ui-kitten/components';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import {default as theme} from '../res/custom-theme.json';
 import {getClosestPointOnLines, distance} from '../helpers/geometry';
 import polyline from '@mapbox/polyline';
-// import Tts from 'react-native-tts';
-// import MapboxNavigation from '@cargorocket/react-native-mapbox-navigation';
-import {RoutingContext} from '../context';
+import {RoutingContext, UiContext, LanguageContext} from '../context';
+import {accessToken, cargorocketAPIKey} from '../res/config';
 import RNLocation from 'react-native-location';
-// import {accessToken, cargorocketAPIKey} from '../res/config';
-
-// Tts.setDefaultLanguage('de-DE');
-// Tts.setDefaultVoice('com.apple.ttsbundle.Daniel-compact');
+import {NavigationHeader} from '../components/navigation/NavigationHeader';
 
 const styles = StyleSheet.create({
   view: {
@@ -33,41 +22,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: -2,
   },
-  topBox: {
-    position: 'relative',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    height: 80,
-    margin: 10,
-    width: '90%',
-    borderRadius: 10,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: 'rgba(143, 155, 179, 0.24)',
-  },
-  divider: {
-    height: '100%',
-    width: 1,
-  },
-  message: {
-    flex: 1,
-    padding: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  messageText: {
-    fontWeight: 'bold',
-  },
-  spinner: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  close: {
-    width: 30,
-  },
   bottomBox: {
     position: 'absolute',
-    width: 120,
+    minWidth: 120,
     height: 80,
     margin: 10,
     bottom: 30,
@@ -89,9 +46,8 @@ const styles = StyleSheet.create({
     margin: 10,
     height: 80,
     width: 80,
+    backgroundColor: '#F7F9FC',
     borderRadius: 80,
-    borderWidth: 1,
-    borderColor: 'rgba(143, 155, 179, 0.24)',
   },
   marker: {
     height: 30,
@@ -108,47 +64,76 @@ const styles = StyleSheet.create({
   },
 });
 
-export const NavigatingView = ({navigation, route}) => {
+export const NavigatingView = ({navigation}) => {
   const rerouteingMargin = 0.5;
   const {
     destination: [destination, setDestination],
     start: [start, setStart],
+    routes: [routes, setRoutes],
+    selectedRoute: [selectedRoute, setSelectedRoute],
   } = React.useContext(RoutingContext);
+  const i18n = React.useContext(LanguageContext);
+  const route = routes[selectedRoute].routes[0];
+  const legs = route.legs;
+
+  const {
+    popupMessage: [popupMessage, setPopupMessage],
+  } = React.useContext(UiContext);
 
   const [currentStepId, setCurrentStepId] = React.useState(0);
-  const [currentLocation, setCurrentLocation] = React.useState(start);
-  const [rerouting, setRerouting] = React.useState(false);
+  const [currentLocation, setCurrentLocation] = React.useState(start[0]);
+  const [currentLegProgress, setCurrentLegProgress] = React.useState(0);
   const [currentLocationOnRoute, setCurrentLocationOnRoute] = React.useState(
     start.coordinates,
   );
+
+  const [rerouting, setRerouting] = React.useState(false);
   const [routeGeometry, setRouteGeometry] = React.useState(
-    polyline.toGeoJSON(route.params.route.geometry, 6),
+    polyline.toGeoJSON(route.geometry, 6),
   );
 
-  const legs = route.params.route.legs;
   let locationSubscription = React.useRef(null);
 
   const startRerouting = () => {
-    // setRerouting(true);
+    setRerouting(true);
+    fetch(
+      `https://api.cargorocket.de/route?from=[${currentLocation.latitude},${currentLocation.longitude}]&to=[${destination.coordinates[1]},${destination.coordinates[0]}]&access_token=${accessToken}&key=${cargorocketAPIKey}&format=mapbox`,
+    )
+      .then((rawData) => rawData.json())
+      .then((routesResponse) => {
+        if ((routesResponse.name && routesResponse.name === 'Error') || routesResponse.status === 400) {
+          setRerouting(false);
+          return;
+        }
+        setRoutes([
+          {
+            ...routesResponse.cargobike,
+            name: i18n.navigation.cargoBikeRoute,
+            description: i18n.navigation.cargoBikeRouteDescription,
+          },
+          {
+            ...routesResponse.bike,
+            name: i18n.navigation.classicBikeRoute,
+            description: i18n.navigation.classicBikeRouteDescription,
+          },
+        ]);
+        setRerouting(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setRerouting(false);
+      });
   };
 
-  const directionIcon = () => {
-    const directionIcons = {
-      'slight right': 'diagonal-arrow-right-up-outline',
-      'slight left': 'diagonal-arrow-left-up-outline',
-      right: 'corner-up-right-outline',
-      left: 'corner-up-left-outline',
-      'sharp right': 'arrow-forward-outline',
-      'sharp left': 'arrow-back-outline',
-      straight: 'arrow-upward-outline',
-    };
-    const icon = directionIcons[legs[0].steps[currentStepId].maneuver.modifier];
-
-    if (!icon) {
-      return 'move-outline';
+  // key can be duration or distance
+  const calculateRemaning = (key) => {
+    let remaning = route[key];
+    const currentStepRemaning = route.legs[0].steps[currentStepId][key];
+    for (let n = 0; n < currentStepId; n++) {
+      remaning -= route.legs[0].steps[n][key];
     }
-    console.log(icon);
-    return icon;
+    remaning -= currentStepRemaning * currentLegProgress;
+    return remaning;
   };
 
   React.useEffect(() => {
@@ -161,7 +146,7 @@ export const NavigatingView = ({navigation, route}) => {
       if (granted) {
         locationSubscription.current = RNLocation.subscribeToLocationUpdates(
           (locations) => {
-            setCurrentLocation(locations);
+            setCurrentLocation(locations[0]);
           },
         );
       }
@@ -173,42 +158,66 @@ export const NavigatingView = ({navigation, route}) => {
     };
   }, []);
 
+  const matchPointOntoLeg = (stepId) => {
+    const currentLeg = legs[0].steps[stepId];
+    const stepGeometry = polyline.toGeoJSON(currentLeg.geometry, 6);
+    const stepCoordinates = stepGeometry.coordinates.map((coordinate) => ({
+      x: coordinate[0],
+      y: coordinate[1],
+    }));
+    return getClosestPointOnLines(
+      {x: currentLocation.longitude, y: currentLocation.latitude},
+      stepCoordinates,
+    );
+  };
+
   React.useEffect(() => {
-    if (currentLocation && currentLocation[0]) {
-      const currentLeg = legs[0].steps[currentStepId];
-      const stepGeometry = polyline.toGeoJSON(currentLeg.geometry, 6);
-      const stepCoordinates = stepGeometry.coordinates.map((coordinate) => ({x: coordinate[0], y: coordinate[1]}));
-      const currentStepPoint = getClosestPointOnLines({x: currentLocation[0].longitude, y: currentLocation[0].latitude}, stepCoordinates);
-      const distanceToCurrentStepPoint = distance(currentStepPoint.y, currentStepPoint.x, currentLocation[0].latitude, currentLocation[0].longitude);
+    if (currentLocation) {
+      const currentStepPoint = matchPointOntoLeg(currentStepId);
+      const distanceToCurrentStepPoint = distance(
+        currentStepPoint.y,
+        currentStepPoint.x,
+        currentLocation.latitude,
+        currentLocation.longitude,
+      );
 
       if (currentStepId < legs[0].steps.length) {
-        const nextStep = legs[0].steps[currentStepId + 1];
-        const nextStepGeometry = polyline.toGeoJSON(nextStep.geometry, 6);
-        const nextStepCoordinates = nextStepGeometry.coordinates.map((coordinate) => ({x: coordinate[0], y: coordinate[1]}));
-        const nextStepPoint = getClosestPointOnLines({x: currentLocation[0].longitude, y: currentLocation[0].latitude}, nextStepCoordinates);
-        const distanceToNextStepPoint = distance(nextStepPoint.y, nextStepPoint.x, currentLocation[0].latitude, currentLocation[0].longitude);
+        const nextStepPoint = matchPointOntoLeg(currentStepId + 1);
+        const distanceToNextStepPoint = distance(
+          nextStepPoint.y,
+          nextStepPoint.x,
+          currentLocation.latitude,
+          currentLocation.longitude,
+        );
 
         if (distanceToCurrentStepPoint > distanceToNextStepPoint) {
           if (distanceToNextStepPoint > rerouteingMargin) {
-            console.log('REROUTING');
+            // REROUTING
             startRerouting();
             return;
           }
           setCurrentStepId(currentStepId + 1);
-          console.log(nextStepPoint);
           setCurrentLocationOnRoute([nextStepPoint.x, nextStepPoint.y]);
+          setCurrentLegProgress(nextStepPoint.fTo);
         } else {
           if (distanceToCurrentStepPoint > rerouteingMargin) {
-            console.log('REROUTING');
+            // REROUTING
             startRerouting();
             return;
           }
-          console.log(currentStepPoint);
           setCurrentLocationOnRoute([currentStepPoint.x, currentStepPoint.y]);
+          setCurrentLegProgress(currentStepPoint.fTo);
         }
       } else {
         // Last Step
-        console.log('LAST STEP');
+        if (distanceToCurrentStepPoint > rerouteingMargin) {
+          navigation.goBack();
+          setPopupMessage({
+            title: i18n.modals.routeCompleteTitle,
+            message: i18n.modals.routeCompleteMessage,
+            status: 'success',
+          });
+        }
       }
     }
   }, [currentLocation, routeGeometry]);
@@ -235,7 +244,7 @@ export const NavigatingView = ({navigation, route}) => {
         };
   };
   const renderRoute = (index) => {
-    const geometry = route.params.route.geometry;
+    const geometry = route.geometry;
     return (
       <MapboxGL.ShapeSource
         id={`cargobike-route-source-${index}`}
@@ -250,14 +259,12 @@ export const NavigatingView = ({navigation, route}) => {
   };
 
   const renderStartMarker = () => {
-    console.log(currentLocationOnRoute);
     if (currentLocationOnRoute) {
       return (
         <MapboxGL.PointAnnotation
           id="start-marker"
           coordinate={currentLocationOnRoute}
           onDragEnd={(point) => {
-            // const lat = Math.round(point.geometry.coordinates[0], 2);
             setStart({
               name: `${point.geometry.coordinates[0].toFixed(4)},
                 ${point.geometry.coordinates[1].toFixed(4)}`,
@@ -298,9 +305,28 @@ export const NavigatingView = ({navigation, route}) => {
     }
   };
 
-  const closeIcon = (props) => <Icon {...props} name="close-outline" />;
+  const feedbackIcon = (props) => (
+    <Icon {...props} height={40} width={40} name="star-outline" />
+  );
 
-  const feedbackIcon = (props) => <Icon {...props} name="alert-triangle-outline" />;
+  const renderBottomBox = () => {
+    const remaningDuration = calculateRemaning('duration');
+    const remaningDistance = calculateRemaning('distance');
+
+    const minutes = Math.round((remaningDuration % 3600) / 60);
+    const hours = Math.floor(remaningDuration / 3600);
+
+    return (
+      <Layout style={styles.bottomBox}>
+        <Text style={styles.minutes}>
+          {hours ? `${hours}h ${minutes} min` : `${minutes} min`}
+        </Text>
+        <Text style={styles.distance}>
+          {`${(remaningDistance / 1000).toFixed(2)} km`}
+        </Text>
+      </Layout>
+    );
+  };
 
   return (
     <SafeAreaView style={styles.view}>
@@ -318,39 +344,14 @@ export const NavigatingView = ({navigation, route}) => {
         {renderStartMarker()}
         {renderDestinationMarker()}
       </MapboxGL.MapView>
-      <Layout style={styles.topBox} level='1'>
-        <Button
-          style={styles.close}
-          appearance="ghost"
-          accessoryRight={closeIcon}
-          onPress={() => navigation.goBack()}
-        />
-        <Divider style={styles.divider} />
-        <View style={styles.message}>
-          {rerouting ? (
-            <Text style={styles.messageText}>Rerouting...</Text>
-          ) : (
-            <Text style={styles.messageText}>
-              {legs[0].steps[currentStepId].maneuver.instruction}
-            </Text>
-          )}
-        </View>
-        <Divider style={styles.divider} />
-        {rerouting ? (
-          <View style={styles.spinner} height={'100%'} width={40}>
-            <Spinner />
-          </View>
-        ) : (
-          <Icon style={styles.direction} name={directionIcon()} height={'100%'} width={40} fill="#000" />
-        )}
-      </Layout>
-
-      <Layout style={styles.bottomBox}>
-        <Text style={styles.minutes}>42min</Text>
-        <Text style={styles.distance}>100km</Text>
-      </Layout>
-
-      <Button style={styles.feedbackButton} accessoryLeft={feedbackIcon}></Button>
+      <NavigationHeader
+        navigation={navigation}
+        rerouting={rerouting}
+        legs={legs}
+        currentStepId={currentStepId}
+      />
+      {renderBottomBox()}
+      <Button appearance='outline' style={styles.feedbackButton} accessoryLeft={feedbackIcon} />
     </SafeAreaView>
   );
 };

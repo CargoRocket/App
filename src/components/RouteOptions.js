@@ -58,9 +58,7 @@ export const RouteOptions = ({navigation}) => {
   } = React.useContext(RoutingContext);
 
   const startNavigation = (route) => {
-    navigation.navigate('Navigating', {
-      route: route.routes[0],
-    });
+    navigation.navigate('Navigating');
   };
 
   const navigationIcon = (props) => <Icon {...props} name="navigation" />;
