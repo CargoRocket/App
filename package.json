@@ -28,6 +28,7 @@
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^2.18.1",
     "react-native-svg": "^12.1.0",
+    "react-native-tts": "^4.1.0",
     "react-native-webview": "^11.3.1"
   },
   "devDependencies": {

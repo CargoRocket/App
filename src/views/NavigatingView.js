@@ -10,6 +10,7 @@ import {accessToken, cargorocketAPIKey} from '../res/config';
 import RNLocation from 'react-native-location';
 import {RouteFeedbackPopup} from '../components/navigation/RouteFeedbackPopup';
 import {NavigationHeader} from '../components/navigation/NavigationHeader';
+import Tts from "react-native-tts";
 
 const styles = StyleSheet.create({
   view: {
@@ -95,6 +96,7 @@ export const NavigatingView = ({navigation}) => {
   );
 
   let locationSubscription = React.useRef(null);
+  Tts.speak('Hello, world!');
 
   const startRerouting = () => {
     setRerouting(true);

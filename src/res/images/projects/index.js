@@ -5,4 +5,5 @@ export default {
   'mapathon.jpg': require('./mapathon.jpg'),
   'team_image.jpg': require('./team_image2.jpg'),
   'index_2.png': require('./index_2.png'),
+  'cargo_bike_girl.png': require('./cargo_bike_girl.png'),
 };
