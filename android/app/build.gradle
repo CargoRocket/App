@@ -193,6 +193,7 @@ dependencies {
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation 'androidx.multidex:multidex:2.0.1'
+    compile project(':react-native-keep-awake')
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 

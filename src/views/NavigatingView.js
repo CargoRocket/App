@@ -13,6 +13,7 @@ import {NavigationHeader} from '../components/navigation/NavigationHeader';
 import Tts from 'react-native-tts';
 import CenterIcon from '../res/images/icons/crosshairs-gps.svg';
 import {deviceLanguage} from '../helpers/LanguageProvider';
+import KeepAwake from 'react-native-keep-awake';
 
 const styles = StyleSheet.create({
   view: {
@@ -373,6 +374,7 @@ export const NavigatingView = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.view}>
+      <KeepAwake />
       <RouteFeedbackPopup
         feedbackShown={feedbackShown}
         setFeedbackShown={setFeedbackShown}
