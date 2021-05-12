@@ -49,8 +49,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   utilButton: {
-    height: 50,
-    width: 50,
+    height: 60,
+    width: 60,
     margin: 5,
     borderRadius: 50,
     backgroundColor: '#FFFFFF',
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
 Tts.setDefaultLanguage(deviceLanguage);
 RNLocation.configure({
   distanceFilter: 0,
-  interval: 500,
+  // interval: 500,
 });
 
 export const NavigatingView = ({navigation}) => {
@@ -104,7 +104,7 @@ export const NavigatingView = ({navigation}) => {
   const [feedbackShown, setFeedbackShown] = React.useState(false);
 
   const [currentStepId, setCurrentStepId] = React.useState(0);
-  const [currentLocation, setCurrentLocation] = React.useState(start[0]);
+  const [currentLocation, setCurrentLocation] = React.useState({longitude: start.coordinates[0], latitude: start.coordinates[1]});
   const [currentLegProgress, setCurrentLegProgress] = React.useState(0);
   const [currentLocationOnRoute, setCurrentLocationOnRoute] = React.useState(
     start.coordinates,
@@ -112,6 +112,7 @@ export const NavigatingView = ({navigation}) => {
 
   const [rerouting, setRerouting] = React.useState(false);
   const [voiceInstructionActive, setVoiceInstructionActive] = React.useState(false);
+  const [followUser, setFollowUser] = React.useState(true);
   const [routeGeometry, setRouteGeometry] = React.useState(
     polyline.toGeoJSON(route.geometry, 6),
   );
@@ -126,7 +127,10 @@ export const NavigatingView = ({navigation}) => {
     )
       .then((rawData) => rawData.json())
       .then((routesResponse) => {
-        if ((routesResponse.name && routesResponse.name === 'Error') || routesResponse.status === 400) {
+        if (
+          (routesResponse.name && routesResponse.name === 'Error') ||
+          routesResponse.status === 400
+        ) {
           setRerouting(false);
           return;
         }
@@ -198,10 +202,6 @@ export const NavigatingView = ({navigation}) => {
 
   const readVoiceInstructions = (instructions) => {
     Tts.speak(instructions[0].announcement);
-    // instructions.forEach((instruction) => {
-    //   console.log(instruction);
-    //   Tts.speak(instruction.announcement);
-    // });
   };
 
   React.useEffect(() => {
@@ -260,24 +260,6 @@ export const NavigatingView = ({navigation}) => {
     }
   }, [currentLocation, routeGeometry]);
 
-  const bounds = () => {
-    const currentLeg = legs[0].steps[currentStepId];
-    const stepGeometry = polyline.toGeoJSON(currentLeg.geometry, 6);
-    return stepGeometry && stepGeometry.coordinates
-      ? {
-          ne: stepGeometry.coordinates[0],
-          sw: stepGeometry.coordinates[stepGeometry.coordinates.length - 1],
-          padding: 150,
-        }
-      : {
-          ne: [11.106090200587593, 46.94990650185683],
-          sw: [9.595923969628181, 55.010052465795454],
-          paddingTop: 150,
-          paddingLeft: 40,
-          paddingRight: 40,
-          paddingBottom: 40,
-        };
-  };
   const renderRoute = (index) => {
     const geometry = route.geometry;
     return (
@@ -363,7 +345,16 @@ export const NavigatingView = ({navigation}) => {
     );
   };
 
-  const centerIcon = (props) => <CenterIcon {...props} fill="#2E3A59" />;
+  const centerIcon = (props) => (
+    <CenterIcon
+      {...props}
+      fill={followUser ? theme['color-info-500'] : '#2E3A59'}
+      onPress={() => {
+        console.log('pressed2');
+        setFollowUser(true);
+      }}
+    />
+  );
 
   const voiceInstructionIcon = (props) => (
     <Icon
@@ -384,11 +375,21 @@ export const NavigatingView = ({navigation}) => {
         style={styles.map}
         // styleURL={'mapbox://styles/thenewcivilian/ck6qr6ho60ypw1irod1yw005m'}
         pitchEnabled={false}
+        onRegionWillChange={(value) => {
+          if (value.properties.isUserInteraction) {
+            setFollowUser(false);
+          }
+        }}
         compassEnabled={false}>
         <MapboxGL.Camera
           pitch={400}
+          centerCoordinate={
+            followUser
+              ? [currentLocation.longitude, currentLocation.latitude]
+              : undefined
+          }
+          zoomLevel={17}
           heading={legs[0].steps[currentStepId].maneuver.bearing_after}
-          bounds={bounds()}
           ref={mapCamera}
         />
         {renderRoute()}
@@ -430,13 +431,8 @@ export const NavigatingView = ({navigation}) => {
           status="basic"
           //appearance="outline"
           onPress={() => {
-            const currentLeg = legs[0].steps[currentStepId];
-            const stepGeometry = polyline.toGeoJSON(currentLeg.geometry, 6);
-            mapCamera?.current.fitBounds(
-              stepGeometry.coordinates[0],
-              stepGeometry.coordinates[stepGeometry.coordinates.length - 1],
-              150,
-            );
+            console.log('pressed');
+            setFollowUser(true);
           }}
           style={styles.utilButton}
           accessoryLeft={centerIcon}
