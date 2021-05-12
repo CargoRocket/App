@@ -11,13 +11,17 @@
  */
 
 import React from 'react';
-import {Platform, NativeModules} from 'react-native';
 import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
 import {EvaIconsPack} from '@ui-kitten/eva-icons';
 import * as eva from '@eva-design/eva';
 import {default as theme} from './res/custom-theme.json';
 import {Views} from './views/Views';
-import {UiContext, SettingsContext, LanguageContext, RoutingContext} from './context';
+import {
+  UiContext,
+  SettingsContext,
+  LanguageContext,
+  RoutingContext,
+} from './context';
 import MMKVStorage from 'react-native-mmkv-storage';
 import {makePersistent} from './helpers/persistantState';
 import {LanguageProvider} from './helpers/LanguageProvider';
@@ -29,16 +33,9 @@ import {LanguageProvider} from './helpers/LanguageProvider';
 
 export const App = () => {
   const MMKV = new MMKVStorage.Loader().initialize();
-
-  const deviceLanguage =
-    Platform.OS === 'ios'
-      ? NativeModules.SettingsManager.settings.AppleLocale ||
-        NativeModules.SettingsManager.settings.AppleLanguages[0] //iOS 13
-      : NativeModules.I18nManager.localeIdentifier;
   // Setting up UI Context
   const popupMessage = React.useState(null);
   const bikeSettingsShown = React.useState(false);
-  const [language, setLanguage] = React.useState(deviceLanguage.slice(0, 2));
   const onBoarding = makePersistent(
     React.useState(MMKV.getBool('isOnBoarded')),
     'isOnBoarded',
@@ -86,7 +83,7 @@ export const App = () => {
   return (
     <UiContext.Provider value={{onBoarding, popupMessage, bikeSettingsShown}}>
       <SettingsContext.Provider value={{use, bikeType, bikeLength, bikeWidth, userLocationConsent}}>
-        <LanguageContext.Provider value={LanguageProvider(language)}>
+        <LanguageContext.Provider value={LanguageProvider()}>
           <RoutingContext.Provider
             value={{start, destination, routes, selectedRoute}}>
             <IconRegistry icons={EvaIconsPack} />

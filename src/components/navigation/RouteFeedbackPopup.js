@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, ScrollView} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Card, Text, Icon, Modal, Button, Input} from '@ui-kitten/components';
 import {UiContext, LanguageContext} from '../../context';
 import {cargorocketAPIKey} from '../../res/config';

@@ -60,7 +60,10 @@ export const NavigationHeader = ({
       'sharp left': 'arrow-back-outline',
       straight: 'arrow-upward-outline',
     };
-    const icon = directionIcons[legs[0].steps[currentStepId].maneuver.modifier];
+    const icon =
+      directionIcons[
+        legs[0].steps[currentStepId].bannerInstructions[0].primary.modifier
+      ];
 
     if (!icon) {
       return 'move-outline';
@@ -84,7 +87,7 @@ export const NavigationHeader = ({
           <Text style={styles.messageText}>Rerouting...</Text>
         ) : (
           <Text style={styles.messageText}>
-            {legs[0].steps[currentStepId].maneuver.instruction}
+            {legs[0].steps[currentStepId].bannerInstructions[0].primary.text}
           </Text>
         )}
       </View>

@@ -4,6 +4,7 @@ import {StyleSheet, View} from 'react-native';
 import {LocationSelect} from './LocationSelection';
 import {RoutingContext, LanguageContext} from '../../src/context';
 import {accessToken, cargorocketAPIKey} from '../res/config';
+import {deviceLanguage} from '../helpers/LanguageProvider';
 
 export const RoutingInput = ({navigation}) => {
   const {
@@ -24,7 +25,7 @@ export const RoutingInput = ({navigation}) => {
       }
       lastAbortController.current = new window.AbortController();
       fetch(
-        `https://api.cargorocket.de/route?from=[${start.coordinates[1]},${start.coordinates[0]}]&to=[${destination.coordinates[1]},${destination.coordinates[0]}]&access_token=${accessToken}&key=${cargorocketAPIKey}&format=mapbox`,
+        `https://api.cargorocket.de/route?from=[${start.coordinates[1]},${start.coordinates[0]}]&to=[${destination.coordinates[1]},${destination.coordinates[0]}]&access_token=${accessToken}&key=${cargorocketAPIKey}&format=mapbox&lang=${deviceLanguage.slice(0,2)}`,
         {signal: lastAbortController.current.signal},
       )
         .then((rawData) => rawData.json())

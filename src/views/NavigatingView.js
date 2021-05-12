@@ -10,7 +10,9 @@ import {accessToken, cargorocketAPIKey} from '../res/config';
 import RNLocation from 'react-native-location';
 import {RouteFeedbackPopup} from '../components/navigation/RouteFeedbackPopup';
 import {NavigationHeader} from '../components/navigation/NavigationHeader';
-import Tts from "react-native-tts";
+import Tts from 'react-native-tts';
+import CenterIcon from '../res/images/icons/crosshairs-gps.svg';
+import {deviceLanguage} from '../helpers/LanguageProvider';
 
 const styles = StyleSheet.create({
   view: {
@@ -38,16 +40,27 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(143, 155, 179, 0.24)',
   },
-  minutes: {
-    fontSize: 30,
-  },
-  feedbackButton: {
+  buttonPane: {
     position: 'absolute',
     bottom: 30,
     right: 10,
     margin: 10,
+    alignItems: 'center',
+  },
+  utilButton: {
+    height: 50,
+    width: 50,
+    margin: 5,
+    borderRadius: 50,
+    backgroundColor: '#FFFFFF',
+  },
+  minutes: {
+    fontSize: 30,
+  },
+  feedbackButton: {
     height: 80,
     width: 80,
+    marginTop: 5,
     // backgroundColor: '#F7F9FC',
     borderRadius: 80,
   },
@@ -64,6 +77,12 @@ const styles = StyleSheet.create({
   markerDestination: {
     backgroundColor: theme['color-warning-300'],
   },
+});
+
+Tts.setDefaultLanguage(deviceLanguage);
+RNLocation.configure({
+  distanceFilter: 0,
+  interval: 500,
 });
 
 export const NavigatingView = ({navigation}) => {
@@ -91,17 +110,18 @@ export const NavigatingView = ({navigation}) => {
   );
 
   const [rerouting, setRerouting] = React.useState(false);
+  const [voiceInstructionActive, setVoiceInstructionActive] = React.useState(false);
   const [routeGeometry, setRouteGeometry] = React.useState(
     polyline.toGeoJSON(route.geometry, 6),
   );
 
-  let locationSubscription = React.useRef(null);
-  Tts.speak('Hello, world!');
+  const locationSubscription = React.useRef(null);
+  const mapCamera = React.useRef(null);
 
   const startRerouting = () => {
     setRerouting(true);
     fetch(
-      `https://api.cargorocket.de/route?from=[${currentLocation.latitude},${currentLocation.longitude}]&to=[${destination.coordinates[1]},${destination.coordinates[0]}]&access_token=${accessToken}&key=${cargorocketAPIKey}&format=mapbox`,
+      `https://api.cargorocket.de/route?from=[${currentLocation.latitude},${currentLocation.longitude}]&to=[${destination.coordinates[1]},${destination.coordinates[0]}]&access_token=${accessToken}&key=${cargorocketAPIKey}&format=mapbox&lang=${deviceLanguage.slice(0,2)}`,
     )
       .then((rawData) => rawData.json())
       .then((routesResponse) => {
@@ -175,6 +195,14 @@ export const NavigatingView = ({navigation}) => {
     );
   };
 
+  const readVoiceInstructions = (instructions) => {
+    Tts.speak(instructions[0].announcement);
+    // instructions.forEach((instruction) => {
+    //   console.log(instruction);
+    //   Tts.speak(instruction.announcement);
+    // });
+  };
+
   React.useEffect(() => {
     if (currentLocation) {
       const currentStepPoint = matchPointOntoLeg(currentStepId);
@@ -203,6 +231,11 @@ export const NavigatingView = ({navigation}) => {
           setCurrentStepId(currentStepId + 1);
           setCurrentLocationOnRoute([nextStepPoint.x, nextStepPoint.y]);
           setCurrentLegProgress(nextStepPoint.fTo);
+          if (voiceInstructionActive) {
+            readVoiceInstructions(
+              legs[0].steps[currentStepId].voiceInstructions,
+            );
+          }
         } else {
           if (distanceToCurrentStepPoint > rerouteingMargin) {
             // REROUTING
@@ -233,10 +266,7 @@ export const NavigatingView = ({navigation}) => {
       ? {
           ne: stepGeometry.coordinates[0],
           sw: stepGeometry.coordinates[stepGeometry.coordinates.length - 1],
-          paddingTop: 80,
-          paddingLeft: 40,
-          paddingRight: 40,
-          paddingBottom: 40,
+          padding: 150,
         }
       : {
           ne: [11.106090200587593, 46.94990650185683],
@@ -332,6 +362,15 @@ export const NavigatingView = ({navigation}) => {
     );
   };
 
+  const centerIcon = (props) => <CenterIcon {...props} fill="#2E3A59" />;
+
+  const voiceInstructionIcon = (props) => (
+    <Icon
+      {...props}
+      name={voiceInstructionActive ? 'volume-up-outline' : 'volume-off-outline'}
+    />
+  );
+
   return (
     <SafeAreaView style={styles.view}>
       <RouteFeedbackPopup
@@ -348,6 +387,7 @@ export const NavigatingView = ({navigation}) => {
           pitch={400}
           heading={legs[0].steps[currentStepId].maneuver.bearing_after}
           bounds={bounds()}
+          ref={mapCamera}
         />
         {renderRoute()}
         {renderStartMarker()}
@@ -360,12 +400,52 @@ export const NavigatingView = ({navigation}) => {
         currentStepId={currentStepId}
       />
       {renderBottomBox()}
-      <Button
-        // appearance="outline"
-        onPress={() => setFeedbackShown(true)}
-        style={styles.feedbackButton}
-        accessoryLeft={feedbackIcon}
-      />
+      <View style={styles.buttonPane}>
+        <Button
+          // appearance="outlin
+          status="basic"
+          onPress={() => {
+            if (!voiceInstructionActive) {
+              Tts.getInitStatus().then(
+                () => {
+                  readVoiceInstructions(
+                    legs[0].steps[currentStepId].voiceInstructions,
+                  );
+                },
+                (err) => {
+                  if (err.code === 'no_engine') {
+                    Tts.requestInstallEngine();
+                  }
+                },
+              );
+            }
+            setVoiceInstructionActive(!voiceInstructionActive);
+          }}
+          style={styles.utilButton}
+          accessoryLeft={voiceInstructionIcon}
+        />
+        <Button
+          status="basic"
+          //appearance="outline"
+          onPress={() => {
+            const currentLeg = legs[0].steps[currentStepId];
+            const stepGeometry = polyline.toGeoJSON(currentLeg.geometry, 6);
+            mapCamera?.current.fitBounds(
+              stepGeometry.coordinates[0],
+              stepGeometry.coordinates[stepGeometry.coordinates.length - 1],
+              150,
+            );
+          }}
+          style={styles.utilButton}
+          accessoryLeft={centerIcon}
+        />
+        <Button
+          // appearance="outline"
+          onPress={() => setFeedbackShown(true)}
+          style={styles.feedbackButton}
+          accessoryLeft={feedbackIcon}
+        />
+      </View>
     </SafeAreaView>
   );
 };
