@@ -2,8 +2,8 @@ import {Divider, Icon, Text, Layout, Card} from '@ui-kitten/components';
 import React from 'react';
 import {SafeAreaView, ScrollView} from 'react-native';
 import AboutHtml from '../../res/about.js';
-import PrivacyPolicyHtml from '../../res/privacyPolicy';
 import {UiContext, LanguageContext} from '../../context';
+import {deviceLanguage} from '../../helpers/LanguageProvider.js';
 
 const styles = {
   settingsEntry: {
@@ -108,7 +108,7 @@ export const SettingsView = ({navigation}) => {
           i18n.settings.privacyPolicySubtitle,
           'ProjectWebView',
           {
-            uri: 'https://cargorocket.de/app_privacy_policy',
+            uri: `${deviceLanguage.slice(0,2) === 'de' ? 'https://cargorocket.de/privacy':'https://cargorocket.de/privacy_en'}`,
           },
         )}
         <Divider />
