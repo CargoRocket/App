@@ -72,7 +72,7 @@
     "feedbackSendMessage": "Danke für deine Nachricht an uns! Wir werden so schnell es geht deine Hinweise in das Projekt einfließen lassen.",
 
     "locationConsentTitle": "Navigation Starten",
-    "locationConsentMessage": "Um dir aktive Navigation bieten zu können benötigt diese App deinen aktuellen Standort. Dieser wir während der Navigation im Hintergrund von deinem Gerät abgefragt. Starte die Navigation jetzt mit einem weiteren click auf die Routen-Option.",
+    "locationConsentMessage": "Um dir aktive Navigation bieten zu können benötigt diese App deinen aktuellen Standort. Dieser wir während der Navigation im Hintergrund von deinem Gerät abgefragt. Wenn du die Navigation erneut startest, wirst du aufgefordert deinen Standort zu freizugeben.",
 
     "errorUpdatingRouteTitle": "Oh... Wir konnten deine route nicht updaten",
     "errorUpdatingRouteTitleMessage": "Es scheint ein Netzwerk fehler aufgetreten sein. Wir konnten deine Route nicht updaten.",

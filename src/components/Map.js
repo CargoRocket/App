@@ -66,7 +66,7 @@ export const Map = () => {
         <MapboxGL.LineLayer
           id={`cargobike-route-line-${index}-${selectedRoute}`}
           sourceID={`cargobike-route-source-${index}-${selectedRoute}`}
-          layerIndex={selected ? 140 : 150}
+          layerIndex={selected ? 160 : 150}
           style={{lineWidth: 5, lineJoin: 'bevel', lineColor: `${selected ? '#515555' : '#f6f6f6'}` }} />
       </MapboxGL.ShapeSource>
     );
@@ -142,8 +142,8 @@ export const Map = () => {
         // Do something
       }}>
       <MapboxGL.Camera bounds={bounds} />
-      {routes ? renderRoute(routes[selectedRoute], true, -1) : null}
       {routes ? routes.map((route, index) => renderRoute(route, false, index)) : null}
+      {routes ? renderRoute(routes[selectedRoute], true, -1) : null}
       {renderStartMarker()}
       {renderDestinationMarker()}
     </MapboxGL.MapView>
