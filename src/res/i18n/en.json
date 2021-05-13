@@ -12,7 +12,7 @@
     "private": "Private Use",
 
     "bikeType": "Bike Type",
-    "howDoesYourBikeLookLike": "How does your bike look like?",
+    "howDoesYourBikeLookLike": "How does your cargobike look like?",
 
     "bikeDimensions":"Bike Dimensions",
     "bikeDimensionsSubtitle": "subtitle",
@@ -20,7 +20,7 @@
     "bikeWidth": "Bike width (W):",
     "bikeLength": "Bike length (L):",
     "lengthInMillimeters": "Length in centimeter",
-    "weEstimatedYourBikeDimensions": "We estimated your bikes dimensions. If you dont know your exact bike dimensions don't worrie. You can change these values later in the Settings view."
+    "weEstimatedYourBikeDimensions": "We estimated your bikes dimensions. If you don't know your exact bike dimensions don't worry. You can change these values later in the Settings view."
   },
   "settings": {
     "email": "E-mail (Optional)",
@@ -34,9 +34,9 @@
     "bikeSettings": "Bike Settings",
     "bikeSettingsSubtitle": "Configure bike attributes",
     "about": "Imprint",
-    "aboutSubtitle": "",
+    "aboutSubtitle": "Legal information and more",
     "privacyPolicy": "Privacy Policy",
-    "privacyPolicySubtitle": ""
+    "privacyPolicySubtitle": "How we use your data"
   },
   "navigation": {
     "start": "Start",
@@ -76,18 +76,18 @@
   },
   "project": {
     "theProject": "The Project",
-    "description": "CargoRocket was formed in December 2020, at the MobiData Hackathon. Our mission is to provide insights into the needs of cargo-bike drivers and an overview of the current infrastructure. Based on this information we generate Reports, Indexes and provide routing solutions",
+    "description": "CargoRocket was formed in November 2020, at the MobiData BW Hackathon. Our mission is to provide insights into the needs of cargo-bike drivers and an overview of the current infrastructure. Based on this information we generate Reports, Indexes and provide routing solutions.",
 
     "projects": [
       {
         "title": "Mapathon",
-        "description":"Help us getting more accurate data about your region at Baden-Württemberg",
+        "description":"Help us getting more accurate data about your region in Baden-Württemberg",
         "image": "mapathon.jpg",
         "uri": "https://cargorocket.de/2021/04/17/mapping-tutorial.html"
       },
       {
-        "title": "Cargobike Index",
-        "description":"Our Cargobike Index for Stuttgart (CAUTION! Long loading time ahead!)",
+        "title": "CargoBikeIndex",
+        "description":"Our CargoBikeIndex for Stuttgart (CAUTION! Long loading time ahead!)",
         "image": "index_2.png",
         "uri": "https://cargorocket.shinyapps.io/index_stuttgart/"
       },
@@ -99,7 +99,7 @@
       },
       {
         "title": "Blog",
-        "description":"For more insights into the project idea, progress and innovations feel free to check ot our Blog!",
+        "description":"For more insights into the project idea, progress and innovations feel free to check our Blog!",
         "image": "cargo_bike_girl.png",
         "uri": "https://cargorocket.de/blog"
       }

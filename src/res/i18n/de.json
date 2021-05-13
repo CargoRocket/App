@@ -17,14 +17,14 @@
     "bikeDimensions": "Dimensionen",
     "bikeDimensionsSubtitle": "Abmessungen deines Lastenrads",
     "widthInMillimeters": "Breite in Zentimeter",
-    "bikeWidth": "Fahrrad Breite (W):",
-    "bikeLength": "Fahrrad Länge (L):",
-    "lengthInMillimeters": "Länge in Zentimeter",
-    "weEstimatedYourBikeDimensions": "Wir haben die Dimensionen deines Fahrrads nach unseren Erfahrungswerten geschätzt. Wenn du gerade keinen Maßstab zu hand hast, kannst du diesen Schritt überspringen und später diese Einstellungen in den Einstellungen nachtragen."
+    "bikeWidth": "Fahrzeug Breite (W):",
+    "bikeLength": "Fahrzeug Länge (L):",
+    "lengthInMillimeters": "Länge in Zentimetern",
+    "weEstimatedYourBikeDimensions": "Wir haben die Dimensionen deines Lastenrads nach unseren Erfahrungswerten geschätzt. Wenn du gerade keinen Maßstab zur Hand hast, kannst du diesen Schritt überspringen und später diese Eigenschaften in den Einstellungen nachtragen."
   },
   "settings": {
     "email": "E-mail (Optional)",
-    "yourMessageToUs": "DEINE NACHRICHT. Schreib uns deine Gedanken zur App, zum Projekt, Cargobike-Index, Routing etc.",
+    "yourMessageToUs": "DEINE NACHRICHT. Schreib uns deine Gedanken zur App, zum Projekt, CargoBikeIndex, Routing etc.",
     "send": "Senden",
 
     "feedback": "Feedback",
@@ -34,16 +34,16 @@
     "bikeSettings": "Fahrrad Eigenschaften",
     "bikeSettingsSubtitle": "Radeinstellungen neu vornehmen",
     "about": "Impressum",
-    "aboutSubtitle": "",
+    "aboutSubtitle": "Rechtliche Informationen und mehr",
     "privacyPolicy": "Datenschutz",
-    "privacyPolicySubtitle": ""
+    "privacyPolicySubtitle": "Wie wir mit deinen Daten umgehen"
   },
   "navigation": {
     "start": "Start",
     "destination": "Ziel",
     "yourLocation": "Dein Standort",
     "cargoBikeRoute": "Lastenrad-Route",
-    "cargoBikeRouteDescription": "für dein Fahrrad optimiert",
+    "cargoBikeRouteDescription": "für dein Lastenrad optimiert",
     "classicBikeRoute": "Klassische Fahrrad-Route",
     "classicBikeRouteDescription": "zum Vergleich die normale Route"
   },
@@ -53,8 +53,8 @@
     "settings": "Einstellungen"
   },
   "modals": {
-    "settingsUpdatedTitle": "Fahrrad Updated",
-    "settingsUpdatedMessage": "Dein Fahrrad wurde erfolgreich geupdated. Wir nutzen deine Rad-Dimensionen um Hindernisse auf deiner Route zu vermeiden.",
+    "settingsUpdatedTitle": "Lastenrad aktualisiert",
+    "settingsUpdatedMessage": "Dein Lastenrad wurde erfolgreich aktualisiert. Wir nutzen deine Rad-Dimensionen um Hindernisse auf deiner Route zu vermeiden.",
     
     "welcomeTitle": "Willkommen",
     "welcomeMessage": "Die CargoRocket App ist dein Begleiter auf dem Lastenrad. Hier findest du nützliche Informationen zum Projekt und Navigation speziell für dein Lastenrad.",
@@ -76,7 +76,7 @@
   },
   "project": {
     "theProject": "Das Projekt",
-    "description": "Im Dezember 2020 hat sich CargoRocket als Team beim MobiData Hackathon gegründet. Unsere Mission ist es die Nöte der Lastenradfahrenden aufzuzeigen, zu analysieren und dieses Wissen auf bestehende Infrastruktur anzuwenden. Zu diesem Zweck veröffentlichen wir Reports, den Cargobike Index und stellen Routing-Lösungen speziell für Lastenräder bereit.",
+    "description": "Im November 2020 hat sich CargoRocket als Team beim MobiData BW Hackathon gegründet. Unsere Mission ist es die Nöte der Lastenradfahrenden aufzuzeigen, zu analysieren und dieses Wissen auf bestehende Infrastruktur anzuwenden. Zu diesem Zweck veröffentlichen wir Reports, den CargoBikeIndex und stellen Routing-Lösungen speziell für Lastenräder bereit.",
 
     "projects": [
       {
@@ -87,19 +87,19 @@
       },
       {
         "title": "Cargobike Index",
-        "description":"Unser Cargobike-Index für Stuttgart (Vorsicht! Evtl. Lange Ladezeiten!)",
+        "description":"Unser CargoBikeIndex für Stuttgart (Vorsicht! Evtl. Lange Ladezeiten!)",
         "image": "index_2.png",
         "uri": "https://cargorocket.shinyapps.io/index_stuttgart/"
       },
       {
         "title": "Zusammenarbeit",
-        "description":"Du willst dich mit uns zum Projekt austauschen oder benötigst daten und Expertenrat zum Thema Lastenradinfrastruktur? Setze dich mit uns in verbindung!",
+        "description":"Du willst dich mit uns zum Projekt austauschen oder benötigst Daten- und Expertenrat zum Thema Lastenradinfrastruktur? Setze dich mit uns in Verbindung!",
         "image": "survey_bike.jpg",
         "uri": "https://cargorocket.de/"
       },
       {
         "title": "CargoRocket.de - Blog",
-        "description":"Für genauere Einblicke und technische Hintergründe hinter CargoRocket besuche unseren Blog.",
+        "description":"Für genauere Einblicke und technische Hintergründe bei CargoRocket, besuche gerne unseren Blog.",
         "image": "cargo_bike_girl.png",
         "uri": "https://cargorocket.de/blog"
       }
