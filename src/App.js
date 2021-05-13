@@ -78,7 +78,7 @@ export const App = () => {
   const start = React.useState(null);
   const destination = React.useState(null);
   const routes = React.useState(null);
-  const selectedRoute = React.useState(null);
+  const selectedRoute = React.useState(0);
 
   return (
     <UiContext.Provider value={{onBoarding, popupMessage, bikeSettingsShown}}>

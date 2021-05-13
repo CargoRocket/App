@@ -57,17 +57,18 @@ export const Map = () => {
     },
   });
 
-  const renderRoute = (route, index) => {
+  const renderRoute = (route, selected, index) => {
+    console.log(route);
     const geometry = route.routes[0].geometry;
     return (
       <MapboxGL.ShapeSource
-        id={`cargobike-route-source-${index}`}
+        id={`cargobike-route-source-${index}-${selectedRoute}`}
         shape={polyline.toGeoJSON(geometry, 6)}>
         <MapboxGL.LineLayer
-          id={`cargobike-route-line-${index}`}
-          sourceID={`cargobike-route-source-${index}`}
-          layerIndex={150}
-          style={{lineWidth: 5, lineJoin: 'bevel', lineColor: `${selectedRoute === index ? '#515555' : '#f6f6f6'}` }} />
+          id={`cargobike-route-line-${index}-${selectedRoute}`}
+          sourceID={`cargobike-route-source-${index}-${selectedRoute}`}
+          layerIndex={selected ? 140 : 150}
+          style={{lineWidth: 5, lineJoin: 'bevel', lineColor: `${selected ? '#515555' : '#f6f6f6'}` }} />
       </MapboxGL.ShapeSource>
     );
   };
@@ -80,7 +81,6 @@ export const Map = () => {
           coordinate={start.coordinates}
           draggable={true}
           onDragEnd={(point) => {
-            const lat = Math.round(point.geometry.coordinates[0], 2);
             setStart({
               name: `${point.geometry.coordinates[0].toFixed(4)},
                 ${point.geometry.coordinates[1].toFixed(4)}`,
@@ -122,6 +122,8 @@ export const Map = () => {
     }
   };
 
+  console.log(selectedRoute);
+  // console.log(routes ? routes.filter((route) => route != routes[selectedRoute]) : null);
   return (
     <MapboxGL.MapView
       style={styles.map}
@@ -144,9 +146,8 @@ export const Map = () => {
         // Do something
       }}>
       <MapboxGL.Camera bounds={bounds} />
-      {routes
-        ? routes.map((route, index) => renderRoute(route, index))
-        : null}
+      {routes ? renderRoute(routes[selectedRoute], true, -1) : null}
+      {routes ? routes.map((route, index) => renderRoute(route, false, index)) : null}
       {renderStartMarker()}
       {renderDestinationMarker()}
     </MapboxGL.MapView>

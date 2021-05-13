@@ -2,7 +2,7 @@ import React from 'react';
 import {Card, Spinner} from '@ui-kitten/components';
 import {StyleSheet, View} from 'react-native';
 import {LocationSelect} from './LocationSelection';
-import {RoutingContext, LanguageContext} from '../../src/context';
+import {RoutingContext, LanguageContext, UiContext} from '../../src/context';
 import {accessToken, cargorocketAPIKey} from '../res/config';
 import {deviceLanguage} from '../helpers/LanguageProvider';
 
@@ -14,6 +14,9 @@ export const RoutingInput = ({navigation}) => {
   } = React.useContext(RoutingContext);
   const [loading, setLoading] = React.useState(false);
   const i18n = React.useContext(LanguageContext);
+  const {
+    popupMessage: [popupMessage, setPopupMessage],
+  } = React.useContext(UiContext);
   let lastAbortController = React.useRef(null);
 
   React.useEffect(() => {
@@ -25,7 +28,7 @@ export const RoutingInput = ({navigation}) => {
       }
       lastAbortController.current = new window.AbortController();
       fetch(
-        `https://api.cargorocket.de/route?from=[${start.coordinates[1]},${start.coordinates[0]}]&to=[${destination.coordinates[1]},${destination.coordinates[0]}]&access_token=${accessToken}&key=${cargorocketAPIKey}&format=mapbox&lang=${deviceLanguage.slice(0,2)}`,
+        `https://api.cargorocket.de/v1/routes?from=[${start.coordinates[1]},${start.coordinates[0]}]&to=[${destination.coordinates[1]},${destination.coordinates[0]}]&access_token=${accessToken}&key=${cargorocketAPIKey}&format=mapbox&lang=${deviceLanguage.slice(0,2)}`,
         {signal: lastAbortController.current.signal},
       )
         .then((rawData) => rawData.json())
@@ -39,12 +42,12 @@ export const RoutingInput = ({navigation}) => {
           console.log(routesResponse);
           setRoutes([
             {
-              ...routesResponse.cargobike,
+              ...routesResponse.find((route) => route.profile.name === 'cargobike'),
               name: i18n.navigation.cargoBikeRoute,
               description: i18n.navigation.cargoBikeRouteDescription,
             },
             {
-              ...routesResponse.bike,
+              ...routesResponse.find((route) => route.profile.name === 'bike'),
               name: i18n.navigation.classicBikeRoute,
               description: i18n.navigation.classicBikeRouteDescription,
             },
@@ -52,6 +55,11 @@ export const RoutingInput = ({navigation}) => {
         })
         .catch((error) => {
           console.log(error);
+          setPopupMessage({
+            title: i18n.modals.errorFindingRouteTitle,
+            message: i18n.modals.errorFindingRouteTitleMessage,
+            status: 'error',
+          });
           setLoading(false);
         });
     }

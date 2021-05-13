@@ -123,7 +123,7 @@ export const NavigatingView = ({navigation}) => {
   const startRerouting = () => {
     setRerouting(true);
     fetch(
-      `https://api.cargorocket.de/route?from=[${currentLocation.latitude},${currentLocation.longitude}]&to=[${destination.coordinates[1]},${destination.coordinates[0]}]&access_token=${accessToken}&key=${cargorocketAPIKey}&format=mapbox&lang=${deviceLanguage.slice(0,2)}`,
+      `https://api.cargorocket.de/v1/routes?from=[${currentLocation.latitude},${currentLocation.longitude}]&to=[${destination.coordinates[1]},${destination.coordinates[0]}]&access_token=${accessToken}&key=${cargorocketAPIKey}&format=mapbox&lang=${deviceLanguage.slice(0,2)}`,
     )
       .then((rawData) => rawData.json())
       .then((routesResponse) => {
@@ -136,12 +136,12 @@ export const NavigatingView = ({navigation}) => {
         }
         setRoutes([
           {
-            ...routesResponse.cargobike,
+            ...routesResponse.find((route) => route.profile.name === 'cargobike'),
             name: i18n.navigation.cargoBikeRoute,
             description: i18n.navigation.cargoBikeRouteDescription,
           },
           {
-            ...routesResponse.bike,
+            ...routesResponse.find((route) => route.profile.name === 'bike'),
             name: i18n.navigation.classicBikeRoute,
             description: i18n.navigation.classicBikeRouteDescription,
           },
@@ -150,6 +150,11 @@ export const NavigatingView = ({navigation}) => {
       })
       .catch((error) => {
         console.error(error);
+        setPopupMessage({
+          title: i18n.modals.errorUpdatingRouteTitle,
+          message: i18n.modals.errorUpdatingRouteTitleMessage,
+          status: 'error',
+        });
         setRerouting(false);
       });
   };
@@ -405,7 +410,6 @@ export const NavigatingView = ({navigation}) => {
       {renderBottomBox()}
       <View style={styles.buttonPane}>
         <Button
-          // appearance="outlin
           status="basic"
           onPress={() => {
             if (!voiceInstructionActive) {
@@ -429,7 +433,6 @@ export const NavigatingView = ({navigation}) => {
         />
         <Button
           status="basic"
-          //appearance="outline"
           onPress={() => {
             console.log('pressed');
             setFollowUser(true);
@@ -438,7 +441,6 @@ export const NavigatingView = ({navigation}) => {
           accessoryLeft={centerIcon}
         />
         <Button
-          // appearance="outline"
           onPress={() => setFeedbackShown(true)}
           style={styles.feedbackButton}
           accessoryLeft={feedbackIcon}
