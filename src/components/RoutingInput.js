@@ -34,12 +34,15 @@ export const RoutingInput = ({navigation}) => {
         .then((rawData) => rawData.json())
         .then((routesResponse) => {
           if (routesResponse.name && routesResponse.name === 'Error') {
-            console.log(routesResponse);
             setLoading(false);
+            setPopupMessage({
+              title: i18n.modals.errorFindingRouteTitle,
+              message: i18n.modals.errorFindingRouteTitleMessage,
+              status: 'error',
+            });
             return;
           }
           setLoading(false);
-          console.log(routesResponse);
           setRoutes([
             {
               ...routesResponse.find((route) => route.profile.name === 'cargobike'),

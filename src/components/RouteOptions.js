@@ -74,7 +74,6 @@ export const RouteOptions = ({navigation}) => {
   const navigationIcon = (props) => <Icon {...props} name="navigation" />;
 
   const startNavigation = () => {
-    console.log(userLocationConsent);
     if (!userLocationConsent) {
       setMessage({
         title: i18n.modals.locationConsentTitle,

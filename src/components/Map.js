@@ -58,7 +58,6 @@ export const Map = () => {
   });
 
   const renderRoute = (route, selected, index) => {
-    console.log(route);
     const geometry = route.routes[0].geometry;
     return (
       <MapboxGL.ShapeSource
@@ -122,8 +121,6 @@ export const Map = () => {
     }
   };
 
-  console.log(selectedRoute);
-  // console.log(routes ? routes.filter((route) => route != routes[selectedRoute]) : null);
   return (
     <MapboxGL.MapView
       style={styles.map}
@@ -131,7 +128,6 @@ export const Map = () => {
       // styleURL={'mapbox://styles/thenewcivilian/ck6qr6ho60ypw1irod1yw005m'}
       compassEnabled={false}
       onLongPress={(point) => {
-        console.log(point);
         if (!start) {
           setStart({
             name: `${point.geometry.coordinates[0].toFixed(4)}, ${point.geometry.coordinates[1].toFixed(4)}`,

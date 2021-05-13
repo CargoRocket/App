@@ -83,6 +83,10 @@ const styles = StyleSheet.create({
 Tts.setDefaultLanguage(deviceLanguage);
 RNLocation.configure({
   distanceFilter: 0,
+  desiredAccuracy: {
+    android: 'highAccuracy',
+    ios: 'bestForNavigation',
+  },
   // interval: 500,
 });
 
@@ -355,7 +359,6 @@ export const NavigatingView = ({navigation}) => {
       {...props}
       fill={followUser ? theme['color-info-500'] : '#2E3A59'}
       onPress={() => {
-        console.log('pressed2');
         setFollowUser(true);
       }}
     />
@@ -434,7 +437,6 @@ export const NavigatingView = ({navigation}) => {
         <Button
           status="basic"
           onPress={() => {
-            console.log('pressed');
             setFollowUser(true);
           }}
           style={styles.utilButton}
