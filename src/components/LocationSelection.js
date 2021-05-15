@@ -58,7 +58,7 @@ export const LocationSelect = ({
 
   const setCurrentLocation = () => {
     RNLocation.configure({
-      distanceFilter: 5.0,
+      distanceFilter: 0,
     });
     RNLocation.requestPermission({
       ios: 'whenInUse',

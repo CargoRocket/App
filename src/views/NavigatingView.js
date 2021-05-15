@@ -5,7 +5,12 @@ import MapboxGL from '@react-native-mapbox-gl/maps';
 import {default as theme} from '../res/custom-theme.json';
 import {getClosestPointOnLines, distance} from '../helpers/geometry';
 import polyline from '@mapbox/polyline';
-import {RoutingContext, UiContext, LanguageContext} from '../context';
+import {
+  RoutingContext,
+  UiContext,
+  LanguageContext,
+  SettingsContext,
+} from '../context';
 import {accessToken, cargorocketAPIKey} from '../res/config';
 import RNLocation from 'react-native-location';
 import {RouteFeedbackPopup} from '../components/navigation/RouteFeedbackPopup';
@@ -84,17 +89,22 @@ Tts.setDefaultLanguage(deviceLanguage);
 RNLocation.configure({
   distanceFilter: 0,
   desiredAccuracy: {
-    android: 'highAccuracy',
     ios: 'bestForNavigation',
+    android: 'highAccuracy',
   },
-  // interval: 500,
+  // interval: 1000,
+  // maxWaitTime: 1000,
 });
 
 export const NavigatingView = ({navigation}) => {
-  const rerouteingMargin = 0.5;
+  const reroutingMargin = 0.03;
+  const arriveMargin = 0.02;
   const {
     popupMessage: [popupMessage, setPopupMessage],
   } = React.useContext(UiContext);
+  const {
+    voiceInstructions: [voiceInstructionActive, setVoiceInstructionActive],
+  } = React.useContext(SettingsContext);
   const {
     destination: [destination, setDestination],
     start: [start, setStart],
@@ -115,7 +125,6 @@ export const NavigatingView = ({navigation}) => {
   );
 
   const [rerouting, setRerouting] = React.useState(false);
-  const [voiceInstructionActive, setVoiceInstructionActive] = React.useState(false);
   const [followUser, setFollowUser] = React.useState(true);
   const [routeGeometry, setRouteGeometry] = React.useState(
     polyline.toGeoJSON(route.geometry, 6),
@@ -175,6 +184,9 @@ export const NavigatingView = ({navigation}) => {
   };
 
   React.useEffect(() => {
+    if (legs[0].steps[currentStepId]) {
+      readVoiceInstructions(legs[0].steps[currentStepId].voiceInstructions);
+    }
     RNLocation.requestPermission({
       ios: 'whenInUse',
       android: {
@@ -210,7 +222,9 @@ export const NavigatingView = ({navigation}) => {
   };
 
   const readVoiceInstructions = (instructions) => {
-    Tts.speak(instructions[0].announcement);
+    if (voiceInstructionActive) {
+      Tts.speak(instructions[0].announcement);
+    }
   };
 
   React.useEffect(() => {
@@ -223,7 +237,7 @@ export const NavigatingView = ({navigation}) => {
         currentLocation.longitude,
       );
 
-      if (currentStepId < legs[0].steps.length) {
+      if (currentStepId < legs[0].steps.length - 2) {
         const nextStepPoint = matchPointOntoLeg(currentStepId + 1);
         const distanceToNextStepPoint = distance(
           nextStepPoint.y,
@@ -233,7 +247,7 @@ export const NavigatingView = ({navigation}) => {
         );
 
         if (distanceToCurrentStepPoint > distanceToNextStepPoint) {
-          if (distanceToNextStepPoint > rerouteingMargin) {
+          if (distanceToNextStepPoint > reroutingMargin) {
             // REROUTING
             startRerouting();
             return;
@@ -241,13 +255,13 @@ export const NavigatingView = ({navigation}) => {
           setCurrentStepId(currentStepId + 1);
           setCurrentLocationOnRoute([nextStepPoint.x, nextStepPoint.y]);
           setCurrentLegProgress(nextStepPoint.fTo);
-          if (voiceInstructionActive) {
+          if (legs[0].steps[currentStepId + 1]) {
             readVoiceInstructions(
-              legs[0].steps[currentStepId].voiceInstructions,
+              legs[0].steps[currentStepId + 1].voiceInstructions,
             );
           }
         } else {
-          if (distanceToCurrentStepPoint > rerouteingMargin) {
+          if (distanceToCurrentStepPoint > reroutingMargin) {
             // REROUTING
             startRerouting();
             return;
@@ -257,8 +271,8 @@ export const NavigatingView = ({navigation}) => {
         }
       } else {
         // Last Step
-        if (distanceToCurrentStepPoint > rerouteingMargin) {
-          navigation.goBack();
+        if (distanceToCurrentStepPoint < arriveMargin) {
+          navigation.navigate('Content');
           setPopupMessage({
             title: i18n.modals.routeCompleteTitle,
             message: i18n.modals.routeCompleteMessage,
@@ -415,7 +429,8 @@ export const NavigatingView = ({navigation}) => {
         <Button
           status="basic"
           onPress={() => {
-            if (!voiceInstructionActive) {
+            setVoiceInstructionActive(!voiceInstructionActive);
+            if (voiceInstructionActive) {
               Tts.getInitStatus().then(
                 () => {
                   readVoiceInstructions(
@@ -429,7 +444,6 @@ export const NavigatingView = ({navigation}) => {
                 },
               );
             }
-            setVoiceInstructionActive(!voiceInstructionActive);
           }}
           style={styles.utilButton}
           accessoryLeft={voiceInstructionIcon}

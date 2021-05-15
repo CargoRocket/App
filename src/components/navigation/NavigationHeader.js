@@ -59,6 +59,7 @@ export const NavigationHeader = ({
       'sharp right': 'arrow-forward-outline',
       'sharp left': 'arrow-back-outline',
       straight: 'arrow-upward-outline',
+      arrive: 'flag-outline',
     };
     const icon =
       directionIcons[

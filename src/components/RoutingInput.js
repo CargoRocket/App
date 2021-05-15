@@ -70,16 +70,16 @@ export const RoutingInput = ({navigation}) => {
 
   const styles = StyleSheet.create({
     navigationOverview: {
-      position: 'absolute',
+      position: 'relative',
       width: '100%',
-      flex: 1,
     },
     loader: {
+      position: 'absolute',
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
       alignSelf: 'center',
-      bottom: -20,
+      bottom: -60,
       width: 50,
       height: 50,
       borderRadius: 50,

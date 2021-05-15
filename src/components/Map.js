@@ -16,6 +16,18 @@ export const Map = () => {
     selectedRoute: [selectedRoute, setSelectedRoute],
   } = React.useContext(RoutingContext);
 
+  const camera = React.useRef();
+
+  React.useEffect(() => {
+    if (start && !destination) {
+      camera.current.setCamera({
+        centerCoordinate: start.coordinates,
+        zoomLevel: 10,
+        animationDuration: 2000,
+      });
+    }
+  }, [start, destination]);
+
   const bounds =
     destination && start && destination.coordinates && start.coordinates
       ? {
@@ -24,12 +36,12 @@ export const Map = () => {
           paddingTop: 80,
           paddingLeft: 40,
           paddingRight: 40,
-          paddingBottom: 40,
+          paddingBottom: 140,
         }
       : {
           ne: [11.106090200587593, 46.94990650185683],
           sw: [9.595923969628181, 55.010052465795454],
-          paddingTop: 150,
+          paddingTop: 40,
           paddingLeft: 40,
           paddingRight: 40,
           paddingBottom: 40,
@@ -37,9 +49,8 @@ export const Map = () => {
 
   const styles = StyleSheet.create({
     map: {
-      height: '100%',
+      flex: 1,
       width: '100%',
-      position: 'absolute',
       zIndex: -2,
     },
     marker: {
@@ -141,7 +152,7 @@ export const Map = () => {
         }
         // Do something
       }}>
-      <MapboxGL.Camera bounds={bounds} />
+      <MapboxGL.Camera bounds={bounds} ref={camera} />
       {routes ? routes.map((route, index) => renderRoute(route, false, index)) : null}
       {routes ? renderRoute(routes[selectedRoute], true, -1) : null}
       {renderStartMarker()}

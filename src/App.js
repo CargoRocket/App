@@ -75,6 +75,13 @@ export const App = () => {
     'bool',
   );
 
+  const voiceInstructions = makePersistent(
+    React.useState(MMKV.getBool('voiceInstructions')),
+    'voiceInstructions',
+    MMKV,
+    'bool',
+  );
+
   const start = React.useState(null);
   const destination = React.useState(null);
   const routes = React.useState(null);
@@ -82,7 +89,14 @@ export const App = () => {
 
   return (
     <UiContext.Provider value={{onBoarding, popupMessage, bikeSettingsShown}}>
-      <SettingsContext.Provider value={{use, bikeType, bikeLength, bikeWidth, userLocationConsent}}>
+      <SettingsContext.Provider value={{
+          use,
+          bikeType,
+          bikeLength,
+          bikeWidth,
+          userLocationConsent,
+          voiceInstructions,
+        }}>
         <LanguageContext.Provider value={LanguageProvider()}>
           <RoutingContext.Provider
             value={{start, destination, routes, selectedRoute}}>
