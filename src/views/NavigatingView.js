@@ -19,6 +19,7 @@ import Tts from 'react-native-tts';
 import CenterIcon from '../res/images/icons/crosshairs-gps.svg';
 import {deviceLanguage} from '../helpers/LanguageProvider';
 import KeepAwake from 'react-native-keep-awake';
+import RNDisableBatteryOptimizationsAndroid from 'react-native-disable-battery-optimizations-android';
 
 const styles = StyleSheet.create({
   view: {
@@ -83,17 +84,6 @@ const styles = StyleSheet.create({
   markerDestination: {
     backgroundColor: theme['color-warning-300'],
   },
-});
-
-Tts.setDefaultLanguage(deviceLanguage);
-RNLocation.configure({
-  distanceFilter: 0,
-  desiredAccuracy: {
-    ios: 'bestForNavigation',
-    android: 'highAccuracy',
-  },
-  // interval: 1000,
-  // maxWaitTime: 1000,
 });
 
 export const NavigatingView = ({navigation}) => {
@@ -187,6 +177,31 @@ export const NavigatingView = ({navigation}) => {
     if (legs[0].steps[currentStepId]) {
       readVoiceInstructions(legs[0].steps[currentStepId].voiceInstructions);
     }
+    RNDisableBatteryOptimizationsAndroid.isBatteryOptimizationEnabled().then(
+      (value) => {
+        if (value) {
+          setPopupMessage({
+            title: i18n.modals.powerSavingTitle,
+            message: i18n.modals.powerSavingMessage,
+            status: 'info',
+          });
+        }
+      },
+    );
+
+    // Configure Default Language
+    Tts.setDefaultLanguage(deviceLanguage);
+
+    // Configure Location Service
+    RNLocation.configure({
+      distanceFilter: 0,
+      desiredAccuracy: {
+        ios: 'bestForNavigation',
+        android: 'highAccuracy',
+      },
+      // interval: 1000,
+      // maxWaitTime: 1000,
+    });
     RNLocation.requestPermission({
       ios: 'whenInUse',
       android: {
@@ -429,12 +444,11 @@ export const NavigatingView = ({navigation}) => {
         <Button
           status="basic"
           onPress={() => {
-            setVoiceInstructionActive(!voiceInstructionActive);
-            if (voiceInstructionActive) {
+            if (!voiceInstructionActive) {
               Tts.getInitStatus().then(
                 () => {
-                  readVoiceInstructions(
-                    legs[0].steps[currentStepId].voiceInstructions,
+                  Tts.speak(
+                    legs[0].steps[currentStepId].voiceInstructions[0].announcement,
                   );
                 },
                 (err) => {
@@ -444,6 +458,7 @@ export const NavigatingView = ({navigation}) => {
                 },
               );
             }
+            setVoiceInstructionActive(!voiceInstructionActive);
           }}
           style={styles.utilButton}
           accessoryLeft={voiceInstructionIcon}

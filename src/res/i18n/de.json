@@ -77,7 +77,10 @@
     "errorUpdatingRouteTitle": "Oh... Wir konnten deine route nicht updaten",
     "errorUpdatingRouteTitleMessage": "Es scheint ein Netzwerk fehler aufgetreten sein. Wir konnten deine Route nicht updaten.",
     "errorFindingRouteTitle": "Oh... Es ist ein Fehler aufgetreten",
-    "errorFindingRouteTitleMessage": "Wir konnten keine Route Finden. Bitte beachte, dass diese App momentan zu testzwecken nur in Deutschland funktioniert"
+    "errorFindingRouteTitleMessage": "Wir konnten keine Route Finden. Bitte beachte, dass diese App momentan zu testzwecken nur in Deutschland funktioniert",
+    
+    "powerSavingTitle": "Battery Saving",
+    "powerSavingMessage": "Diese App funktioniert am besten wenn sie aus dem Battery Saving ausgeschlossen wird. Bitte fügen sie dazu in den Einstellungen eine Ausnahme hinzu."
   },
   "project": {
     "theProject": "Das Projekt",

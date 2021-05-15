@@ -21,6 +21,7 @@
     "@ui-kitten/eva-icons": "5.0.0",
     "react": "16.11.0",
     "react-native": "0.62.2",
+    "react-native-disable-battery-optimizations-android": "https://github.com/IronTony/react-native-disable-battery-optimizations-android",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-keep-awake": "^4.0.0",
     "react-native-location": "^2.5.0",
