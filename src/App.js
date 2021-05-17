@@ -23,6 +23,7 @@ import {
   RoutingContext,
 } from './context';
 import MMKVStorage from 'react-native-mmkv-storage';
+import {StatusBar} from 'react-native';
 import {makePersistent} from './helpers/persistantState';
 import {LanguageProvider} from './helpers/LanguageProvider';
 
@@ -102,6 +103,7 @@ export const App = () => {
             value={{start, destination, routes, selectedRoute}}>
             <IconRegistry icons={EvaIconsPack} />
             <ApplicationProvider {...eva} theme={{...eva.light, ...theme}}>
+              <StatusBar backgroundColor={theme['color-primary-500']} />
               <Views />
             </ApplicationProvider>
           </RoutingContext.Provider>

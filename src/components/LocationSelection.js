@@ -19,6 +19,9 @@ const styles = {
   autocompleteCurrentLocation: {
     color: theme['color-info-500'],
   },
+  hidden: {
+    display: 'none',
+  },
 };
 
 export const LocationSelect = ({
@@ -37,10 +40,12 @@ export const LocationSelect = ({
   } = React.useContext(UiContext);
 
   const onSelect = (index) => {
-    onChange({
-      name: data[index].place_name,
-      coordinates: data[index].center,
-    });
+    if (data[index].place_name) {
+      onChange({
+        name: data[index].place_name,
+        coordinates: data[index].center,
+      });
+    }
   };
 
   const onChangeText = (query) => {
@@ -50,8 +55,11 @@ export const LocationSelect = ({
     )
       .then((rawData) => rawData.json())
       .then((response) => {
-        if (response.features) {
+        if (response.features && response.features.length > 0) {
+          console.log(response.features);
           setData(response.features);
+        } else {
+          setData([{}]);
         }
       });
   };
@@ -85,10 +93,23 @@ export const LocationSelect = ({
 
   const PinIcon = (props) => <Icon {...props} name="pin-outline" />;
 
-  const locationIcon = (props) => <CenterIcon {...props} fill={value?.name === i18n.navigation.yourLocation ? theme['color-info-500'] : "#2E3A59"} />;
+  const locationIcon = (props) => (
+    <CenterIcon
+      {...props}
+      fill={
+        value?.name === i18n.navigation.yourLocation
+          ? theme['color-info-500']
+          : '#2E3A59'
+      }
+    />
+  );
 
   const renderOption = (item, index) => (
-    <AutocompleteItem key={index} title={item.place_name} />
+    <AutocompleteItem
+      key={index}
+      title={item.place_name}
+      style={item.place_name ? null : styles.hidden}
+    />
   );
 
   const renderLiveLocation = () =>
@@ -106,7 +127,9 @@ export const LocationSelect = ({
       placeholder={placeholder}
       value={active ? input : value ? value.name : ''}
       textStyle={
-        value?.name === i18n.navigation.yourLocation ? styles.autocompleteCurrentLocation : null
+        value?.name === i18n.navigation.yourLocation
+          ? styles.autocompleteCurrentLocation
+          : null
       }
       onSelect={onSelect}
       onFocus={() => {
