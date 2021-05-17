@@ -7,7 +7,7 @@ import {
   Divider,
   Text,
 } from '@ui-kitten/components';
-import {StyleSheet, TextInput, View} from 'react-native';
+import {StyleSheet, TextInput, View, SafeAreaView} from 'react-native';
 import {SettingsContext, LanguageContext, UiContext} from '../../context';
 import theme from '../../res/custom-theme.json';
 import BikeIcon from '../../res/images/bike_settings.svg';
@@ -96,7 +96,7 @@ export const InputBikeSize = ({navigation}) => {
   );
 
   return (
-    <Layout>
+    <SafeAreaView>
       <TopNavigation
         title={i18n.onboarding.bikeDimensions}
         alignment="center"
@@ -147,6 +147,6 @@ export const InputBikeSize = ({navigation}) => {
           {i18n.onboarding.weEstimatedYourBikeDimensions}
         </Text>
       </Layout>
-    </Layout>
+    </SafeAreaView>
   );
 };

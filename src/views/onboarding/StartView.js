@@ -1,6 +1,6 @@
 import React from 'react';
-import {Button, Layout, Text, Icon} from '@ui-kitten/components';
-import {StyleSheet} from 'react-native';
+import {Button, Text, Icon} from '@ui-kitten/components';
+import {StyleSheet, SafeAreaView} from 'react-native';
 import {LanguageContext, UiContext} from '../../context';
 import Logo from '../../res/images/cargo_bike.svg';
 
@@ -36,7 +36,7 @@ export const StartView = ({navigation}) => {
   });
 
   return (
-    <Layout style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Logo width={400} height={200} />
       <Text style={styles.text} category="h1">
         {i18n.onboarding.title}
@@ -56,6 +56,6 @@ export const StartView = ({navigation}) => {
         }}>
         {i18n.onboarding.goCycling}
       </Button>
-    </Layout>
+    </SafeAreaView>
   );
 };

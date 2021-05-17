@@ -7,7 +7,7 @@ import {
   Divider,
   Card,
 } from '@ui-kitten/components';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, SafeAreaView} from 'react-native';
 import {SettingsContext, LanguageContext} from '../../context';
 import theme from '../../res/custom-theme.json';
 
@@ -61,7 +61,7 @@ export const SelectBike = ({navigation}) => {
   );
 
   return (
-    <Layout style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1}}>
       <TopNavigation
         title={i18n.onboarding.bikeType}
         alignment="center"
@@ -134,6 +134,6 @@ export const SelectBike = ({navigation}) => {
         }}>
         <Trike height={100} width={100} />
       </Card>
-    </Layout>
+    </SafeAreaView>
   );
 };
