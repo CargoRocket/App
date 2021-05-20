@@ -100,6 +100,8 @@ export const NavigatingView = ({navigation}) => {
     start: [start, setStart],
     routes: [routes, setRoutes],
     selectedRoute: [selectedRoute, setSelectedRoute],
+    currentRouteInfo: [currentRouteInfo, setCurrentRouteInfo],
+    routeStorage: [routeStorage, setRouteStorage],
   } = React.useContext(RoutingContext);
   const i18n = React.useContext(LanguageContext);
   const route = routes[selectedRoute].routes[0];
@@ -108,7 +110,10 @@ export const NavigatingView = ({navigation}) => {
   const [feedbackShown, setFeedbackShown] = React.useState(false);
 
   const [currentStepId, setCurrentStepId] = React.useState(0);
-  const [currentLocation, setCurrentLocation] = React.useState({longitude: start.coordinates[0], latitude: start.coordinates[1]});
+  const [currentLocation, setCurrentLocation] = React.useState({
+    longitude: start.coordinates[0],
+    latitude: start.coordinates[1],
+  });
   const [currentLegProgress, setCurrentLegProgress] = React.useState(0);
   const [currentLocationOnRoute, setCurrentLocationOnRoute] = React.useState(
     start.coordinates,
@@ -149,6 +154,15 @@ export const NavigatingView = ({navigation}) => {
             description: i18n.navigation.classicBikeRouteDescription,
           },
         ]);
+        if (currentRouteInfo) {
+          setCurrentRouteInfo({
+            ...currentRouteInfo,
+            rerouting: [
+              ...currentRouteInfo.rerouting,
+              [currentLocation.latitude, currentLocation.longitude],
+            ],
+          });
+        }
         setRerouting(false);
       })
       .catch((error) => {
@@ -188,6 +202,14 @@ export const NavigatingView = ({navigation}) => {
         }
       },
     );
+
+    setCurrentRouteInfo({
+      from: start.coordinates,
+      to: destination.coordinates,
+      time: new Date().getTime(),
+      rerouting: [],
+      transmitted: false,
+    });
 
     // Configure Default Language
     Tts.setDefaultLanguage(deviceLanguage);
@@ -287,6 +309,9 @@ export const NavigatingView = ({navigation}) => {
       } else {
         // Last Step
         if (distanceToCurrentStepPoint < arriveMargin) {
+          // Save Route
+          setRouteStorage([...routeStorage, currentRouteInfo]);
+
           navigation.navigate('Content');
           setPopupMessage({
             title: i18n.modals.routeCompleteTitle,

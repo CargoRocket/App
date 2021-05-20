@@ -83,6 +83,16 @@ export const App = () => {
     'bool',
   );
 
+  const routeStorage = makePersistent(
+    React.useState(MMKV.getArray('routeStorage')),
+    'routeStorage',
+    MMKV,
+    'array',
+  );
+  const currentRouteInfo = React.useState(null);
+
+  console.log(routeStorage);
+
   const start = React.useState(null);
   const destination = React.useState(null);
   const routes = React.useState(null);
@@ -100,7 +110,14 @@ export const App = () => {
         }}>
         <LanguageContext.Provider value={LanguageProvider()}>
           <RoutingContext.Provider
-            value={{start, destination, routes, selectedRoute}}>
+            value={{
+              start,
+              destination,
+              routes,
+              selectedRoute,
+              routeStorage,
+              currentRouteInfo,
+            }}>
             <IconRegistry icons={EvaIconsPack} />
             <ApplicationProvider {...eva} theme={{...eva.light, ...theme}}>
               <StatusBar backgroundColor={theme['color-primary-500']} />

@@ -23,6 +23,15 @@ export const makePersistent = (state, key, MMKV, type = 'string') => {
             }
           });
           break;
+        case 'array':
+          MMKV.setArray(key, value, (error, result) => {
+            if (error) {
+              // Todo Figure out how to handle this in the future.
+              console.error(error);
+              return;
+            }
+          });
+          break;
         case 'string':
         default:
           MMKV.setString(key, value, (error, result) => {
