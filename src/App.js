@@ -91,8 +91,6 @@ export const App = () => {
   );
   const currentRouteInfo = React.useState(null);
 
-  console.log(routeStorage);
-
   const start = React.useState(null);
   const destination = React.useState(null);
   const routes = React.useState(null);

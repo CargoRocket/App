@@ -73,6 +73,7 @@ export const ProjectView = ({navigation}) => {
   const renderItem = (info) => (
     <Card
       status="primary"
+      key={`${info.item.title}-${info.index}`}
       style={styles.item}
       header={(headerProps) => renderItemHeader(headerProps, info)}
       footer={(footerProps) => renderItemFooter(footerProps, info)}

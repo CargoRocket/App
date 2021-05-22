@@ -5,6 +5,7 @@ import {
   Icon,
   Button,
 } from '@ui-kitten/components';
+import {TouchableWithoutFeedback} from 'react-native';
 import {accessToken} from '../res/config';
 import RNLocation from 'react-native-location';
 import {default as theme} from '../res/custom-theme.json';
@@ -32,7 +33,7 @@ export const LocationSelect = ({
 }) => {
   // [{}] is a workaround. As an empty array leads to no data presented.
   const [data, setData] = React.useState([{}]);
-  const [input, setInput] = React.useState('');
+  const [input, setInput] = React.useState(value ? value.name : '');
   const [active, setActive] = React.useState(false);
   const i18n = React.useContext(LanguageContext);
   const {
@@ -56,7 +57,6 @@ export const LocationSelect = ({
       .then((rawData) => rawData.json())
       .then((response) => {
         if (response.features && response.features.length > 0) {
-          console.log(response.features);
           setData(response.features);
         } else {
           setData([{}]);
@@ -122,6 +122,16 @@ export const LocationSelect = ({
       />
     ) : null;
 
+  const clearInput = () => {
+    onChange(null);
+  };
+
+  const renderCloseIcon = (props) => (
+    <TouchableWithoutFeedback onPress={clearInput}>
+      <Icon {...props} name="close" />
+    </TouchableWithoutFeedback>
+  );
+
   return (
     <Autocomplete
       placeholder={placeholder}
@@ -133,14 +143,14 @@ export const LocationSelect = ({
       }
       onSelect={onSelect}
       onFocus={() => {
-        setInput('');
+        setInput(value ? value.name : '');
         setActive(true);
       }}
       onBlur={() => {
         setActive(false);
       }}
       onChangeText={onChangeText}
-      accessoryRight={renderLiveLocation}
+      accessoryRight={value ? renderCloseIcon : renderLiveLocation}
       accessoryLeft={PinIcon}>
       {data.map(renderOption)}
     </Autocomplete>

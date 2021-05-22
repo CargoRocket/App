@@ -91,7 +91,7 @@ export const RouteOptions = ({navigation}) => {
     const hours = Math.floor(route.routes[0].duration / 3600);
 
     return (
-      <View style={styles.tab}>
+      <View style={styles.tab} key={`${route.name}`}>
         <Card style={styles.route} level="1" onPress={() => startNavigation()}>
           <Text category="h5">{route.name} </Text>
           <Text appearance="hint">{route.description}</Text>

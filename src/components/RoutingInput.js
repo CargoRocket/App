@@ -65,6 +65,8 @@ export const RoutingInput = ({navigation}) => {
           });
           setLoading(false);
         });
+    } else {
+      setRoutes(null);
     }
   }, [start, destination, setRoutes]);
 
