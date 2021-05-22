@@ -77,6 +77,7 @@ export const Map = () => {
     return (
       <MapboxGL.ShapeSource
         id={`cargobike-route-source-${index}-${selectedRoute}`}
+        key={`cargobike-route-source-${index}-${selectedRoute}`}
         shape={polyline.toGeoJSON(geometry, 6)}>
         <MapboxGL.LineLayer
           id={`cargobike-route-line-${index}-${selectedRoute}`}

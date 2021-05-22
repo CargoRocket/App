@@ -121,6 +121,7 @@ export const RouteOptions = ({navigation}) => {
       <View style={styles.radios}>
         {routes.map((route, index) => (
           <Radio
+            key={`radio-${index}`}
             style={styles.radio}
             status="basic"
             checked={index === selectedRoute}
