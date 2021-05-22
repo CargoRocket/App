@@ -214,6 +214,8 @@ export const NavigatingView = ({navigation}) => {
     // Configure Default Language
     Tts.setDefaultLanguage(deviceLanguage);
 
+    MapboxGL.setTelemetryEnabled(false);
+
     // Configure Location Service
     RNLocation.configure({
       distanceFilter: 0,

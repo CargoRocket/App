@@ -19,6 +19,10 @@ export const Map = () => {
   const camera = React.useRef();
 
   React.useEffect(() => {
+    MapboxGL.setTelemetryEnabled(false);
+  }, []);
+
+  React.useEffect(() => {
     if (start && !destination) {
       camera.current.setCamera({
         centerCoordinate: start.coordinates,
