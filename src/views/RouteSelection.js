@@ -20,8 +20,12 @@ import {accessToken} from '../res/config';
 import {ScrollView} from 'react-native-gesture-handler';
 import {setRoutePoint} from '../helpers/routePoints';
 import RNLocation from 'react-native-location';
+import {MapLocationSelect} from '../components/MapLocationSelect';
 
 const styles = {
+  view: {
+    flex: 1,
+  },
   routePoint: {},
   routePointList: {
     padding: 10,
@@ -36,6 +40,7 @@ const styles = {
 export const RouteSelection = ({navigation}) => {
   const [selectedRoutePoint, setSelectedRoutePoint] = React.useState(0);
   const [suggestions, setSuggestions] = React.useState([]);
+  const [mapSelectEnabled, setMapSelectEnabled] = React.useState(false);
   const i18n = React.useContext(LanguageContext);
   const {
     popupMessage: [popupMessage, setPopupMessage],
@@ -59,6 +64,12 @@ export const RouteSelection = ({navigation}) => {
       });
   };
 
+  const updateRoutePoint = (name, coordinates) => {
+    setRoutePoints(
+      setRoutePoint(routePoints, {name, coordinates}, selectedRoutePoint),
+    );
+  };
+
   const selectCurrentLocation = () => {
     console.log('location');
     RNLocation.configure({
@@ -72,16 +83,10 @@ export const RouteSelection = ({navigation}) => {
     });
     RNLocation.getLatestLocation({timeout: 1000})
       .then((latestLocation) => {
-        setRoutePoints(
-          setRoutePoint(
-            routePoints,
-            {
-              name: i18n.navigation.yourLocation,
-              coordinates: [latestLocation.longitude, latestLocation.latitude],
-            },
-            selectedRoutePoint,
-          ),
-        );
+        updateRoutePoint(i18n.navigation.yourLocation, [
+          latestLocation.longitude,
+          latestLocation.latitude,
+        ]);
       })
       .catch((error) => {
         console.log('locationError', error);
@@ -94,17 +99,7 @@ export const RouteSelection = ({navigation}) => {
   };
 
   const clearInput = () => {
-    console.log('clear');
-    setRoutePoints(
-      setRoutePoint(
-        routePoints,
-        {
-          name: '',
-          coordinates: null,
-        },
-        selectedRoutePoint,
-      ),
-    );
+    updateRoutePoint('', null);
   };
 
   const renderClear = (props) => (
@@ -123,7 +118,7 @@ export const RouteSelection = ({navigation}) => {
           key={`${element.index}-${JSON.stringify(routePoints)}`}
           style={styles.routePointInput}
           defaultValue={element.item.name}
-          autoFocus={element.index === selectedRoutePoint}
+          autoFocus={!mapSelectEnabled && element.index === selectedRoutePoint}
           accessoryRight={element.index === selectedRoutePoint ? renderClear : null}
           placeholder={
             element.index === 0
@@ -135,6 +130,7 @@ export const RouteSelection = ({navigation}) => {
           onFocus={() => {
             setSuggestions([]);
             setSelectedRoutePoint(element.index);
+            setMapSelectEnabled(false);
           }}
           onChangeText={onChangeText}
         />
@@ -176,6 +172,8 @@ export const RouteSelection = ({navigation}) => {
     <CenterIcon {...props} fill={theme['color-info-500']} />
   );
 
+  const renderListIcon = (props) => <Icon {...props} name="list-outline" />;
+
   return (
     <SafeAreaView style={styles.view}>
       <TopNavigation
@@ -191,23 +189,35 @@ export const RouteSelection = ({navigation}) => {
         <List style={styles.routePointList} data={routePoints} renderItem={renderRoutePoint} />
       </Layout>
 
-      <ScrollView style={styles.container}>
-        {suggestions.map((suggestion, index) =>
-          renderSuggestionItem(suggestion, index),
-        )}
-        <ListItem
-          key={`current-suggestion-input`}
-          title="Your current Location"
-          accessoryLeft={renderLocationIcon}
-          onPress={selectCurrentLocation}
-        />
-        {/* <ListItem
-          key={`map-suggestion-input`}
-          title="Choose on map"
-          accessoryLeft={renderMapIcon}
-          onPress={() => console.log('map')}
-        /> */}
-      </ScrollView>
+      {mapSelectEnabled ? (
+        <Layout style={styles.view}>
+          <ListItem
+            key={`current-suggestion-input`}
+            title="Back To List View"
+            accessoryLeft={renderListIcon}
+            onPress={() => setMapSelectEnabled(false)}
+          />
+          <MapLocationSelect onChange={updateRoutePoint} />
+        </Layout>
+      ) : (
+        <ScrollView style={styles.container}>
+          {suggestions.map((suggestion, index) =>
+            renderSuggestionItem(suggestion, index),
+          )}
+          <ListItem
+            key={`current-suggestion-input`}
+            title="Your current Location"
+            accessoryLeft={renderLocationIcon}
+            onPress={selectCurrentLocation}
+          />
+          <ListItem
+            key={`map-suggestion-input`}
+            title="Choose on map"
+            accessoryLeft={renderMapIcon}
+            onPress={() => setMapSelectEnabled(true)}
+          />
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 };

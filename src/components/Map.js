@@ -9,6 +9,27 @@ import {setRoutePoint} from '../helpers/routePoints';
 
 MapboxGL.setAccessToken(accessToken);
 
+const styles = StyleSheet.create({
+  map: {
+    flex: 1,
+    width: '100%',
+    zIndex: -2,
+  },
+  marker: {
+    height: 30,
+    width: 30,
+    borderRadius: 50,
+    borderColor: '#fff',
+    borderWidth: 3,
+  },
+  markerStart: {
+    backgroundColor: theme['color-info-300'],
+  },
+  markerDestination: {
+    backgroundColor: theme['color-warning-300'],
+  },
+});
+
 export const Map = () => {
   const {
     routePoints: [routePoints, setRoutePoints],
@@ -53,27 +74,6 @@ export const Map = () => {
           paddingRight: 40,
           paddingBottom: 40,
         };
-
-  const styles = StyleSheet.create({
-    map: {
-      flex: 1,
-      width: '100%',
-      zIndex: -2,
-    },
-    marker: {
-      height: 30,
-      width: 30,
-      borderRadius: 50,
-      borderColor: '#fff',
-      borderWidth: 3,
-    },
-    markerStart: {
-      backgroundColor: theme['color-info-300'],
-    },
-    markerDestination: {
-      backgroundColor: theme['color-warning-300'],
-    },
-  });
 
   const renderRoute = (route, selected, index) => {
     const geometry = route.routes[0].geometry;
