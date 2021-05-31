@@ -56,8 +56,35 @@ export const Map = () => {
     }
   }, [routePoints]);
 
+  const handleLongTouch = (point) => {
+    if (!routePoints[0].coordinates) {
+      setRoutePoints(
+        setRoutePoint(
+          routePoints,
+          {
+            name: `${point.geometry.coordinates[0].toFixed(4)}, ${point.geometry.coordinates[1].toFixed(4)}`,
+            coordinates: point.geometry.coordinates,
+          },
+          0,
+        ),
+      );
+    } else if (routePoints[routePoints.length - 1].coordinates) {
+      setRoutePoints(
+        setRoutePoint(
+          routePoints,
+          {
+            name: `${point.geometry.coordinates[0].toFixed(4)}, ${point.geometry.coordinates[1].toFixed(4)}`,
+            coordinates: point.geometry.coordinates,
+          },
+          routePoints.length - 1,
+        ),
+      );
+    }
+  };
+
   const bounds =
-    routePoints[routePoints.length - 1].coordinates && routePoints[0].coordinates
+    routePoints[routePoints.length - 1].coordinates &&
+    routePoints[0].coordinates
       ? {
           ne: routePoints[routePoints.length - 1].coordinates,
           sw: routePoints[0].coordinates,
@@ -129,32 +156,7 @@ export const Map = () => {
       pitchEnabled={false}
       // styleURL={'mapbox://styles/thenewcivilian/ck6qr6ho60ypw1irod1yw005m'}
       compassEnabled={false}
-      onLongPress={(point) => {
-        if (!routePoints[0].coordinates) {
-          setRoutePoints(
-            setRoutePoint(
-              routePoints,
-              {
-                name: `${point.geometry.coordinates[0].toFixed(4)}, ${point.geometry.coordinates[1].toFixed(4)}`,
-                coordinates: point.geometry.coordinates,
-              },
-              0,
-            ),
-          );
-        } else {
-          setRoutePoints(
-            setRoutePoint(
-              routePoints,
-              {
-                name: `${point.geometry.coordinates[0].toFixed(4)}, ${point.geometry.coordinates[1].toFixed(4)}`,
-                coordinates: point.geometry.coordinates,
-              },
-              routePoints.length - 1,
-            ),
-          );
-        }
-        // Do something
-      }}>
+      onLongPress={handleLongTouch}>
       <MapboxGL.Camera bounds={bounds} ref={camera} />
       {routes
         ? routes.map((route, index) => renderRoute(route, false, index))

@@ -71,10 +71,7 @@ export const MapLocationSelect = ({onChange}) => {
             `${event.geometry.coordinates[0].toFixed(4)}, ${event.geometry.coordinates[1].toFixed(4)}`,
             event.geometry.coordinates,
           )
-        }
-        onLongPress={(point) => {
-          console.log(point);
-        }}>
+        }>
         <MapboxGL.Camera bounds={bounds} />
       </MapboxGL.MapView>
       <View style={styles.mapCenter}>

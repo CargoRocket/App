@@ -90,6 +90,11 @@ export const RouteHeader = ({navigation}) => {
         'to',
         JSON.stringify(destination.reverse()),
       );
+      let vias = routePoints.slice(1, routePoints.length - 1).filter((via) => via.coordinates).map(((via) => via.coordinates));
+      if (vias.length > 0) {
+        vias = vias.map((via) => [...via].reverse());
+        endpointUrl.searchParams.append('vias', JSON.stringify(vias));
+      }
       endpointUrl.searchParams.append('access_token', accessToken);
       endpointUrl.searchParams.append('key', cargorocketAPIKey);
       endpointUrl.searchParams.append('format', 'mapbox');
@@ -155,8 +160,6 @@ export const RouteHeader = ({navigation}) => {
     ]);
   };
 
-  const routeIcon = (props) => <RouteIcon {...props} fill="#fff" />;
-
   const renderCloseIcon = (props) => <Icon {...props} name="close" />;
 
   return (
@@ -166,7 +169,9 @@ export const RouteHeader = ({navigation}) => {
         <Layout style={styles.header}>
           {routes ? (
             <Layout level="2" style={styles.routeInfoContainer}>
-              <Text alignSelf="left">{routePoints[0].name.slice(0, 25)}{routePoints[0].name.length > 25 ? '...': ''}</Text>
+              <Text alignSelf="left">
+                {routePoints[0].name.slice(0, 25)}{routePoints[0].name.length > 25 ? '...': ''}
+              </Text>
               <Text alignSelf="left">
                 <Text style={{fontWeight: 'bold'}}>{i18n.navigation.to}</Text> {routePoints[routePoints.length - 1].name.slice(0, 21)}{routePoints[routePoints.length - 1].name.length > 21 ? '...': ''}
               </Text>

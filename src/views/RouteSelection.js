@@ -11,14 +11,19 @@ import {
   TopNavigation,
 } from '@ui-kitten/components';
 import React from 'react';
-import {SafeAreaView} from 'react-native';
+import {SafeAreaView, View, Button as ReactButton} from 'react-native';
 import {default as theme} from '../res/custom-theme.json';
 import CenterIcon from '../res/images/icons/crosshairs-gps.svg';
 import {RoutingContext, LanguageContext, UiContext} from '../context';
-import {TouchableWithoutFeedback} from 'react-native';
+import {TouchableWithoutFeedback, TouchableOpacity} from 'react-native';
 import {accessToken} from '../res/config';
 import {ScrollView} from 'react-native-gesture-handler';
-import {setRoutePoint} from '../helpers/routePoints';
+import {
+  addRoutePoint,
+  setRoutePoint,
+  cleanUnusedVias,
+  removeRoutePoint,
+} from '../helpers/routePoints';
 import RNLocation from 'react-native-location';
 import {MapLocationSelect} from '../components/MapLocationSelect';
 
@@ -26,14 +31,48 @@ const styles = {
   view: {
     flex: 1,
   },
-  routePoint: {},
+  routePoint: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#fff',
+    padding: 10,
+  },
   routePointList: {
     padding: 10,
   },
   routePointInput: {
-    width: '100%',
+    flex: 1,
     height: '100%',
-    marginTop: -15,
+  },
+  addVia: {
+    borderRadius: 30,
+    marginLeft: 15,
+    width: 30,
+    height: 30,
+    display: 'flex',
+    backgroundColor: '#EDF1F7',
+    borderWidth: 2,
+    borderColor: '#E4E9F2',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  addViaText: {
+    height: 20,
+    width: 20,
+  },
+  removeVia: {
+    marginRight: 5,
+    width: 30,
+    height: 30,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  removeViaText: {
+    height: 20,
+    width: 20,
   },
 };
 
@@ -73,7 +112,6 @@ export const RouteSelection = ({navigation}) => {
   };
 
   const selectCurrentLocation = () => {
-    console.log('location');
     RNLocation.configure({
       distanceFilter: 0,
     });
@@ -110,12 +148,35 @@ export const RouteSelection = ({navigation}) => {
     </TouchableWithoutFeedback>
   );
 
+  const addEmptyPoint = (index) => {
+    setRoutePoints(
+      addRoutePoint(
+        routePoints,
+        {
+          name: '',
+          coordinates: null,
+        },
+        index,
+      ),
+    );
+  };
+
   const renderRoutePoint = (element) => {
     return (
-      <ListItem
+      <View
         style={styles.routePoint}
-        key={`${element.index}-route-point-input`}
-        accessoryRight={renderLocationIcon}>
+        key={`${element.index}-route-point-input`}>
+        {element.index != 0 && element.index != routePoints.length - 1 ? (
+          <TouchableOpacity
+            style={styles.removeVia}
+            onPress={() => setRoutePoints(removeRoutePoint(routePoints, element.index))}>
+            <Icon
+              style={styles.removeViaText}
+              fill="#2E3A59"
+              name="trash-outline"
+            />
+          </TouchableOpacity>
+        ) : null}
         <Input
           key={`${element.index}-${JSON.stringify(routePoints)}`}
           style={styles.routePointInput}
@@ -133,10 +194,22 @@ export const RouteSelection = ({navigation}) => {
             setSuggestions([]);
             setSelectedRoutePoint(element.index);
             setMapSelectEnabled(false);
+            setRoutePoints(cleanUnusedVias(routePoints, selectedRoutePoint));
           }}
           onChangeText={onChangeText}
         />
-      </ListItem>
+        {element.index < routePoints.length - 1 ? (
+          <TouchableOpacity
+            style={styles.addVia}
+            onPress={() => addEmptyPoint(element.index + 1)}>
+            <Icon
+              style={styles.addViaText}
+              fill="#2E3A59"
+              name="plus-outline"
+            />
+          </TouchableOpacity>
+        ) : null}
+      </View>
     );
   };
 
