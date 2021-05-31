@@ -5,11 +5,39 @@ import {LocationSelect} from './LocationSelection';
 import {RoutingContext, LanguageContext, UiContext} from '../../src/context';
 import {accessToken, cargorocketAPIKey} from '../res/config';
 import {deviceLanguage} from '../helpers/LanguageProvider';
+import {setRoutePoint} from '../helpers/routePoints';
+
+const styles = StyleSheet.create({
+  navigationOverview: {
+    position: 'relative',
+    width: '100%',
+  },
+  loader: {
+    position: 'absolute',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    bottom: -60,
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+  },
+  routingMenu: {
+    backgroundColor: '#ffffff',
+    borderRadius: 0,
+  },
+  title: {
+    fontWeight: 'bold',
+    color: '#00002288',
+    textAlign: 'center',
+    marginBottom: 5,
+  },
+});
 
 export const RoutingInput = ({navigation}) => {
   const {
-    destination: [destination, setDestination],
-    start: [start, setStart],
+    routePoints: [routePoints, setRoutePoints],
     routes: [routes, setRoutes],
   } = React.useContext(RoutingContext);
   const [loading, setLoading] = React.useState(false);
@@ -20,17 +48,32 @@ export const RoutingInput = ({navigation}) => {
   let lastAbortController = React.useRef(null);
 
   React.useEffect(() => {
-    if (start && destination) {
+    if (
+      routePoints[0].coordinates &&
+      routePoints[routePoints.length - 1].coordinates
+    ) {
       setLoading(true);
       setRoutes(null);
       if (lastAbortController.current) {
         lastAbortController.current.abort();
       }
       lastAbortController.current = new window.AbortController();
-      fetch(
-        `https://api.cargorocket.de/v1/routes?from=[${start.coordinates[1]},${start.coordinates[0]}]&to=[${destination.coordinates[1]},${destination.coordinates[0]}]&access_token=${accessToken}&key=${cargorocketAPIKey}&format=mapbox&lang=${deviceLanguage.slice(0,2)}`,
-        {signal: lastAbortController.current.signal},
-      )
+
+      // Build url
+      const endpointUrl = new URL('https://api.cargorocket.de/v1/routes');
+      const start = [...routePoints[0].coordinates];
+      endpointUrl.searchParams.append('from', JSON.stringify(start.reverse()));
+      const destination = [...routePoints[routePoints.length - 1].coordinates];
+      endpointUrl.searchParams.append(
+        'to',
+        JSON.stringify(destination.reverse()),
+      );
+      endpointUrl.searchParams.append('access_token', accessToken);
+      endpointUrl.searchParams.append('key', cargorocketAPIKey);
+      endpointUrl.searchParams.append('format', 'mapbox');
+      endpointUrl.searchParams.append('lang', deviceLanguage.slice(0, 2));
+
+      fetch(endpointUrl, {signal: lastAbortController.current.signal})
         .then((rawData) => rawData.json())
         .then((routesResponse) => {
           if (routesResponse.name && routesResponse.name === 'Error') {
@@ -45,7 +88,9 @@ export const RoutingInput = ({navigation}) => {
           setLoading(false);
           setRoutes([
             {
-              ...routesResponse.find((route) => route.profile.name === 'cargobike'),
+              ...routesResponse.find(
+                (route) => route.profile.name === 'cargobike',
+              ),
               name: i18n.navigation.cargoBikeRoute,
               description: i18n.navigation.cargoBikeRouteDescription,
             },
@@ -68,40 +113,32 @@ export const RoutingInput = ({navigation}) => {
     } else {
       setRoutes(null);
     }
-  }, [start, destination, setRoutes]);
+  }, [routePoints, setRoutes]);
 
-  const styles = StyleSheet.create({
-    navigationOverview: {
-      position: 'relative',
-      width: '100%',
-    },
-    loader: {
-      position: 'absolute',
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      alignSelf: 'center',
-      bottom: -60,
-      width: 50,
-      height: 50,
-      borderRadius: 50,
-    },
-    routingMenu: {
-      backgroundColor: '#ffffff',
-      borderRadius: 0,
-    },
-    title: {
-      fontWeight: 'bold',
-      color: '#00002288',
-      textAlign: 'center',
-      marginBottom: 5,
-    },
-  });
+  const renderLocationSelect = (routePoint, index) => {
+    return (
+      <LocationSelect
+        key={`LocationInput-${index}`}
+        onChange={(value) => {
+          setRoutePoints(setRoutePoint(routePoints, value, index));
+        }}
+        value={routePoint}
+        placeholder={
+          index === 0
+            ? i18n.navigation.start
+            : index === routePoints.length - 1
+            ? i18n.navigation.destination
+            : i18n.navigation.via
+        }
+        liveLocation={index === 0 ? true : false}
+      />
+    );
+  };
 
   return (
     <View style={styles.navigationOverview}>
       <Card style={styles.routingMenu}>
-        <LocationSelect
+        {/* <LocationSelect
           onChange={setStart}
           value={start}
           placeholder={i18n.navigation.start}
@@ -111,7 +148,10 @@ export const RoutingInput = ({navigation}) => {
           onChange={setDestination}
           value={destination}
           placeholder={i18n.navigation.destination}
-        />
+        /> */}
+        {routePoints.map((routePoint, index) =>
+          renderLocationSelect(routePoint, index),
+        )}
       </Card>
       {loading ? (
         <Card style={styles.loader}>

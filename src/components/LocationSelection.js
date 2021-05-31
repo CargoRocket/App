@@ -123,7 +123,10 @@ export const LocationSelect = ({
     ) : null;
 
   const clearInput = () => {
-    onChange(null);
+    onChange({
+      name: '',
+      coordinates: null,
+    });
   };
 
   const renderCloseIcon = (props) => (

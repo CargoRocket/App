@@ -91,8 +91,16 @@ export const App = () => {
   );
   const currentRouteInfo = React.useState(null);
 
-  const start = React.useState(null);
-  const destination = React.useState(null);
+  const routePoints = React.useState([
+    {
+      name: '',
+      coordinates: null,
+    },
+    {
+      name: '',
+      coordinates: null,
+    },
+  ]);
   const routes = React.useState(null);
   const selectedRoute = React.useState(0);
 
@@ -109,8 +117,7 @@ export const App = () => {
         <LanguageContext.Provider value={LanguageProvider()}>
           <RoutingContext.Provider
             value={{
-              start,
-              destination,
+              routePoints,
               routes,
               selectedRoute,
               routeStorage,

@@ -11,6 +11,7 @@ import {
   LanguageContext,
   SettingsContext,
 } from '../context';
+import {setRoutePoint} from '../helpers/routePoints';
 import {accessToken, cargorocketAPIKey} from '../res/config';
 import RNLocation from 'react-native-location';
 import {RouteFeedbackPopup} from '../components/navigation/RouteFeedbackPopup';
@@ -96,13 +97,15 @@ export const NavigatingView = ({navigation}) => {
     voiceInstructions: [voiceInstructionActive, setVoiceInstructionActive],
   } = React.useContext(SettingsContext);
   const {
-    destination: [destination, setDestination],
-    start: [start, setStart],
+    routePoints: [routePoints, setRoutePoints],
     routes: [routes, setRoutes],
     selectedRoute: [selectedRoute, setSelectedRoute],
     currentRouteInfo: [currentRouteInfo, setCurrentRouteInfo],
     routeStorage: [routeStorage, setRouteStorage],
   } = React.useContext(RoutingContext);
+
+  const start = routePoints[0];
+  const destination = routePoints[routePoints.length - 1];
   const i18n = React.useContext(LanguageContext);
   const route = routes[selectedRoute].routes[0];
   const legs = route.legs;
@@ -212,7 +215,7 @@ export const NavigatingView = ({navigation}) => {
     });
 
     // Configure Default Language
-    Tts.setDefaultLanguage(deviceLanguage);
+    Tts.setDefaultLanguage(deviceLanguage).catch((e) => console.log(e));
 
     MapboxGL.setTelemetryEnabled(false);
 
@@ -340,47 +343,19 @@ export const NavigatingView = ({navigation}) => {
     );
   };
 
-  const renderStartMarker = () => {
-    if (currentLocation) {
+  const renderRoutePoint = (routePoint, index) => {
+    if (routePoint.coordinates) {
       return (
         <MapboxGL.PointAnnotation
-          id="start-marker"
-          coordinate={[currentLocation.longitude, currentLocation.latitude]}
-          onDragEnd={(point) => {
-            setStart({
-              name: `${point.geometry.coordinates[0].toFixed(4)},
-                ${point.geometry.coordinates[1].toFixed(4)}`,
-              coordinates: point.geometry.coordinates,
-            });
-          }}>
+          id={`routePoint-${index}`}
+          key={`routePoint-${index}`}
+          coordinate={routePoint.coordinates}>
           <View
-            style={{
-              ...styles.marker,
-              ...styles.markerStart,
-            }}
-          />
-        </MapboxGL.PointAnnotation>
-      );
-    }
-  };
-
-  const renderDestinationMarker = () => {
-    if (destination && destination.coordinates) {
-      return (
-        <MapboxGL.PointAnnotation
-          id="destination-marker"
-          coordinate={destination.coordinates}
-          onDragEnd={(point) => {
-            setDestination({
-              name: `${point.geometry.coordinates[0].toFixed(4)}, ${point.geometry.coordinates[1].toFixed(4)}`,
-              coordinates: point.geometry.coordinates,
-            });
-          }}>
-          <View
-            style={{
-              ...styles.marker,
-              ...styles.markerDestination,
-            }}
+            style={
+              index === 0
+                ? {...styles.marker, ...styles.markerStart}
+                : {...styles.marker, ...styles.markerDestination}
+            }
           />
         </MapboxGL.PointAnnotation>
       );
@@ -457,8 +432,21 @@ export const NavigatingView = ({navigation}) => {
           ref={mapCamera}
         />
         {renderRoute()}
-        {renderStartMarker()}
-        {renderDestinationMarker()}
+        {routePoints.map((routePoint, index) => {
+          if (index === 0) {
+            return renderRoutePoint(
+              {
+                name: 'Your Position',
+                coordinates: [
+                  currentLocation.longitude,
+                  currentLocation.latitude,
+                ],
+              },
+              index,
+            );
+          }
+          return renderRoutePoint(routePoint, index);
+        })}
       </MapboxGL.MapView>
       <NavigationHeader
         navigation={navigation}

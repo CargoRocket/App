@@ -41,6 +41,7 @@
   "navigation": {
     "start": "Start",
     "destination": "Ziel",
+    "via": "Via",
     "yourLocation": "Dein Standort",
     "cargoBikeRoute": "Lastenrad-Route",
     "cargoBikeRouteDescription": "für dein Lastenrad optimiert",

@@ -56,8 +56,6 @@ const styles = StyleSheet.create({
 
 export const RouteOptions = ({navigation}) => {
   const {
-    destination: [destination, setDestination],
-    start: [start, setStart],
     routes: [routes, setRoutes],
     selectedRoute: [selectedRoute, setSelectedRoute],
   } = React.useContext(RoutingContext);

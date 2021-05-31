@@ -41,6 +41,7 @@
   "navigation": {
     "start": "Start",
     "destination": "Destination",
+    "via": "via",
     "yourLocation": "Your Location",
     "cargoBikeRoute": "Cargo-Bike Route",
     "cargoBikeRouteDescription": "optimized for your bike",

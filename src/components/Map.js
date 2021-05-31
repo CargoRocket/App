@@ -5,13 +5,13 @@ import {accessToken} from '../res/config';
 import {default as theme} from '../res/custom-theme.json';
 import polyline from '@mapbox/polyline';
 import {RoutingContext} from '../context';
+import {setRoutePoint} from '../helpers/routePoints';
 
 MapboxGL.setAccessToken(accessToken);
 
 export const Map = () => {
   const {
-    destination: [destination, setDestination],
-    start: [start, setStart],
+    routePoints: [routePoints, setRoutePoints],
     routes: [routes, setRoutes],
     selectedRoute: [selectedRoute, setSelectedRoute],
   } = React.useContext(RoutingContext);
@@ -23,20 +23,23 @@ export const Map = () => {
   }, []);
 
   React.useEffect(() => {
-    if (start && !destination) {
+    if (
+      routePoints[0].coordinates &&
+      !routePoints[routePoints.length - 1].coordinates
+    ) {
       camera.current.setCamera({
-        centerCoordinate: start.coordinates,
+        centerCoordinate: routePoints[0].coordinates,
         zoomLevel: 10,
         animationDuration: 2000,
       });
     }
-  }, [start, destination]);
+  }, [routePoints]);
 
   const bounds =
-    destination && start && destination.coordinates && start.coordinates
+    routePoints[routePoints.length - 1].coordinates && routePoints[0].coordinates
       ? {
-          ne: destination.coordinates,
-          sw: start.coordinates,
+          ne: routePoints[routePoints.length - 1].coordinates,
+          sw: routePoints[0].coordinates,
           paddingTop: 80,
           paddingLeft: 40,
           paddingRight: 40,
@@ -88,49 +91,32 @@ export const Map = () => {
     );
   };
 
-  const renderStartMarker = () => {
-    if (start && start.coordinates) {
+  const renderRoutePoint = (routePoint, index) => {
+    if (routePoint.coordinates) {
       return (
         <MapboxGL.PointAnnotation
-          id="start-marker"
-          coordinate={start.coordinates}
+          id={`routePoint-${index}`}
+          key={`routePoint-${index}`}
+          coordinate={routePoint.coordinates}
           draggable={true}
           onDragEnd={(point) => {
-            setStart({
-              name: `${point.geometry.coordinates[0].toFixed(4)},
-                ${point.geometry.coordinates[1].toFixed(4)}`,
-              coordinates: point.geometry.coordinates,
-            });
+            setRoutePoints(
+              setRoutePoint(
+                routePoints,
+                {
+                  name: `${point.geometry.coordinates[0].toFixed(4)}, ${point.geometry.coordinates[1].toFixed(4)}`,
+                  coordinates: point.geometry.coordinates,
+                },
+                index,
+              ),
+            );
           }}>
           <View
-            style={{
-              ...styles.marker,
-              ...styles.markerStart,
-            }}
-          />
-        </MapboxGL.PointAnnotation>
-      );
-    }
-  };
-
-  const renderDestinationMarker = () => {
-    if (destination && destination.coordinates) {
-      return (
-        <MapboxGL.PointAnnotation
-          id="destination-marker"
-          coordinate={destination.coordinates}
-          draggable={true}
-          onDragEnd={(point) => {
-            setDestination({
-              name: `${point.geometry.coordinates[0].toFixed(4)}, ${point.geometry.coordinates[1].toFixed(4)}`,
-              coordinates: point.geometry.coordinates,
-            });
-          }}>
-          <View
-            style={{
-              ...styles.marker,
-              ...styles.markerDestination,
-            }}
+            style={
+              index === 0
+                ? {...styles.marker, ...styles.markerStart}
+                : {...styles.marker, ...styles.markerDestination}
+            }
           />
         </MapboxGL.PointAnnotation>
       );
@@ -144,24 +130,39 @@ export const Map = () => {
       // styleURL={'mapbox://styles/thenewcivilian/ck6qr6ho60ypw1irod1yw005m'}
       compassEnabled={false}
       onLongPress={(point) => {
-        if (!start) {
-          setStart({
-            name: `${point.geometry.coordinates[0].toFixed(4)}, ${point.geometry.coordinates[1].toFixed(4)}`,
-            coordinates: point.geometry.coordinates,
-          });
+        if (!routePoints[0].coordinates) {
+          setRoutePoints(
+            setRoutePoint(
+              routePoints,
+              {
+                name: `${point.geometry.coordinates[0].toFixed(4)}, ${point.geometry.coordinates[1].toFixed(4)}`,
+                coordinates: point.geometry.coordinates,
+              },
+              0,
+            ),
+          );
         } else {
-          setDestination({
-            name: `${point.geometry.coordinates[0].toFixed(4)}, ${point.geometry.coordinates[1].toFixed(4)}`,
-            coordinates: point.geometry.coordinates,
-          });
+          setRoutePoints(
+            setRoutePoint(
+              routePoints,
+              {
+                name: `${point.geometry.coordinates[0].toFixed(4)}, ${point.geometry.coordinates[1].toFixed(4)}`,
+                coordinates: point.geometry.coordinates,
+              },
+              routePoints.length - 1,
+            ),
+          );
         }
         // Do something
       }}>
       <MapboxGL.Camera bounds={bounds} ref={camera} />
-      {routes ? routes.map((route, index) => renderRoute(route, false, index)) : null}
+      {routes
+        ? routes.map((route, index) => renderRoute(route, false, index))
+        : null}
       {routes ? renderRoute(routes[selectedRoute], true, -1) : null}
-      {renderStartMarker()}
-      {renderDestinationMarker()}
+      {routePoints.map((routePoint, index) =>
+        renderRoutePoint(routePoint, index),
+      )}
     </MapboxGL.MapView>
   );
 };
