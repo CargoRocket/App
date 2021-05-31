@@ -43,6 +43,11 @@
     "destination": "Destination",
     "via": "via",
     "yourLocation": "Your Location",
+    "chooseOnMap": "Select on map",
+    "backToListView": "Back to list view",
+    "to": "to",
+    "whereToGo": "Where to go?",
+    "clickBannerToChoose": "Click banner to choose",
     "cargoBikeRoute": "Cargo-Bike Route",
     "cargoBikeRouteDescription": "optimized for your bike",
     "classicBikeRoute": "Classic Bike Route",
@@ -119,5 +124,5 @@
     "howWouldYouRate": "How would you rate this section?",
     "whyDoYouRate": "Why do you give this section this rating? (Optional)",
     "send": "Send"
-  }
+  },
 }

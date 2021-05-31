@@ -18,7 +18,7 @@ const styles = {
   routeInfoContainer: {
     flex: 1,
     marginHorizontal: 10,
-    borderRadius: 4,
+    borderRadius: 10,
     height: '90%',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -38,7 +38,9 @@ const styles = {
   header: {
     position: 'relative',
     width: '80%',
+    minHeight: 60,
     borderRadius: 10,
+    paddingVertical: 5,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
@@ -122,6 +124,10 @@ export const RouteHeader = ({navigation}) => {
           ]);
         })
         .catch((error) => {
+          if (error.name === 'AbortError') {
+            console.log('Aborted', error);
+            return;
+          }
           console.log(error);
           setPopupMessage({
             title: i18n.modals.errorFindingRouteTitle,
@@ -160,12 +166,15 @@ export const RouteHeader = ({navigation}) => {
         <Layout style={styles.header}>
           {routes ? (
             <Layout level="2" style={styles.routeInfoContainer}>
-              <Text alignSelf="left">{routePoints[0].name.slice(0, 20)}...</Text>
-              <Text alignSelf="left"><Text bold="true">To</Text> {routePoints[routePoints.length - 1].name.slice(0, 20)}...</Text>
+              <Text alignSelf="left">{routePoints[0].name.slice(0, 25)}{routePoints[0].name.length > 25 ? '...': ''}</Text>
+              <Text alignSelf="left">
+                <Text style={{fontWeight: 'bold'}}>{i18n.navigation.to}</Text> {routePoints[routePoints.length - 1].name.slice(0, 21)}{routePoints[routePoints.length - 1].name.length > 21 ? '...': ''}
+              </Text>
             </Layout>
           ) : (
             <Layout level="2" style={styles.routeInfoContainer}>
-              <Text>Where to go?</Text>
+              <Text category="h6">{i18n.navigation.whereToGo}</Text>
+              <Text appearance='hint'>{i18n.navigation.clickBannerToChoose}</Text>
             </Layout>
           )}
           {routes ? (
@@ -176,13 +185,7 @@ export const RouteHeader = ({navigation}) => {
               style={styles.cancelButton}
               accessoryLeft={renderCloseIcon}
             />
-          ) : (
-            <Button
-              appearance="ghost"
-              style={styles.routeButton}
-              accessoryLeft={routeIcon}
-            />
-          )}
+          ) : null}
         </Layout>
       </TouchableWithoutFeedback>
       {loading ? (

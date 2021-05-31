@@ -48,6 +48,7 @@ export const RouteSelection = ({navigation}) => {
 
   const {
     routePoints: [routePoints, setRoutePoints],
+    routes: [routes, setRoutes],
   } = React.useContext(RoutingContext);
 
   const onChangeText = (query) => {
@@ -65,6 +66,7 @@ export const RouteSelection = ({navigation}) => {
   };
 
   const updateRoutePoint = (name, coordinates) => {
+    setRoutes(null);
     setRoutePoints(
       setRoutePoint(routePoints, {name, coordinates}, selectedRoutePoint),
     );
@@ -193,7 +195,7 @@ export const RouteSelection = ({navigation}) => {
         <Layout style={styles.view}>
           <ListItem
             key={`current-suggestion-input`}
-            title="Back To List View"
+            title={i18n.navigation.backToListView}
             accessoryLeft={renderListIcon}
             onPress={() => setMapSelectEnabled(false)}
           />
@@ -206,13 +208,13 @@ export const RouteSelection = ({navigation}) => {
           )}
           <ListItem
             key={`current-suggestion-input`}
-            title="Your current Location"
+            title={i18n.navigation.yourLocation}
             accessoryLeft={renderLocationIcon}
             onPress={selectCurrentLocation}
           />
           <ListItem
             key={`map-suggestion-input`}
-            title="Choose on map"
+            title={i18n.navigation.chooseOnMap}
             accessoryLeft={renderMapIcon}
             onPress={() => setMapSelectEnabled(true)}
           />
