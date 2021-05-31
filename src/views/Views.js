@@ -4,6 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {NavigatingView} from './NavigatingView';
 import {Content} from './content/Content';
 import {ProjectWebView} from './ProjectWebView';
+import {RouteSelection} from './RouteSelection';
 import {UiContext} from '../context';
 
 import {StartView} from './onboarding/StartView';
@@ -28,6 +29,7 @@ export const Views = () => {
             <Screen name="Content" component={Content} />
             <Screen name="Navigating" component={NavigatingView} />
             <Screen name="ProjectWebView" component={ProjectWebView} />
+            <Screen name="RouteSelection" component={RouteSelection} />
           </>
         ) : (
           <>
