@@ -132,8 +132,8 @@ android {
         applicationId "de.cargorocket"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 10
-        versionName "0.10"
+        versionCode 100
+        versionName "1.00"
         multiDexEnabled true
     }
     splits {

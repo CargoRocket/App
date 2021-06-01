@@ -4,18 +4,25 @@ import {Card, Text, Icon, Modal} from '@ui-kitten/components';
 import theme from '../res/custom-theme.json';
 import {UiContext} from '../context';
 
+//
+// Responsible for showing information to the user.
+// This should be used to show errors and relevant information.
+// Its globally accessible via the popupMessage value of the UIContext.
+//
 export const MessagePopup = () => {
   const {
     popupMessage: [message, setMessage],
   } = React.useContext(UiContext);
 
+  const handleBackdropPressed = () => {
+    setMessage(null);
+  };
+
   return (
     <Modal
       visible={message !== null}
       backdropStyle={styles.backdrop}
-      onBackdropPress={() => {
-        setMessage(null);
-      }}>
+      onBackdropPress={handleBackdropPressed}>
       {message !== null ? (
         <Card disabled={true} style={styles.message}>
           {message.status === 'info' ? (

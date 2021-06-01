@@ -289,7 +289,7 @@ export const NavigatingView = ({navigation}) => {
         );
 
         if (distanceToCurrentStepPoint > distanceToNextStepPoint) {
-          if (distanceToNextStepPoint > reroutingMargin) {
+          if (distanceToNextStepPoint > (currentLocation.accuracy / 100) + reroutingMargin) {
             // REROUTING
             startRerouting();
             return;
@@ -303,7 +303,7 @@ export const NavigatingView = ({navigation}) => {
             );
           }
         } else {
-          if (distanceToCurrentStepPoint > reroutingMargin) {
+          if (distanceToCurrentStepPoint > (currentLocation.accuracy / 100) + reroutingMargin) {
             // REROUTING
             startRerouting();
             return;
@@ -313,7 +313,7 @@ export const NavigatingView = ({navigation}) => {
         }
       } else {
         // Last Step
-        if (distanceToCurrentStepPoint < arriveMargin) {
+        if (distanceToCurrentStepPoint < (currentLocation.accuracy / 100) + arriveMargin) {
           // Save Route
           setRouteStorage([...routeStorage, currentRouteInfo]);
 
