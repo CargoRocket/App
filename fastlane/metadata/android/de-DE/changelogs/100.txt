@@ -1,0 +1,8 @@
+Version 1.0 enthält:
+
+<ul>
+  <li>Erste Version der Navigationssicht</li>
+  <li>Projekt Übersicht Seite</li>
+  <li>Lastenrad-Setup Dialog</li>
+  <li>Applikations Einstellungen</li>
+</ul>

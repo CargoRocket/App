@@ -1,0 +1,4 @@
+<p>
+Our mission at CargoRocket is to make riding a cargo bike as smooth as possible. Providing insights into the special needs of our drivers and providing this information to decision makers to improve the current infrastructure. We generate Reports, Indexes and provide routing solutions.
+This App is built as a demo of our routing API and to provide insights into the project to the public.
+</p>
