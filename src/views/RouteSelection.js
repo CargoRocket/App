@@ -26,6 +26,7 @@ import {
 } from '../helpers/routePoints';
 import RNLocation from 'react-native-location';
 import {MapLocationSelect} from '../components/MapLocationSelect';
+import Base from '../helpers/base64';
 
 const styles = {
   view: {
@@ -92,7 +93,7 @@ export const RouteSelection = ({navigation}) => {
 
   const onChangeText = (query) => {
     fetch(
-      `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${accessToken}&country=DE`,
+      `https://api.mapbox.com/geocoding/v5/mapbox.places/${query}.json?access_token=${Base.atob(accessToken)}&country=DE`,
     )
       .then((rawData) => rawData.json())
       .then((response) => {

@@ -6,8 +6,9 @@ import {default as theme} from '../res/custom-theme.json';
 import polyline from '@mapbox/polyline';
 import {RoutingContext} from '../context';
 import {setRoutePoint} from '../helpers/routePoints';
+import Base from '../helpers/base64';
 
-MapboxGL.setAccessToken(accessToken);
+MapboxGL.setAccessToken(Base.atob(accessToken));
 
 const styles = StyleSheet.create({
   map: {

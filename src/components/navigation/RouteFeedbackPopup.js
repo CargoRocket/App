@@ -4,6 +4,7 @@ import {Card, Text, Icon, Modal, Button, Input} from '@ui-kitten/components';
 import {UiContext, LanguageContext} from '../../context';
 import {cargorocketAPIKey} from '../../res/config';
 import theme from '../../res/custom-theme.json';
+import Base from '../../helpers/base64';
 
 const styles = StyleSheet.create({
   container: {
@@ -66,7 +67,7 @@ export const RouteFeedbackPopup = ({
   const i18n = React.useContext(LanguageContext);
 
   const sendFeedback = () => {
-    fetch(`https://api.cargorocket.de/mail?key=${cargorocketAPIKey}`, {
+    fetch(`https://api.cargorocket.de/mail?key=${ Base.atob(cargorocketAPIKey)}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -21,6 +21,7 @@ import CenterIcon from '../res/images/icons/crosshairs-gps.svg';
 import {deviceLanguage} from '../helpers/LanguageProvider';
 import KeepAwake from 'react-native-keep-awake';
 import RNDisableBatteryOptimizationsAndroid from 'react-native-disable-battery-optimizations-android';
+import Base from '../helpers/base64';
 
 const styles = StyleSheet.create({
   view: {
@@ -134,7 +135,7 @@ export const NavigatingView = ({navigation}) => {
   const startRerouting = () => {
     setRerouting(true);
     fetch(
-      `https://api.cargorocket.de/v1/routes?from=[${currentLocation.latitude},${currentLocation.longitude}]&to=[${destination.coordinates[1]},${destination.coordinates[0]}]&access_token=${accessToken}&key=${cargorocketAPIKey}&format=mapbox&lang=${deviceLanguage.slice(0,2)}`,
+      `https://api.cargorocket.de/v1/routes?from=[${currentLocation.latitude},${currentLocation.longitude}]&to=[${destination.coordinates[1]},${destination.coordinates[0]}]&access_token=${Base.atob(accessToken)}&key=${Base.atob(cargorocketAPIKey)}&format=mapbox&lang=${deviceLanguage.slice(0,2)}`,
     )
       .then((rawData) => rawData.json())
       .then((routesResponse) => {

@@ -15,8 +15,9 @@ import {
   Divider,
   TopNavigation,
 } from '@ui-kitten/components';
+import Base from '../helpers/base64';
 
-MapboxGL.setAccessToken(accessToken);
+MapboxGL.setAccessToken(Base.atob(accessToken));
 
 const styles = StyleSheet.create({
   map: {

@@ -1,0 +1,3 @@
+export const accessToken =
+  'cGsuZXlKMUlqb2lZMkZ5WjI5eWIyTnJaWFFpTENKaElqb2lZMnR3WldscGRXVmxNRGwwZWpKdWJ6UnhlR013TkdWNlp5SjkuV0J5cnRCZjBUd1AyajJVS3BkbEN3QQ==';
+export const cargorocketAPIKey = 'UXh4eUJ4UlJOQXlSZlgyV1hCWHN1UDZ0';

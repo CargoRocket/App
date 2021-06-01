@@ -6,6 +6,7 @@ import {RoutingContext, LanguageContext, UiContext} from '../../src/context';
 import {accessToken, cargorocketAPIKey} from '../res/config';
 import {deviceLanguage} from '../helpers/LanguageProvider';
 import {default as theme} from '../res/custom-theme.json';
+import Base from '../helpers/base64';
 
 const styles = {
   navigationOverview: {
@@ -90,13 +91,16 @@ export const RouteHeader = ({navigation}) => {
         'to',
         JSON.stringify(destination.reverse()),
       );
-      let vias = routePoints.slice(1, routePoints.length - 1).filter((via) => via.coordinates).map(((via) => via.coordinates));
+      let vias = routePoints
+        .slice(1, routePoints.length - 1)
+        .filter((via) => via.coordinates)
+        .map((via) => via.coordinates);
       if (vias.length > 0) {
         vias = vias.map((via) => [...via].reverse());
         endpointUrl.searchParams.append('vias', JSON.stringify(vias));
       }
-      endpointUrl.searchParams.append('access_token', accessToken);
-      endpointUrl.searchParams.append('key', cargorocketAPIKey);
+      endpointUrl.searchParams.append('access_token', Base.atob(accessToken));
+      endpointUrl.searchParams.append('key', Base.atob(cargorocketAPIKey));
       endpointUrl.searchParams.append('format', 'mapbox');
       endpointUrl.searchParams.append('lang', deviceLanguage.slice(0, 2));
 

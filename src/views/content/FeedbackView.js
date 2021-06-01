@@ -4,6 +4,7 @@ import {SafeAreaView} from 'react-native';
 import Logo from '../../res/images/logo.svg';
 import {LanguageContext, UiContext} from '../../context';
 import {cargorocketAPIKey} from '../../res/config';
+import Base from '../../helpers/base64';
 
 const styles = {
   view: {
@@ -33,17 +34,20 @@ export const FeedbackView = ({navigation}) => {
 
   const sendFeedback = () => {
     setLoading(true);
-    fetch(`https://api.cargorocket.de/mail?key=${cargorocketAPIKey}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+    fetch(
+      `https://api.cargorocket.de/mail?key=${Base.atob(cargorocketAPIKey)}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message,
+          type: 'APP Feedback',
+          email,
+        }),
       },
-      body: JSON.stringify({
-        message,
-        type: 'APP Feedback',
-        email,
-      }),
-    })
+    )
       .then(() => {
         setPopupMessage({
           title: i18n.modals.feedbackSendTitle,

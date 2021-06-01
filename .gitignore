@@ -62,8 +62,6 @@ buck-out/
 # CocoaPods
 /ios/Pods/
 
-src/res/config.js
-
 *.hprof
 
 android/app/release/app-release.aab
