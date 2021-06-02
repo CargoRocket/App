@@ -88,6 +88,7 @@ export const RouteSelection = ({navigation}) => {
 
   const {
     routePoints: [routePoints, setRoutePoints],
+    routePointStorage: [routePointStorage, setRoutePointStorage],
     routes: [routes, setRoutes],
   } = React.useContext(RoutingContext);
 
@@ -174,7 +175,9 @@ export const RouteSelection = ({navigation}) => {
         {element.index != 0 && element.index != routePoints.length - 1 ? (
           <TouchableOpacity
             style={styles.removeVia}
-            onPress={() => setRoutePoints(removeRoutePoint(routePoints, element.index))}>
+            onPress={() =>
+              setRoutePoints(removeRoutePoint(routePoints, element.index))
+            }>
             <Icon
               style={styles.removeViaText}
               fill="#2E3A59"
@@ -187,7 +190,9 @@ export const RouteSelection = ({navigation}) => {
           style={styles.routePointInput}
           defaultValue={element.item.name}
           autoFocus={!mapSelectEnabled && element.index === selectedRoutePoint}
-          accessoryRight={element.index === selectedRoutePoint ? renderClear : null}
+          accessoryRight={
+            element.index === selectedRoutePoint ? renderClear : null
+          }
           placeholder={
             element.index === 0
               ? i18n.navigation.start
@@ -220,19 +225,19 @@ export const RouteSelection = ({navigation}) => {
 
   const renderIconMarker = (props) => <Icon {...props} name="pin-outline" />;
 
-  const renderSuggestionItem = (suggestion, index) => {
+  const renderSuggestionItem = (name, coordinates, index) => {
     return (
       <ListItem
         key={`${index}-suggestion-input`}
-        title={suggestion.place_name}
+        title={name}
         accessoryLeft={renderIconMarker}
         onPress={() => {
           setRoutePoints(
             setRoutePoint(
               routePoints,
               {
-                name: suggestion.place_name,
-                coordinates: suggestion.geometry.coordinates,
+                name,
+                coordinates,
               },
               selectedRoutePoint,
             ),
@@ -244,6 +249,30 @@ export const RouteSelection = ({navigation}) => {
         }}
       />
     );
+  };
+
+  const goBack = () => {
+    navigation.goBack();
+
+    // Update Route Point Storage
+    const routePointStorageList = [...routePointStorage];
+    routePoints.forEach((routePoint) => {
+      // ToDo Maybe replace with regex later
+      if (routePoint.name[7] != ',' && routePoint.coordinates) {
+        const elementIndex = routePointStorageList.findIndex(
+          (element) => element === routePoint,
+        );
+        if (elementIndex !== -1) {
+          routePointStorageList.splice(elementIndex, 1);
+        }
+        if (routePointStorageList.length > 5) {
+          routePointStorageList.pop();
+        }
+        routePointStorageList.unshift(routePoint);
+      }
+    });
+    setRoutePointStorage(routePointStorageList);
+    console.log(routePointStorageList);
   };
 
   const renderMapIcon = (props) => <Icon {...props} name="map-outline" />;
@@ -259,7 +288,7 @@ export const RouteSelection = ({navigation}) => {
       <TopNavigation
         style={styles.topNavigation}
         accessoryRight={() => (
-          <Button onPress={() => navigation.goBack()} appearance="ghost">
+          <Button onPress={goBack} appearance="ghost">
             Start
           </Button>
         )}
@@ -288,9 +317,21 @@ export const RouteSelection = ({navigation}) => {
         </Layout>
       ) : (
         <ScrollView style={styles.container}>
-          {suggestions.map((suggestion, index) =>
-            renderSuggestionItem(suggestion, index),
-          )}
+          {suggestions.length > 0
+            ? suggestions.map((suggestion, index) =>
+                renderSuggestionItem(
+                  suggestion.place_name,
+                  suggestion.geometry.coordinates,
+                  index,
+                ),
+              )
+            : routePointStorage.map((suggestion, index) =>
+                renderSuggestionItem(
+                  suggestion.name,
+                  suggestion.coordinates,
+                  index,
+                ),
+              )}
           <ListItem
             key={`current-suggestion-input`}
             title={i18n.navigation.yourLocation}

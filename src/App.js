@@ -91,6 +91,14 @@ export const App = () => {
     'array',
   );
 
+  const loadedRoutePointStorage = MMKV.getArray('routePointStorage');
+  const routePointStorage = makePersistent(
+    React.useState(loadedRoutePointStorage ? loadedRoutePointStorage : []),
+    'routePointStorage',
+    MMKV,
+    'array',
+  );
+
   const currentRouteInfo = React.useState(null);
 
   const routePoints = React.useState([
@@ -123,6 +131,7 @@ export const App = () => {
               routes,
               selectedRoute,
               routeStorage,
+              routePointStorage,
               currentRouteInfo,
             }}>
             <IconRegistry icons={EvaIconsPack} />
