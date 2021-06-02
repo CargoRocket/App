@@ -266,7 +266,11 @@ export const RouteSelection = ({navigation}) => {
       />
       <Divider />
       <Layout level="2">
-        <List style={styles.routePointList} data={routePoints} renderItem={renderRoutePoint} />
+        <List
+          style={styles.routePointList}
+          data={routePoints}
+          renderItem={renderRoutePoint}
+        />
       </Layout>
 
       {mapSelectEnabled ? (
@@ -277,7 +281,10 @@ export const RouteSelection = ({navigation}) => {
             accessoryLeft={renderListIcon}
             onPress={() => setMapSelectEnabled(false)}
           />
-          <MapLocationSelect onChange={updateRoutePoint} />
+          <MapLocationSelect
+            point={routePoints[selectedRoutePoint]}
+            onChange={updateRoutePoint}
+          />
         </Layout>
       ) : (
         <ScrollView style={styles.container}>

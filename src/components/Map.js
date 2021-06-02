@@ -44,34 +44,39 @@ export const Map = () => {
   React.useEffect(() => {
     MapboxGL.setTelemetryEnabled(false);
 
-    RNLocation.configure({
-      distanceFilter: 0,
-      desiredAccuracy: {
-        ios: 'bestForNavigation',
-        android: 'highAccuracy',
-      },
-    });
-    RNLocation.getLatestLocation({timeout: 1000})
-      .then((latestLocation) => {
-        console.log(latestLocation);
-        if (latestLocation && latestLocation.latitude) {
-          // TODO: Fix this really bad workaround!
-          setTimeout(() => {
-            camera.current.setCamera({
-              centerCoordinate: [
-                latestLocation.longitude,
-                latestLocation.latitude,
-              ],
-              zoomLevel: 10,
-              animationDuration: 2000,
-            });
-          }, 1000);
-        }
-      })
-      .catch((error) => {
-        console.log('locationError', error);
+    if (
+      !routePoints[routePoints.length - 1].coordinates &&
+      !routePoints[0].coordinates
+    ) {
+      RNLocation.configure({
+        distanceFilter: 0,
+        desiredAccuracy: {
+          ios: 'bestForNavigation',
+          android: 'highAccuracy',
+        },
       });
-  }, []);
+      RNLocation.getLatestLocation({timeout: 1000})
+        .then((latestLocation) => {
+          console.log(latestLocation);
+          if (latestLocation && latestLocation.latitude) {
+            // TODO: Fix this really bad workaround!
+            setTimeout(() => {
+              camera.current.setCamera({
+                centerCoordinate: [
+                  latestLocation.longitude,
+                  latestLocation.latitude,
+                ],
+                zoomLevel: 10,
+                animationDuration: 2000,
+              });
+            }, 1000);
+          }
+        })
+        .catch((error) => {
+          console.log('locationError', error);
+        });
+    }
+  }, [routePoints]);
 
   React.useEffect(() => {
     if (
