@@ -65,3 +65,7 @@ buck-out/
 *.hprof
 
 android/app/release/app-release.aab
+
+vendor/
+
+secrets/
