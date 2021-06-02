@@ -115,11 +115,15 @@ export const RouteSelection = ({navigation}) => {
   const selectCurrentLocation = () => {
     RNLocation.configure({
       distanceFilter: 0,
+      desiredAccuracy: {
+        ios: 'bestForNavigation',
+        android: 'highAccuracy',
+      },
     });
     RNLocation.requestPermission({
       ios: 'whenInUse',
       android: {
-        detail: 'fine',
+        detail: 'coarse',
       },
     });
     RNLocation.getLatestLocation({timeout: 1000})

@@ -83,12 +83,14 @@ export const App = () => {
     'bool',
   );
 
+  const loadedRouteStorage = MMKV.getArray('routeStorage');
   const routeStorage = makePersistent(
-    React.useState(MMKV.getArray('routeStorage')),
+    React.useState(loadedRouteStorage ? loadedRouteStorage : []),
     'routeStorage',
     MMKV,
     'array',
   );
+
   const currentRouteInfo = React.useState(null);
 
   const routePoints = React.useState([

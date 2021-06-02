@@ -346,6 +346,8 @@ export const NavigatingView = ({navigation}) => {
         // Last Step
         if (distanceToCurrentStepPoint < (currentLocation.accuracy / 100) + arriveMargin) {
           // Save Route
+          console.log('storage', routeStorage);
+          console.log('current', currentRouteInfo);
           setRouteStorage([...routeStorage, currentRouteInfo]);
 
           navigation.navigate('Content');
@@ -453,9 +455,12 @@ export const NavigatingView = ({navigation}) => {
               <Text style={styles.distance}>
                 {`RouteDistance: ${distanceToCurrentStepPoint.toFixed(4)}`}
               </Text>
-              <Text style={styles.distance}>
-                {`NP: ${distanceToNextStepPoint.toFixed(4)}`}
-              </Text>
+
+              {distanceToNextStepPoint ? (
+                <Text style={styles.distance}>
+                  {`NP: ${distanceToNextStepPoint.toFixed(4)}`}
+                </Text>
+              ) : null}
             </Layout>
           ) : null}
         </Layout>

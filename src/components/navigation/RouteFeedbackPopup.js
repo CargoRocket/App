@@ -67,20 +67,23 @@ export const RouteFeedbackPopup = ({
   const i18n = React.useContext(LanguageContext);
 
   const sendFeedback = () => {
-    fetch(`https://api.cargorocket.de/mail?key=${ Base.atob(cargorocketAPIKey)}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        message: JSON.stringify({
-          message,
-          rating,
-          currentLocation,
+    fetch(
+      `https://api.cargorocket.de/mail?key=${ Base.atob(cargorocketAPIKey)}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: JSON.stringify({
+            message,
+            rating,
+            currentLocation,
+          }),
+          type: 'APP Route-Feedback',
         }),
-        type: 'APP Route-Feedback',
-      }),
-    })
+      },
+    )
       .then(() => {
         setPopupMessage({
           title: i18n.modals.feedbackSendTitle,
