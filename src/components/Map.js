@@ -7,6 +7,7 @@ import polyline from '@mapbox/polyline';
 import {RoutingContext} from '../context';
 import {setRoutePoint} from '../helpers/routePoints';
 import Base from '../helpers/base64';
+import RNLocation from 'react-native-location';
 
 MapboxGL.setAccessToken(Base.atob(accessToken));
 
@@ -42,6 +43,30 @@ export const Map = () => {
 
   React.useEffect(() => {
     MapboxGL.setTelemetryEnabled(false);
+    RNLocation.configure({
+      distanceFilter: 0,
+      desiredAccuracy: {
+        ios: 'bestForNavigation',
+        android: 'highAccuracy',
+      },
+    });
+    RNLocation.getLatestLocation({timeout: 1000})
+      .then((latestLocation) => {
+        console.log(latestLocation);
+        if (latestLocation && latestLocation.latitude) {
+          camera.current.setCamera({
+            centerCoordinate: [
+              latestLocation.longitude,
+              latestLocation.latitude,
+            ],
+            zoomLevel: 10,
+            animationDuration: 2000,
+          });
+        }
+      })
+      .catch((error) => {
+        console.log('locationError', error);
+      });
   }, []);
 
   React.useEffect(() => {
@@ -69,7 +94,7 @@ export const Map = () => {
           0,
         ),
       );
-    } else if (routePoints[routePoints.length - 1].coordinates) {
+    } else if (!routePoints[routePoints.length - 1].coordinates) {
       setRoutePoints(
         setRoutePoint(
           routePoints,
