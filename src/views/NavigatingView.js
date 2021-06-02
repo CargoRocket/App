@@ -1,5 +1,11 @@
 import * as React from 'react';
-import {StyleSheet, View, SafeAreaView} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  SafeAreaView,
+  TouchableWithoutFeedback,
+  ToastAndroid,
+} from 'react-native';
 import {Layout, Text, Icon, Button} from '@ui-kitten/components';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import {default as theme} from '../res/custom-theme.json';
@@ -11,7 +17,6 @@ import {
   LanguageContext,
   SettingsContext,
 } from '../context';
-import {setRoutePoint} from '../helpers/routePoints';
 import {accessToken, cargorocketAPIKey} from '../res/config';
 import RNLocation from 'react-native-location';
 import {RouteFeedbackPopup} from '../components/navigation/RouteFeedbackPopup';
@@ -48,6 +53,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 1,
     borderColor: 'rgba(143, 155, 179, 0.24)',
+  },
+  bottomBoxDebug: {
+    height: 'auto',
   },
   buttonPane: {
     position: 'absolute',
@@ -111,7 +119,11 @@ export const NavigatingView = ({navigation}) => {
   const route = routes[selectedRoute].routes[0];
   const legs = route.legs;
 
+  // let debugCount = 0;
+
   const [feedbackShown, setFeedbackShown] = React.useState(false);
+  const [debugCount, setDebugCount] = React.useState(0);
+  const [debugModeActive, setDebugModeActive] = React.useState(false);
 
   const [currentStepId, setCurrentStepId] = React.useState(0);
   const [currentLocation, setCurrentLocation] = React.useState({
@@ -131,6 +143,24 @@ export const NavigatingView = ({navigation}) => {
 
   const locationSubscription = React.useRef(null);
   const mapCamera = React.useRef(null);
+
+  const handleDebugClick = () => {
+    setDebugCount(debugCount + 1);
+    if (debugCount > 1 && debugCount < 6) {
+      ToastAndroid.showWithGravity(
+        `You are ${6 - debugCount} clicks away from Debug mode`,
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER,
+      );
+    } else if (debugCount === 6) {
+      ToastAndroid.showWithGravity(
+        'Debug mode activated',
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER,
+      );
+      setDebugModeActive(true);
+    }
+  };
 
   const startRerouting = () => {
     setRerouting(true);
@@ -374,15 +404,62 @@ export const NavigatingView = ({navigation}) => {
     const minutes = Math.round((remaningDuration % 3600) / 60);
     const hours = Math.floor(remaningDuration / 3600);
 
+    let currentStepPoint,
+      distanceToCurrentStepPoint,
+      nextStepPoint,
+      distanceToNextStepPoint;
+    if (debugModeActive) {
+      currentStepPoint = matchPointOntoLeg(currentStepId);
+      distanceToCurrentStepPoint = distance(
+        currentStepPoint.y,
+        currentStepPoint.x,
+        currentLocation.latitude,
+        currentLocation.longitude,
+      );
+
+      if (currentStepId < legs[0].steps.length - 2) {
+        nextStepPoint = matchPointOntoLeg(currentStepId + 1);
+        distanceToNextStepPoint = distance(
+          nextStepPoint.y,
+          nextStepPoint.x,
+          currentLocation.latitude,
+          currentLocation.longitude,
+        );
+      }
+    }
+
     return (
-      <Layout style={styles.bottomBox}>
-        <Text style={styles.minutes}>
-          {hours ? `${hours}h ${minutes} min` : `${minutes} min`}
-        </Text>
-        <Text style={styles.distance}>
-          {`${(remaningDistance / 1000).toFixed(2)} km`}
-        </Text>
-      </Layout>
+      <TouchableWithoutFeedback onPress={handleDebugClick}>
+        <Layout
+          style={
+            debugModeActive
+              ? {...styles.bottomBox, ...styles.bottomBoxDebug}
+              : styles.bottomBox
+          }>
+          <Text style={styles.minutes}>
+            {hours ? `${hours}h ${minutes} min` : `${minutes} min`}
+          </Text>
+          <Text style={styles.distance}>
+            {`${(remaningDistance / 1000).toFixed(2)} km`}
+          </Text>
+          {debugModeActive ? (
+            <Layout level="2">
+              <Text style={styles.distance}>
+                {`GPS: ${currentLocation.accuracy}`}
+              </Text>
+              <Text style={styles.distance}>
+                {`Bearing: ${legs[0].steps[currentStepId].maneuver.bearing_after}`}
+              </Text>
+              <Text style={styles.distance}>
+                {`RouteDistance: ${distanceToCurrentStepPoint.toFixed(4)}`}
+              </Text>
+              <Text style={styles.distance}>
+                {`NP: ${distanceToNextStepPoint.toFixed(4)}`}
+              </Text>
+            </Layout>
+          ) : null}
+        </Layout>
+      </TouchableWithoutFeedback>
     );
   };
 
