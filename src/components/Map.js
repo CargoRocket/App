@@ -43,6 +43,7 @@ export const Map = () => {
 
   React.useEffect(() => {
     MapboxGL.setTelemetryEnabled(false);
+
     RNLocation.configure({
       distanceFilter: 0,
       desiredAccuracy: {
@@ -54,14 +55,17 @@ export const Map = () => {
       .then((latestLocation) => {
         console.log(latestLocation);
         if (latestLocation && latestLocation.latitude) {
-          camera.current.setCamera({
-            centerCoordinate: [
-              latestLocation.longitude,
-              latestLocation.latitude,
-            ],
-            zoomLevel: 10,
-            animationDuration: 2000,
-          });
+          // TODO: Fix this really bad workaround!
+          setTimeout(() => {
+            camera.current.setCamera({
+              centerCoordinate: [
+                latestLocation.longitude,
+                latestLocation.latitude,
+              ],
+              zoomLevel: 10,
+              animationDuration: 2000,
+            });
+          }, 1000);
         }
       })
       .catch((error) => {

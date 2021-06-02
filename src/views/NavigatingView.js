@@ -119,10 +119,6 @@ export const NavigatingView = ({navigation}) => {
   const route = routes[selectedRoute].routes[0];
   const legs = route.legs;
 
-  console.log('ROUTE', route);
-
-  // let debugCount = 0;
-
   const [feedbackShown, setFeedbackShown] = React.useState(false);
   const [debugCount, setDebugCount] = React.useState(0);
   const [debugModeActive, setDebugModeActive] = React.useState(false);
@@ -242,18 +238,18 @@ export const NavigatingView = ({navigation}) => {
   // key can be duration or distance
   const calculateRemaning = (key) => {
     let remaning = route[key];
-    const currentStepRemaning = legs[currentLeg].steps[currentStepId][key];
+    const currentStepRemaning = legs[0].steps[currentStepId][key];
     for (let n = 0; n < currentStepId; n++) {
-      remaning -= legs[currentLeg].steps[n][key];
+      remaning -= legs[0].steps[n][key];
     }
     remaning -= currentStepRemaning * currentStrepProgress;
     return remaning;
   };
 
   React.useEffect(() => {
-    if (legs[currentLeg].steps[currentStepId]) {
+    if (legs[0].steps[currentStepId]) {
       readVoiceInstructions(
-        legs[currentLeg].steps[currentStepId].voiceInstructions,
+        legs[0].steps[currentStepId].voiceInstructions,
       );
     }
     RNDisableBatteryOptimizationsAndroid.isBatteryOptimizationEnabled().then(
@@ -310,16 +306,19 @@ export const NavigatingView = ({navigation}) => {
   }, []);
 
   const matchPointOntoLeg = (stepId) => {
-    const currentLegData = legs[currentLeg].steps[stepId];
+    const currentLegData = legs[0].steps[stepId];
     const stepGeometry = polyline.toGeoJSON(currentLegData.geometry, 6);
     const stepCoordinates = stepGeometry.coordinates.map((coordinate) => ({
       x: coordinate[0],
       y: coordinate[1],
     }));
-    return getClosestPointOnLines(
-      {x: currentLocation.longitude, y: currentLocation.latitude},
-      stepCoordinates,
-    );
+    if (stepCoordinates.length > 1) {
+      return getClosestPointOnLines(
+        {x: currentLocation.longitude, y: currentLocation.latitude},
+        stepCoordinates,
+      );
+    }
+    return stepCoordinates[0];
   };
 
   const readVoiceInstructions = (instructions) => {
@@ -338,7 +337,7 @@ export const NavigatingView = ({navigation}) => {
         currentLocation.longitude,
       );
 
-      if (currentStepId < legs[currentLeg].steps.length - 2) {
+      if (currentStepId < legs[0].steps.length - 2) {
         const nextStepPoint = matchPointOntoLeg(currentStepId + 1);
         const distanceToNextStepPoint = distance(
           nextStepPoint.y,
@@ -359,9 +358,12 @@ export const NavigatingView = ({navigation}) => {
           setCurrentStepId(currentStepId + 1);
           setCurrentLocationOnRoute([nextStepPoint.x, nextStepPoint.y]);
           setCurrentStrepProgress(nextStepPoint.fTo);
-          if (legs[currentLeg].steps[currentStepId + 1]) {
+          if (legs[0].steps[currentStepId + 1].maneuver.type === 'arrive') {
+            setCurrentLeg(currentLeg + 1);
+          }
+          if (legs[0].steps[currentStepId + 1]) {
             readVoiceInstructions(
-              legs[currentLeg].steps[currentStepId + 1].voiceInstructions,
+              legs[0].steps[currentStepId + 1].voiceInstructions,
             );
           }
         } else {
@@ -382,18 +384,13 @@ export const NavigatingView = ({navigation}) => {
           distanceToCurrentStepPoint <
           currentLocation.accuracy / 1000 + arriveMargin
         ) {
-          // Save Route
-          if (legs.length - 1 > currentLeg) {
-            setCurrentLeg(currentLeg + 1);
-          } else {
-            setRouteStorage([...routeStorage, currentRouteInfo]);
-            navigation.navigate('Content');
-            setPopupMessage({
-              title: i18n.modals.routeCompleteTitle,
-              message: i18n.modals.routeCompleteMessage,
-              status: 'success',
-            });
-          }
+          setRouteStorage([...routeStorage, currentRouteInfo]);
+          navigation.navigate('Content');
+          setPopupMessage({
+            title: i18n.modals.routeCompleteTitle,
+            message: i18n.modals.routeCompleteMessage,
+            status: 'success',
+          });
         }
       }
     }
@@ -457,7 +454,7 @@ export const NavigatingView = ({navigation}) => {
         currentLocation.longitude,
       );
 
-      if (currentStepId < legs[currentLeg].steps.length - 2) {
+      if (currentStepId < legs[0].steps.length - 2) {
         nextStepPoint = matchPointOntoLeg(currentStepId + 1);
         distanceToNextStepPoint = distance(
           nextStepPoint.y,
@@ -488,15 +485,15 @@ export const NavigatingView = ({navigation}) => {
                 {`GPS: ${currentLocation.accuracy}`}
               </Text>
               <Text style={styles.distance}>
-                {`Bearing: ${legs[currentLeg].steps[currentStepId].maneuver.bearing_after}`}
+                {`Bearing: ${legs[0].steps[currentStepId].maneuver.bearing_after}`}
               </Text>
               <Text style={styles.distance}>
-                {`RouteDistance: ${distanceToCurrentStepPoint.toFixed(4)}`}
+                {`Current: ${distanceToCurrentStepPoint.toFixed(4)}`}
               </Text>
 
               {distanceToNextStepPoint ? (
                 <Text style={styles.distance}>
-                  {`NP: ${distanceToNextStepPoint.toFixed(4)}`}
+                  {`Next: ${distanceToNextStepPoint.toFixed(4)}`}
                 </Text>
               ) : null}
             </Layout>
@@ -549,7 +546,7 @@ export const NavigatingView = ({navigation}) => {
               : undefined
           }
           zoomLevel={17}
-          heading={legs[currentLeg].steps[currentStepId].maneuver.bearing_after}
+          heading={legs[0].steps[currentStepId].maneuver.bearing_after}
           ref={mapCamera}
         />
         {renderRoute()}
@@ -584,7 +581,7 @@ export const NavigatingView = ({navigation}) => {
               Tts.getInitStatus().then(
                 () => {
                   Tts.speak(
-                    legs[currentLeg].steps[currentStepId].voiceInstructions[0].announcement,
+                    legs[0].steps[currentStepId].voiceInstructions[0].announcement,
                   );
                 },
                 (err) => {
