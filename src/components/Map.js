@@ -61,14 +61,16 @@ export const Map = () => {
           if (latestLocation && latestLocation.latitude) {
             // TODO: Fix this really bad workaround!
             setTimeout(() => {
-              camera.current.setCamera({
-                centerCoordinate: [
-                  latestLocation.longitude,
-                  latestLocation.latitude,
-                ],
-                zoomLevel: 10,
-                animationDuration: 2000,
-              });
+              if (camera.current) {
+                camera.current.setCamera({
+                  centerCoordinate: [
+                    latestLocation.longitude,
+                    latestLocation.latitude,
+                  ],
+                  zoomLevel: 10,
+                  animationDuration: 2000,
+                });
+              }
             }, 1000);
           }
         })
@@ -81,7 +83,8 @@ export const Map = () => {
   React.useEffect(() => {
     if (
       routePoints[0].coordinates &&
-      !routePoints[routePoints.length - 1].coordinates
+      !routePoints[routePoints.length - 1].coordinates &&
+      camera.current
     ) {
       camera.current.setCamera({
         centerCoordinate: routePoints[0].coordinates,

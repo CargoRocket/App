@@ -85,7 +85,8 @@
     "errorFindingRouteTitle": "Oh Crap...",
     "errorFindingRouteTitleMessage": "We could not find any route. Please be aware, that for testing purposes only germany is currently routable in this app.",
     "powerSavingTitle": "Battery optimization",
-    "powerSavingMessage": "For best performance this Application needs to be excluded from battery optimization."
+    "powerSavingMessage": "For best performance this Application needs to be excluded from battery optimization.",
+    "powerSavingAction": "> Settings"
   },
   "project": {
     "theProject": "The Project",
@@ -125,4 +126,7 @@
     "whyDoYouRate": "Why do you give this section this rating? (Optional)",
     "send": "Send"
   },
+  "mapLocationSelect": {
+    "tapMap": "Tap to position marker"
+  }
 }

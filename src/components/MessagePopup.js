@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {Card, Text, Icon, Modal} from '@ui-kitten/components';
+import {Card, Text, Icon, Modal, Button} from '@ui-kitten/components';
 import theme from '../res/custom-theme.json';
 import {UiContext} from '../context';
 
@@ -51,6 +51,11 @@ export const MessagePopup = () => {
             {message.title}
           </Text>
           <Text>{message.message}</Text>
+          {message.action ? (
+            <Button onPress={message.action} appearance="ghost" status="info">
+              {message.actionText}
+            </Button>
+          ) : null}
         </Card>
       ) : null}
     </Modal>

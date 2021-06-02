@@ -3,19 +3,9 @@ import {StyleSheet, View} from 'react-native';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import {accessToken} from '../res/config';
 import {default as theme} from '../res/custom-theme.json';
-import {
-  List,
-  ListItem,
-  Layout,
-  Button,
-  Icon,
-  Input,
-  Text,
-  Card,
-  Divider,
-  TopNavigation,
-} from '@ui-kitten/components';
+import {Layout, Text} from '@ui-kitten/components';
 import Base from '../helpers/base64';
+import {LanguageContext} from '../context';
 import RNLocation from 'react-native-location';
 
 MapboxGL.setAccessToken(Base.atob(accessToken));
@@ -57,6 +47,7 @@ const styles = StyleSheet.create({
 
 export const MapLocationSelect = ({point, onChange}) => {
   const camera = React.useRef();
+  const i18n = React.useContext(LanguageContext);
 
   const bounds = {
     ne: [11.106090200587593, 46.94990650185683],
@@ -135,7 +126,9 @@ export const MapLocationSelect = ({point, onChange}) => {
       </MapboxGL.MapView>
       {!point.coordinates ? (
         <View style={styles.mapInfo}>
-          <Text style={styles.mapInfoText}>Tap to position marker</Text>
+          <Text style={styles.mapInfoText}>
+            {i18n.mapLocationSelect.tapMap}
+          </Text>
         </View>
       ) : null}
     </Layout>

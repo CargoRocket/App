@@ -253,7 +253,6 @@ export const RouteSelection = ({navigation}) => {
 
   const goBack = () => {
     navigation.goBack();
-
     // Update Route Point Storage
     const routePointStorageList = [...routePointStorage];
     routePoints.forEach((routePoint) => {

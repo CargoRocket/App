@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
 
 export const NavigatingView = ({navigation}) => {
   const reroutingMargin = 0.03;
-  const arriveMargin = 0.03;
+  const arriveMargin = 0.01;
   const {
     popupMessage: [popupMessage, setPopupMessage],
   } = React.useContext(UiContext);
@@ -163,76 +163,79 @@ export const NavigatingView = ({navigation}) => {
   };
 
   const startRerouting = () => {
-    setRerouting(true);
+    if (!rerouting) {
+      setRerouting(true);
 
-    const endpointUrl = new URL('https://api.cargorocket.de/v1/routes');
-    endpointUrl.searchParams.append('from', JSON.stringify([
-      currentLocation.latitude,
-      currentLocation.longitude,
-    ]));
-    const destinationData = [
-      ...routePoints[routePoints.length - 1].coordinates,
-    ];
-    endpointUrl.searchParams.append(
-      'to',
-      JSON.stringify(destinationData.reverse()),
-    );
-    let vias = routePoints
-      .slice(1 + currentLeg, routePoints.length - 1)
-      .filter((via) => via.coordinates)
-      .map((via) => via.coordinates);
-    if (vias.length > 0) {
-      vias = vias.map((via) => [...via].reverse());
-      endpointUrl.searchParams.append('vias', JSON.stringify(vias));
-    }
-    endpointUrl.searchParams.append('access_token', Base.atob(accessToken));
-    endpointUrl.searchParams.append('key', Base.atob(cargorocketAPIKey));
-    endpointUrl.searchParams.append('format', 'mapbox');
-    endpointUrl.searchParams.append('lang', deviceLanguage.slice(0, 2));
+      const endpointUrl = new URL('https://api.cargorocket.de/v1/routes');
+      endpointUrl.searchParams.append(
+        'from',
+        JSON.stringify([currentLocation.latitude, currentLocation.longitude]),
+      );
+      const destinationData = [
+        ...routePoints[routePoints.length - 1].coordinates,
+      ];
+      endpointUrl.searchParams.append(
+        'to',
+        JSON.stringify(destinationData.reverse()),
+      );
+      let vias = routePoints
+        .slice(1 + currentLeg, routePoints.length - 1)
+        .filter((via) => via.coordinates)
+        .map((via) => via.coordinates);
+      if (vias.length > 0) {
+        vias = vias.map((via) => [...via].reverse());
+        endpointUrl.searchParams.append('vias', JSON.stringify(vias));
+      }
+      endpointUrl.searchParams.append('access_token', Base.atob(accessToken));
+      endpointUrl.searchParams.append('key', Base.atob(cargorocketAPIKey));
+      endpointUrl.searchParams.append('format', 'mapbox');
+      endpointUrl.searchParams.append('lang', deviceLanguage.slice(0, 2));
 
-    fetch(endpointUrl)
-      .then((rawData) => rawData.json())
-      .then((routesResponse) => {
-        console.log('RouteRespone', routesResponse);
-        if (
-          (routesResponse.name && routesResponse.name === 'Error') ||
-          routesResponse.status === 400
-        ) {
+      fetch(endpointUrl)
+        .then((rawData) => rawData.json())
+        .then((routesResponse) => {
+          if (
+            (routesResponse.name && routesResponse.name === 'Error') ||
+            routesResponse.status === 400
+          ) {
+            setRerouting(false);
+            return;
+          }
+          setRoutes([
+            {
+              ...routesResponse.find(
+                (route) => route.profile.name === 'cargobike',
+              ),
+              name: i18n.navigation.cargoBikeRoute,
+              description: i18n.navigation.cargoBikeRouteDescription,
+            },
+            {
+              ...routesResponse.find((route) => route.profile.name === 'bike'),
+              name: i18n.navigation.classicBikeRoute,
+              description: i18n.navigation.classicBikeRouteDescription,
+            },
+          ]);
+          if (currentRouteInfo) {
+            setCurrentRouteInfo({
+              ...currentRouteInfo,
+              rerouting: [
+                ...currentRouteInfo.rerouting,
+                [currentLocation.latitude, currentLocation.longitude],
+              ],
+            });
+          }
           setRerouting(false);
-          return;
-        }
-        setRoutes([
-          {
-            ...routesResponse.find((route) => route.profile.name === 'cargobike'),
-            name: i18n.navigation.cargoBikeRoute,
-            description: i18n.navigation.cargoBikeRouteDescription,
-          },
-          {
-            ...routesResponse.find((route) => route.profile.name === 'bike'),
-            name: i18n.navigation.classicBikeRoute,
-            description: i18n.navigation.classicBikeRouteDescription,
-          },
-        ]);
-        if (currentRouteInfo) {
-          setCurrentRouteInfo({
-            ...currentRouteInfo,
-            rerouting: [
-              ...currentRouteInfo.rerouting,
-              [currentLocation.latitude, currentLocation.longitude],
-            ],
+        })
+        .catch((error) => {
+          console.error(error);
+          setPopupMessage({
+            title: i18n.modals.errorUpdatingRouteTitle,
+            message: i18n.modals.errorUpdatingRouteTitleMessage,
+            status: 'error',
           });
-        }
-        setRerouting(false);
-      })
-      .catch((error) => {
-        console.error(error);
-        setPopupMessage({
-          title: i18n.modals.errorUpdatingRouteTitle,
-          message: i18n.modals.errorUpdatingRouteTitleMessage,
-          status: 'error',
+          setRerouting(false);
         });
-        setRerouting(false);
-      });
+    }
   };
 
   // key can be duration or distance
@@ -248,9 +251,7 @@ export const NavigatingView = ({navigation}) => {
 
   React.useEffect(() => {
     if (legs[0].steps[currentStepId]) {
-      readVoiceInstructions(
-        legs[0].steps[currentStepId].voiceInstructions,
-      );
+      readVoiceInstructions(legs[0].steps[currentStepId].voiceInstructions);
     }
     RNDisableBatteryOptimizationsAndroid.isBatteryOptimizationEnabled().then(
       (value) => {
@@ -258,6 +259,10 @@ export const NavigatingView = ({navigation}) => {
           setPopupMessage({
             title: i18n.modals.powerSavingTitle,
             message: i18n.modals.powerSavingMessage,
+            actionText: 'Settings',
+            action: () => {
+              RNDisableBatteryOptimizationsAndroid.openBatteryModal();
+            },
             status: 'info',
           });
         }

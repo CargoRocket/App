@@ -86,7 +86,8 @@
     "errorFindingRouteTitleMessage": "Wir konnten keine Route Finden. Bitte beachte, dass diese App momentan zu testzwecken nur in Deutschland funktioniert",
     
     "powerSavingTitle": "Battery Saving",
-    "powerSavingMessage": "Diese App funktioniert am besten wenn sie aus dem Battery Saving ausgeschlossen wird. Bitte fügen sie dazu in den Einstellungen eine Ausnahme hinzu."
+    "powerSavingMessage": "Diese App funktioniert am besten wenn sie aus dem Battery Saving ausgeschlossen wird. Bitte fügen sie dazu in den Einstellungen eine Ausnahme hinzu.",
+    "powerSavingAction": "> Einstellungen"
   },
   "project": {
     "theProject": "Das Projekt",
@@ -125,5 +126,8 @@
     "howWouldYouRate": "Wie würdest du diesen Streckenabschnitt bewerten?",
     "whyDoYouRate": "Was ist der Hintergrund deiner Wertung? (Optional)",
     "send": "Senden"
+  },
+  "mapLocationSelect": {
+    "tapMap": "Zur Auswahl auf Karte tippen"
   }
 }
