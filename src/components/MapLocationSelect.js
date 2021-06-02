@@ -90,36 +90,53 @@ export const MapLocationSelect = ({point, onChange}) => {
       });
   }, []);
 
+  const selectPoint = (event) => {
+    fetch(
+      `https://photon.komoot.io/reverse?lon=${event.geometry.coordinates[0]}&lat=${event.geometry.coordinates[1]}`,
+    )
+      .then((response) => response.json())
+      .then((responseData) => {
+        console.log(responseData);
+        if (
+          responseData.features &&
+          responseData.features[0] &&
+          responseData.features[0].properties.city &&
+          responseData.features[0].properties.street
+        ) {
+          onChange(
+            `${responseData.features[0].properties.street}, ${responseData.features[0].properties.city}`,
+            event.geometry.coordinates,
+          );
+        } else {
+          onChange(
+            `${event.geometry.coordinates[0].toFixed(4)}, ${event.geometry.coordinates[1].toFixed(4)}`,
+            event.geometry.coordinates,
+          );
+        }
+      })
+      .catch(() => {
+        onChange(
+          `${event.geometry.coordinates[0].toFixed(4)}, ${event.geometry.coordinates[1].toFixed(4)}`,
+          event.geometry.coordinates,
+        );
+      });
+  };
+
   return (
     <Layout style={{flex: 1}}>
       <MapboxGL.MapView
         style={styles.map}
         pitchEnabled={false}
         compassEnabled={false}
-        onPress={(event) =>
-          onChange(
-            `${event.geometry.coordinates[0].toFixed(4)}, ${event.geometry.coordinates[1].toFixed(4)}`,
-            event.geometry.coordinates,
-          )
-        }
-        onLongPress={(event) =>
-          onChange(
-            `${event.geometry.coordinates[0].toFixed(4)}, ${event.geometry.coordinates[1].toFixed(4)}`,
-            event.geometry.coordinates,
-          )
-        }>
+        onPress={selectPoint}
+        onLongPress={selectPoint}>
         <MapboxGL.Camera bounds={bounds} ref={camera} />
         {point.coordinates ? (
           <MapboxGL.PointAnnotation
             id="select-marker"
             coordinate={point.coordinates}
             draggable={true}
-            onDragEnd={(event) => {
-              onChange(
-                `${event.geometry.coordinates[0].toFixed(4)}, ${event.geometry.coordinates[1].toFixed(4)}`,
-                event.geometry.coordinates,
-              );
-            }}>
+            onDragEnd={selectPoint}>
             <View style={{...styles.marker, ...styles.markerStart}} />
           </MapboxGL.PointAnnotation>
         ) : null}

@@ -259,7 +259,7 @@ export const NavigatingView = ({navigation}) => {
           setPopupMessage({
             title: i18n.modals.powerSavingTitle,
             message: i18n.modals.powerSavingMessage,
-            actionText: 'Settings',
+            actionText: i18n.modals.powerSavingAction,
             action: () => {
               RNDisableBatteryOptimizationsAndroid.openBatteryModal();
             },

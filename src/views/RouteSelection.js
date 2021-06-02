@@ -11,7 +11,7 @@ import {
   TopNavigation,
 } from '@ui-kitten/components';
 import React from 'react';
-import {SafeAreaView, View, Button as ReactButton} from 'react-native';
+import {SafeAreaView, View} from 'react-native';
 import {default as theme} from '../res/custom-theme.json';
 import CenterIcon from '../res/images/icons/crosshairs-gps.svg';
 import {RoutingContext, LanguageContext, UiContext} from '../context';
@@ -81,6 +81,7 @@ export const RouteSelection = ({navigation}) => {
   const [selectedRoutePoint, setSelectedRoutePoint] = React.useState(0);
   const [suggestions, setSuggestions] = React.useState([]);
   const [mapSelectEnabled, setMapSelectEnabled] = React.useState(false);
+
   const i18n = React.useContext(LanguageContext);
   const {
     popupMessage: [popupMessage, setPopupMessage],
@@ -257,7 +258,11 @@ export const RouteSelection = ({navigation}) => {
     const routePointStorageList = [...routePointStorage];
     routePoints.forEach((routePoint) => {
       // ToDo Maybe replace with regex later
-      if (routePoint.name[7] != ',' && routePoint.coordinates) {
+      if (
+        routePoint.name !== i18n.navigation.yourLocation &&
+        routePoint.name[7] !== ',' &&
+        routePoint.coordinates
+      ) {
         const elementIndex = routePointStorageList.findIndex(
           (element) => element === routePoint,
         );

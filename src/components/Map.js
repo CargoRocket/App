@@ -96,27 +96,9 @@ export const Map = () => {
 
   const handleLongTouch = (point) => {
     if (!routePoints[0].coordinates) {
-      setRoutePoints(
-        setRoutePoint(
-          routePoints,
-          {
-            name: `${point.geometry.coordinates[0].toFixed(4)}, ${point.geometry.coordinates[1].toFixed(4)}`,
-            coordinates: point.geometry.coordinates,
-          },
-          0,
-        ),
-      );
+      selectPoint(point, 0);
     } else if (!routePoints[routePoints.length - 1].coordinates) {
-      setRoutePoints(
-        setRoutePoint(
-          routePoints,
-          {
-            name: `${point.geometry.coordinates[0].toFixed(4)}, ${point.geometry.coordinates[1].toFixed(4)}`,
-            coordinates: point.geometry.coordinates,
-          },
-          routePoints.length - 1,
-        ),
-      );
+      selectPoint(point, routePoints.length - 1);
     }
   };
 
@@ -164,18 +146,7 @@ export const Map = () => {
           key={`routePoint-${index}`}
           coordinate={routePoint.coordinates}
           draggable={true}
-          onDragEnd={(point) => {
-            setRoutePoints(
-              setRoutePoint(
-                routePoints,
-                {
-                  name: `${point.geometry.coordinates[0].toFixed(4)}, ${point.geometry.coordinates[1].toFixed(4)}`,
-                  coordinates: point.geometry.coordinates,
-                },
-                index,
-              ),
-            );
-          }}>
+          onDragEnd={(point) => selectPoint(point, index)}>
           <View
             style={
               index === 0
@@ -186,6 +157,55 @@ export const Map = () => {
         </MapboxGL.PointAnnotation>
       );
     }
+  };
+
+  const selectPoint = (event, index) => {
+    fetch(
+      `https://photon.komoot.io/reverse?lon=${event.geometry.coordinates[0]}&lat=${event.geometry.coordinates[1]}`,
+    )
+      .then((response) => response.json())
+      .then((responseData) => {
+        if (
+          responseData.features &&
+          responseData.features[0] &&
+          responseData.features[0].properties.city &&
+          responseData.features[0].properties.street
+        ) {
+          setRoutePoints(
+            setRoutePoint(
+              routePoints,
+              {
+                name: `${responseData.features[0].properties.street}, ${responseData.features[0].properties.city}`,
+                coordinates: event.geometry.coordinates,
+              },
+              index,
+            ),
+          );
+        } else {
+          setRoutePoints(
+            setRoutePoint(
+              routePoints,
+              {
+                name: `${event.geometry.coordinates[0].toFixed(4)}, ${event.geometry.coordinates[1].toFixed(4)}`,
+                coordinates: event.geometry.coordinates,
+              },
+              index,
+            ),
+          );
+        }
+      })
+      .catch(() => {
+        setRoutePoints(
+          setRoutePoint(
+            routePoints,
+            {
+              name: `${event.geometry.coordinates[0].toFixed(4)}, ${event.geometry.coordinates[1].toFixed(4)}`,
+              coordinates: event.geometry.coordinates,
+            },
+            index,
+          ),
+        );
+      });
   };
 
   return (
