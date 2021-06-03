@@ -31,11 +31,11 @@ Increment version number and push to repository - Version number in this case is
 fastlane android test
 ```
 Runs all the tests
-### android beta
+### android internal
 ```
-fastlane android beta
+fastlane android internal
 ```
-Submit a new Beta Build to Crashlytics Beta
+Submit a new Internal Beta Build
 ### android deploy
 ```
 fastlane android deploy

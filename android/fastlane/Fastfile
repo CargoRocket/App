@@ -20,8 +20,8 @@ platform :android do
   desc "Increment build number and push to repository - Build number in this case is the android version code"
   lane :ibn do |options|
     should_commit = options.fetch(:should_commit, true)
-    commit_message = options.fetch(:commit_message, "android: bump build number (version code) [skip ci]")
-    should_push = options.fetch(:should_push, true)
+    commit_message = options.fetch(:commit_message, "[Android] bump build number (version code) [skip ci]")
+    should_push = options.fetch(:should_push, false)
 
     ensure_git_status_clean if should_commit
 
@@ -48,8 +48,8 @@ platform :android do
   desc "Increment version number and push to repository - Version number in this case is the android version name"
   lane :ivn do |options|
     should_commit = options.fetch(:should_commit, true)
-    commit_message = options.fetch(:commit_message, "android: bump version number (version name) [skip ci]")
-    should_push = options.fetch(:should_push, true)
+    commit_message = options.fetch(:commit_message, "[Android] bump version number (version name) [skip ci]")
+    should_push = options.fetch(:should_push, false)
 
     # Ensure that your git status is not dirty
     ensure_git_status_clean if should_commit
@@ -91,7 +91,11 @@ platform :android do
 
   desc "Submit a new Internal Beta Build"
   lane :internal do
+    ibn
+    ivn(increment_type: "patch")
+    icon_banner(name: "INTERNAL", color: "#2A9D8F")
     gradle(task: "clean assembleBundle")
+    icon_banner_restore()
     upload_to_play_store(track: "internal")
     new_version_name = Actions.lane_context[Actions::SharedValues::ANDROID_VERSION_NAME]
     telegram(
