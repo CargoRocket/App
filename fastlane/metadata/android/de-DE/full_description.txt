@@ -1,4 +1,0 @@
-<p>
-Die Mission von CargoRocket ist es deine Lastenradfahrten so schnell und problemlos wie möglich zu gestalten. Wir wollen Erfahrungen und Nöte von Lastenradfahrenden sammeln um damit aussagen über die Lastenradfreundlichkeit der bestehenden Infrastruktur treffen zu können. Aus allen Daten erstellen wir Reports, einen repräsentativen Index und stellen Routing Lösungen für Lastenradfahrende bereit.
-Hilf uns bei unserer Mission und teste unser Routing mit dieser Demo Applikation!
-</p>

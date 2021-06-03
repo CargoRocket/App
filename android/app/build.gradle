@@ -120,6 +120,26 @@ def jscFlavor = 'org.webkit:android-jsc:+'
  */
 def enableHermes = project.ext.react.get("enableHermes", false);
 
+
+def areUploadKeystoreEnvsSet = System.getenv("MYRNAPP_RELEASE_STORE_FILE") != null &&
+    System.getenv("MYRNAPP_RELEASE_STORE_PASSWORD") != null &&
+    System.getenv("MYRNAPP_RELEASE_KEY_ALIAS") != null &&
+    System.getenv("MYAPPP_RELEASE_KEY_PASSWORD") != null
+
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystorePropertiesFileExists = keystorePropertiesFile.exists()
+def keystoreProperties = new Properties()
+if (!(keystorePropertiesFileExists || areUploadKeystoreEnvsSet)) {
+    throw new InvalidUserDataException('''\
+        You must have a keystore.properties file in the <rn-root-folder>/android/ folder or set the environments variables:
+        MYRNAPP_RELEASE_STORE_FILE
+        MYRNAPP_RELEASE_STORE_PASSWORD
+        MYRNAPP_RELEASE_KEY_ALIAS
+        MYRNAPP_RELEASE_KEY_PASSWORD
+    ''')
+}
+keystorePropertiesFileExists && keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
@@ -133,7 +153,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 100
-        versionName "1.00"
+        versionName "1.0.0"
         multiDexEnabled true
     }
     splits {
@@ -151,6 +171,19 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            if (areUploadKeystoreEnvsSet) {
+                storeFile rootProject.file(String.valueOf(System.getenv("MYRNAPP_RELEASE_STORE_FILE")))
+                storePassword String.valueOf(System.getenv("MYRNAPP_RELEASE_STORE_PASSWORD"))
+                keyAlias String.valueOf(System.getenv("MYRNAPP_RELEASE_KEY_ALIAS"))
+                keyPassword String.valueOf(System.getenv("MYRNAPP_RELEASE_KEY_PASSWORD"))
+            } else {
+                storeFile rootProject.file(keystoreProperties['storeFile'])
+                storePassword String.valueOf(System.getenv("KEY_STORE_PASSWORD"))
+                keyPassword String.valueOf(System.getenv("KEY_KEY_PASSWORD"))
+                keyAlias keystoreProperties['keyAlias']
+            }
+        }
     }
     buildTypes {
         debug {
@@ -159,7 +192,7 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://facebook.github.io/react-native/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }

@@ -1,9 +1,0 @@
-
-This release contains:
-
-<ul>
-  <li>First version of Turn-by-Turn routing</li>
-  <li>Initial Settings view</li>
-  <li>Initial Project overview</li>
-  <li>General bike setup dialog</li>
-</ul>
