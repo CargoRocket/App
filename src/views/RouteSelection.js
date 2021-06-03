@@ -329,13 +329,7 @@ export const RouteSelection = ({navigation}) => {
                   index,
                 ),
               )
-            : routePointStorage.map((suggestion, index) =>
-                renderSuggestionItem(
-                  suggestion.name,
-                  suggestion.coordinates,
-                  index,
-                ),
-              )}
+            : null}
           <ListItem
             key={`current-suggestion-input`}
             title={i18n.navigation.yourLocation}
@@ -348,6 +342,15 @@ export const RouteSelection = ({navigation}) => {
             accessoryLeft={renderMapIcon}
             onPress={() => setMapSelectEnabled(true)}
           />
+          {suggestions.length === 0
+            ? routePointStorage.map((suggestion, index) =>
+                renderSuggestionItem(
+                  suggestion.name,
+                  suggestion.coordinates,
+                  index,
+                ),
+              )
+            : null}
         </ScrollView>
       )}
     </SafeAreaView>
