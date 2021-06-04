@@ -1313,6 +1313,11 @@
   resolved "https://registry.npmjs.org/@react-native-community/eslint-plugin/-/eslint-plugin-1.1.0.tgz"
   integrity sha512-W/J0fNYVO01tioHjvYWQ9m6RgndVtbElzYozBq1ZPrHO/iCzlqoySHl4gO/fpCl9QEFjvJfjPgtPMTMlsoq5DQ==
 
+"@react-native-community/geolocation@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@react-native-community/geolocation/-/geolocation-2.0.2.tgz#ba8b40f560ead8d014740d1cdea970b33f19312e"
+  integrity sha512-tTNXRCgnhJBu79mulQwzabXRpDqfh/uaDqfHVpvF0nX4NTpolpy6mvTRiFg7eWFPGRArsnZz1EYp6rHfJWGgEA==
+
 "@react-native-community/masked-view@^0.1.10":
   version "0.1.10"
   resolved "https://registry.yarnpkg.com/@react-native-community/masked-view/-/masked-view-0.1.10.tgz#5dda643e19e587793bc2034dd9bf7398ad43d401"
@@ -6215,10 +6220,10 @@ react-native-location@^2.5.0:
   resolved "https://registry.yarnpkg.com/react-native-location/-/react-native-location-2.5.0.tgz#b6d2f7e9c3dbe13fbe87587f9533b8bf943b6a35"
   integrity sha512-myT54tZuFmN6d5RruMVfoa8eY+voJWkSd73xUVhjzJDnQr5uu5MFoH7hMg3trHF1CAkaY/2gIneOspUdGxv59Q==
 
-react-native-mmkv-storage@^0.5.4:
-  version "0.5.4"
-  resolved "https://registry.yarnpkg.com/react-native-mmkv-storage/-/react-native-mmkv-storage-0.5.4.tgz#b4ac4b57416f771ab522afdb783c3ec1df01f9f1"
-  integrity sha512-eQpOAwXxQvevDFOxKpmzlzpX37XRbFK4Yes9VUnxeI3sLJcnXGjJT6D7fN0yS2NIxusRTvx5/nK2eRq2+Gkswg==
+react-native-mmkv-storage@^0.5.9:
+  version "0.5.9"
+  resolved "https://registry.yarnpkg.com/react-native-mmkv-storage/-/react-native-mmkv-storage-0.5.9.tgz#f4333c6fcae6475a786b1c0f907ae478bad2c91a"
+  integrity sha512-SfjUIpC0pkhdLx1zKYkEkzqfb+sOus1nr/RoXcesLhjz/qRYmnDIULsrebl6peHTNRAbgmhgumr6MoFj0m7EFA==
 
 react-native-reanimated@^2.0.0:
   version "2.0.0"

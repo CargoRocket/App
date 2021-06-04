@@ -12,6 +12,7 @@
   "dependencies": {
     "@eva-design/eva": "2.0.0",
     "@mapbox/polyline": "^1.1.1",
+    "@react-native-community/geolocation": "^2.0.2",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-mapbox-gl/maps": "^8.2.0-beta1",
     "@react-navigation/bottom-tabs": "^5.11.8",
@@ -24,7 +25,6 @@
     "react-native-disable-battery-optimizations-android": "https://github.com/IronTony/react-native-disable-battery-optimizations-android",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-keep-awake": "^4.0.0",
-    "react-native-location": "^2.5.0",
     "react-native-mmkv-storage": "^0.5.9",
     "react-native-reanimated": "^2.0.0",
     "react-native-safe-area-context": "^3.2.0",

@@ -18,7 +18,7 @@ import {
   SettingsContext,
 } from '../context';
 import {accessToken, cargorocketAPIKey} from '../res/config';
-import RNLocation from 'react-native-location';
+import Geolocation from '@react-native-community/geolocation';
 import {RouteFeedbackPopup} from '../components/navigation/RouteFeedbackPopup';
 import {NavigationHeader} from '../components/navigation/NavigationHeader';
 import Tts from 'react-native-tts';
@@ -133,6 +133,7 @@ export const NavigatingView = ({navigation}) => {
     start.coordinates,
   );
 
+  const locationSubscription = React.useRef(null);
   const [currentLeg, setCurrentLeg] = React.useState(0);
 
   const [rerouting, setRerouting] = React.useState(false);
@@ -141,7 +142,6 @@ export const NavigatingView = ({navigation}) => {
     polyline.toGeoJSON(route.geometry, 6),
   );
 
-  const locationSubscription = React.useRef(null);
   const mapCamera = React.useRef(null);
 
   const handleDebugClick = () => {
@@ -281,33 +281,33 @@ export const NavigatingView = ({navigation}) => {
 
     MapboxGL.setTelemetryEnabled(false);
 
-    // Configure Location Service
-    RNLocation.configure({
-      distanceFilter: 0,
-      desiredAccuracy: {
-        ios: 'bestForNavigation',
-        android: 'highAccuracy',
-      },
+    Geolocation.setRNConfiguration({
+      authorizationLevel: 'always',
     });
-    RNLocation.requestPermission({
-      ios: 'whenInUse',
-      android: {
-        detail: 'coarse',
+    // Geolocation.requestAuthorization();
+
+    locationSubscription.current = Geolocation.watchPosition(
+      (location) => {
+        console.log(location);
+        setCurrentLocation(location.coords);
       },
-    }).then((granted) => {
-      if (granted) {
-        locationSubscription.current = RNLocation.subscribeToLocationUpdates(
-          (locations) => {
-            setCurrentLocation(locations[0]);
-          },
-        );
-      }
-    });
-    return () => {
-      if (locationSubscription.current) {
-        locationSubscription.current();
-      }
-    };
+      (error) => {
+        console.log(error);
+      },
+      {
+        timeout: 10000,
+        enableHighAccuracy: true,
+        useSignificantChanges: false,
+        maximumAge: 100,
+        distanceFilter: 0,
+      },
+    );
+
+    // return () => {
+    //   if (locationSubscription.current) {
+    //     Geolocation.clearWatch(locationSubscription.current);
+    //   }
+    // };
   }, []);
 
   const matchPointOntoLeg = (stepId) => {
@@ -390,7 +390,13 @@ export const NavigatingView = ({navigation}) => {
           currentLocation.accuracy / 1000 + arriveMargin
         ) {
           setRouteStorage([...routeStorage, currentRouteInfo]);
-          navigation.navigate('Content');
+          const index = navigation.dangerouslyGetParent().state.index;
+          // handle the index we get
+          if (index > 0) {
+            navigation.goBack();
+          } else {
+            navigation.navigate('Content');
+          }
           setPopupMessage({
             title: i18n.modals.routeCompleteTitle,
             message: i18n.modals.routeCompleteMessage,
@@ -542,7 +548,8 @@ export const NavigatingView = ({navigation}) => {
             setFollowUser(false);
           }
         }}
-        compassEnabled={false}>
+        compassEnabled={true}
+        compassViewMargins={{x: 30, y: 100}}>
         <MapboxGL.Camera
           pitch={400}
           centerCoordinate={

@@ -6,7 +6,7 @@ import {default as theme} from '../res/custom-theme.json';
 import {Layout, Text} from '@ui-kitten/components';
 import Base from '../helpers/base64';
 import {LanguageContext} from '../context';
-import RNLocation from 'react-native-location';
+import Geolocation from '@react-native-community/geolocation';
 
 MapboxGL.setAccessToken(Base.atob(accessToken));
 
@@ -61,33 +61,34 @@ export const MapLocationSelect = ({point, onChange}) => {
   React.useEffect(() => {
     MapboxGL.setTelemetryEnabled(false);
 
-    RNLocation.configure({
-      distanceFilter: 0,
-      desiredAccuracy: {
-        ios: 'bestForNavigation',
-        android: 'highAccuracy',
-      },
+    Geolocation.setRNConfiguration({
+      authorizationLevel: 'whenInUse',
     });
-    RNLocation.getLatestLocation({timeout: 1000})
-      .then((latestLocation) => {
-        console.log(latestLocation);
-        if (latestLocation && latestLocation.latitude) {
-          // TODO: Fix this really bad workaround!
-          setTimeout(() => {
+    Geolocation.getCurrentPosition(
+      (location) => {
+        // ToDo Fix workaround
+        setTimeout(() => {
+          if (camera.current) {
             camera.current.setCamera({
               centerCoordinate: [
-                latestLocation.longitude,
-                latestLocation.latitude,
+                location.coords.longitude,
+                location.coords.latitude,
               ],
               zoomLevel: 10,
               animationDuration: 2000,
             });
-          }, 1000);
-        }
-      })
-      .catch((error) => {
+          }
+        }, 1000);
+      },
+      (error) => {
         console.log('locationError', error);
-      });
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 1000,
+        maximumAge: 200000,
+      },
+    );
   }, []);
 
   const selectPoint = (event) => {

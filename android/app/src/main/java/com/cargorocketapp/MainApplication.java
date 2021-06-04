@@ -5,7 +5,6 @@ import android.content.Context;
 import com.ammarahmed.mmkv.RNMMKVJSIModulePackage; 
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
-import com.github.reactnativecommunity.location.RNLocationPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.bridge.JSIModulePackage;
 import com.facebook.react.ReactNativeHost;
@@ -29,7 +28,7 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
           @SuppressWarnings("UnnecessaryLocalVariable")
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
-          //packages.add(new KCKeepAwakePackage());
+          // packages.add(new GeolocationPackage());
           return packages;
         }
 

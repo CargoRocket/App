@@ -5,8 +5,6 @@ import {
   Button,
   Icon,
   Input,
-  Text,
-  Card,
   Divider,
   TopNavigation,
 } from '@ui-kitten/components';
@@ -24,7 +22,7 @@ import {
   cleanUnusedVias,
   removeRoutePoint,
 } from '../helpers/routePoints';
-import RNLocation from 'react-native-location';
+import Geolocation from '@react-native-community/geolocation';
 import {MapLocationSelect} from '../components/MapLocationSelect';
 import Base from '../helpers/base64';
 
@@ -115,34 +113,30 @@ export const RouteSelection = ({navigation}) => {
   };
 
   const selectCurrentLocation = () => {
-    RNLocation.configure({
-      distanceFilter: 0,
-      desiredAccuracy: {
-        ios: 'bestForNavigation',
-        android: 'highAccuracy',
-      },
+    Geolocation.setRNConfiguration({
+      authorizationLevel: 'whenInUse',
     });
-    RNLocation.requestPermission({
-      ios: 'whenInUse',
-      android: {
-        detail: 'coarse',
-      },
-    });
-    RNLocation.getLatestLocation({timeout: 1000})
-      .then((latestLocation) => {
+    // Geolocation.requestAuthorization();
+
+    Geolocation.getCurrentPosition(
+      (location) => {
         updateRoutePoint(i18n.navigation.yourLocation, [
-          latestLocation.longitude,
-          latestLocation.latitude,
+          location.coords.longitude,
+          location.coords.latitude,
         ]);
-      })
-      .catch((error) => {
-        console.log('locationError', error);
+      },
+      () => {
         setPopupMessage({
           title: i18n.modals.locationErrorTitle,
           message: i18n.modals.locationErrorMessage,
           status: 'error',
         });
-      });
+      },
+      {
+        enableHighAccuracy: true,
+        maximumAge: 200000,
+      },
+    );
   };
 
   const clearInput = () => {
@@ -264,7 +258,7 @@ export const RouteSelection = ({navigation}) => {
         routePoint.coordinates
       ) {
         const elementIndex = routePointStorageList.findIndex(
-          (element) => element === routePoint,
+          (element) => element.name === routePoint.name,
         );
         if (elementIndex !== -1) {
           routePointStorageList.splice(elementIndex, 1);
