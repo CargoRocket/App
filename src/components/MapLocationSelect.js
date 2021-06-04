@@ -97,7 +97,6 @@ export const MapLocationSelect = ({point, onChange}) => {
     )
       .then((response) => response.json())
       .then((responseData) => {
-        console.log(responseData);
         if (
           responseData.features &&
           responseData.features[0] &&

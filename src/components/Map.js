@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, PermissionsAndroid} from 'react-native';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import {accessToken} from '../res/config';
 import {default as theme} from '../res/custom-theme.json';
@@ -48,34 +48,39 @@ export const Map = () => {
       !routePoints[routePoints.length - 1].coordinates &&
       !routePoints[0].coordinates
     ) {
-      Geolocation.setRNConfiguration({
-        authorizationLevel: 'whenInUse',
+      PermissionsAndroid.check('ACCESS_FINE_LOCATION').then((granted) => {
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          Geolocation.setRNConfiguration({
+            authorizationLevel: 'whenInUse',
+            skipPermissionRequests: true,
+          });
+          Geolocation.getCurrentPosition(
+            (location) => {
+              // ToDo Fix workaround
+              setTimeout(() => {
+                if (camera.current) {
+                  camera.current.setCamera({
+                    centerCoordinate: [
+                      location.coords.longitude,
+                      location.coords.latitude,
+                    ],
+                    zoomLevel: 10,
+                    animationDuration: 2000,
+                  });
+                }
+              }, 1000);
+            },
+            (error) => {
+              console.log('locationError', error);
+            },
+            {
+              enableHighAccuracy: true,
+              timeout: 10000,
+              maximumAge: 200000,
+            },
+          );
+        }
       });
-      Geolocation.getCurrentPosition(
-        (location) => {
-          // ToDo Fix workaround
-          setTimeout(() => {
-            if (camera.current) {
-              camera.current.setCamera({
-                centerCoordinate: [
-                  location.coords.longitude,
-                  location.coords.latitude,
-                ],
-                zoomLevel: 10,
-                animationDuration: 2000,
-              });
-            }
-          }, 1000);
-        },
-        (error) => {
-          console.log('locationError', error);
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 200000,
-        },
-      );
     }
   }, [routePoints]);
 

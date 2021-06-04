@@ -74,13 +74,29 @@ export const NavigationHeader = ({
 
   const closeIcon = (props) => <Icon {...props} name="close-outline" />;
 
+  const goBack = () => {
+    if (
+      navigation.dangerouslyGetParent() &&
+      navigation.dangerouslyGetParent().state
+    ) {
+      const index = navigation.dangerouslyGetParent().state.index;
+      if (index > 0) {
+        navigation.goBack();
+      } else {
+        navigation.navigate('Content');
+      }
+    } else {
+      navigation.navigate('Content');
+    }
+  };
+
   return (
     <Layout style={styles.topBox} level="1">
       <Button
         style={styles.close}
         appearance="ghost"
         accessoryRight={closeIcon}
-        onPress={() => navigation.goBack()}
+        onPress={() => goBack()}
       />
       <Divider style={styles.divider} />
       <View style={styles.message}>

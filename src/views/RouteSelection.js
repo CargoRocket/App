@@ -125,7 +125,8 @@ export const RouteSelection = ({navigation}) => {
           location.coords.latitude,
         ]);
       },
-      () => {
+      (error) => {
+        console.log(error);
         setPopupMessage({
           title: i18n.modals.locationErrorTitle,
           message: i18n.modals.locationErrorMessage,
@@ -133,6 +134,7 @@ export const RouteSelection = ({navigation}) => {
         });
       },
       {
+        timeout: 10000,
         enableHighAccuracy: true,
         maximumAge: 200000,
       },
@@ -270,7 +272,6 @@ export const RouteSelection = ({navigation}) => {
       }
     });
     setRoutePointStorage(routePointStorageList);
-    console.log(routePointStorageList);
   };
 
   const renderMapIcon = (props) => <Icon {...props} name="map-outline" />;

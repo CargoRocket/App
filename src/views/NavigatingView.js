@@ -284,11 +284,9 @@ export const NavigatingView = ({navigation}) => {
     Geolocation.setRNConfiguration({
       authorizationLevel: 'always',
     });
-    // Geolocation.requestAuthorization();
 
     locationSubscription.current = Geolocation.watchPosition(
       (location) => {
-        console.log(location);
         setCurrentLocation(location.coords);
       },
       (error) => {
@@ -303,11 +301,11 @@ export const NavigatingView = ({navigation}) => {
       },
     );
 
-    // return () => {
-    //   if (locationSubscription.current) {
-    //     Geolocation.clearWatch(locationSubscription.current);
-    //   }
-    // };
+    return () => {
+      if (locationSubscription.current) {
+        Geolocation.clearWatch(locationSubscription.current);
+      }
+    };
   }, []);
 
   const matchPointOntoLeg = (stepId) => {
@@ -390,10 +388,16 @@ export const NavigatingView = ({navigation}) => {
           currentLocation.accuracy / 1000 + arriveMargin
         ) {
           setRouteStorage([...routeStorage, currentRouteInfo]);
-          const index = navigation.dangerouslyGetParent().state.index;
-          // handle the index we get
-          if (index > 0) {
-            navigation.goBack();
+          if (
+            navigation.dangerouslyGetParent() &&
+            navigation.dangerouslyGetParent().state
+          ) {
+            const index = navigation.dangerouslyGetParent().state.index;
+            if (index > 0) {
+              navigation.goBack();
+            } else {
+              navigation.navigate('Content');
+            }
           } else {
             navigation.navigate('Content');
           }
