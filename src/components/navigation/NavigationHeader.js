@@ -8,6 +8,7 @@ import {
   Divider,
   Spinner,
 } from '@ui-kitten/components';
+import {UiContext} from '../../context';
 
 const styles = StyleSheet.create({
   topBox: {
@@ -50,6 +51,9 @@ export const NavigationHeader = ({
   legs,
   currentStepId,
 }) => {
+  const {
+    navigating: [navigating, setNavigating],
+  } = React.useContext(UiContext);
   const directionIcon = () => {
     const directionIcons = {
       'slight right': 'diagonal-arrow-right-up-outline',
@@ -88,6 +92,7 @@ export const NavigationHeader = ({
     } else {
       navigation.navigate('Content');
     }
+    setNavigating(false);
   };
 
   return (

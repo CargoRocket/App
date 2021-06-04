@@ -42,7 +42,7 @@
     "start": "Start",
     "destination": "Ziel",
     "via": "Via",
-    "yourLocation": "Dein Standort",
+    "yourLocation": "Dein letzter Standort",
     "chooseOnMap": "Auf Karte suchen",
     "backToListView": "Zurück zur Liste",
     "to": "nach",

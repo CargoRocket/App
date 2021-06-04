@@ -42,7 +42,7 @@
     "start": "Start",
     "destination": "Destination",
     "via": "via",
-    "yourLocation": "Your Location",
+    "yourLocation": "Your last location",
     "chooseOnMap": "Select on map",
     "backToListView": "Back to list view",
     "to": "to",

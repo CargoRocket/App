@@ -37,6 +37,7 @@ export const App = () => {
   // Setting up UI Context
   const popupMessage = React.useState(null);
   const bikeSettingsShown = React.useState(false);
+  const navigating = React.useState(false);
   const onBoarding = makePersistent(
     React.useState(MMKV.getBool('isOnBoarded')),
     'isOnBoarded',
@@ -115,7 +116,7 @@ export const App = () => {
   const selectedRoute = React.useState(0);
 
   return (
-    <UiContext.Provider value={{onBoarding, popupMessage, bikeSettingsShown}}>
+    <UiContext.Provider value={{onBoarding, popupMessage, bikeSettingsShown, navigating}}>
       <SettingsContext.Provider value={{
           use,
           bikeType,

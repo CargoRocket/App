@@ -67,14 +67,18 @@ export const RouteHeader = ({navigation}) => {
   const i18n = React.useContext(LanguageContext);
   const {
     popupMessage: [popupMessage, setPopupMessage],
+    navigating: [navigating, setNavigating],
   } = React.useContext(UiContext);
   let lastAbortController = React.useRef(null);
 
   React.useEffect(() => {
+    console.log('chekc1321', navigating);
     if (
       routePoints[0].coordinates &&
-      routePoints[routePoints.length - 1].coordinates
+      routePoints[routePoints.length - 1].coordinates &&
+      !navigating
     ) {
+      console.log('CALL');
       setLoading(true);
       setRoutes(null);
       if (lastAbortController.current) {
@@ -146,7 +150,9 @@ export const RouteHeader = ({navigation}) => {
           setLoading(false);
         });
     } else {
-      setRoutes(null);
+      if (!navigating) {
+        setRoutes(null);
+      }
     }
   }, [routePoints, setRoutes]);
 

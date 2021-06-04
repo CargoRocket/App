@@ -27,6 +27,7 @@ import {deviceLanguage} from '../helpers/LanguageProvider';
 import KeepAwake from 'react-native-keep-awake';
 import RNDisableBatteryOptimizationsAndroid from 'react-native-disable-battery-optimizations-android';
 import Base from '../helpers/base64';
+import {setRoutePoint} from '../helpers/routePoints';
 
 const styles = StyleSheet.create({
   view: {
@@ -101,6 +102,7 @@ export const NavigatingView = ({navigation}) => {
   const arriveMargin = 0.01;
   const {
     popupMessage: [popupMessage, setPopupMessage],
+    navigating: [navigating, setNavigating],
   } = React.useContext(UiContext);
   const {
     voiceInstructions: [voiceInstructionActive, setVoiceInstructionActive],
@@ -201,6 +203,19 @@ export const NavigatingView = ({navigation}) => {
             setRerouting(false);
             return;
           }
+          setRoutePoints(
+            setRoutePoint(
+              routePoints,
+              {
+                name: i18n.navigation.yourLocation,
+                coordinates: [
+                  currentLocation.longitude,
+                  currentLocation.latitude,
+                ],
+              },
+              0,
+            ),
+          );
           setRoutes([
             {
               ...routesResponse.find(
@@ -250,6 +265,7 @@ export const NavigatingView = ({navigation}) => {
   };
 
   React.useEffect(() => {
+    setNavigating(true);
     if (legs[0].steps[currentStepId]) {
       readVoiceInstructions(legs[0].steps[currentStepId].voiceInstructions);
     }
@@ -406,6 +422,7 @@ export const NavigatingView = ({navigation}) => {
             message: i18n.modals.routeCompleteMessage,
             status: 'success',
           });
+          setNavigating(false);
         }
       }
     }
@@ -570,7 +587,7 @@ export const NavigatingView = ({navigation}) => {
           if (index === 0) {
             return renderRoutePoint(
               {
-                name: 'Your Position',
+                name: i18n.navigation.yourLocation,
                 coordinates: [
                   currentLocation.longitude,
                   currentLocation.latitude,
