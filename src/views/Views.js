@@ -36,6 +36,7 @@ export const Views = () => {
             <Screen name="Start" component={StartView} />
             <Screen name="SelectBike" component={SelectBike} />
             <Screen name="InputBikeSize" component={InputBikeSize} />
+            <Screen name="ProjectWebView" component={ProjectWebView} />
           </>
         )}
       </Navigator>

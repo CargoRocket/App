@@ -128,5 +128,15 @@
   },
   "mapLocationSelect": {
     "tapMap": "Tap to position marker"
+  },
+  "privacyPolicy": {
+    "title": "Terms of Service",
+    "doYouAgree": "To use our App, please agree to our Terms of Service (TOS) and privacy policy",
+    "privacylink": "https://cargorocket.de/en/privacy",
+    "agblink": "https://cargorocket.de/en/agb",
+    "privacyPolicy": "Privacy Policy",
+    "agb":"ToS",
+    "cancel": "Close App",
+    "agree": "Agree"
   }
 }

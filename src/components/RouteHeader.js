@@ -72,13 +72,11 @@ export const RouteHeader = ({navigation}) => {
   let lastAbortController = React.useRef(null);
 
   React.useEffect(() => {
-    console.log('chekc1321', navigating);
     if (
       routePoints[0].coordinates &&
       routePoints[routePoints.length - 1].coordinates &&
       !navigating
     ) {
-      console.log('CALL');
       setLoading(true);
       setRoutes(null);
       if (lastAbortController.current) {
