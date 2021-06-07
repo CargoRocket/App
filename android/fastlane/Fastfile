@@ -93,7 +93,7 @@ platform :android do
   lane :internal do
     ibn
     ivn(increment_type: "patch")
-    gradle(task: "clean assembleRelease")
+    gradle(task: "clean bundle")
     upload_to_play_store(track: "internal")
     new_version_name = Actions.lane_context[Actions::SharedValues::ANDROID_VERSION_NAME]
     telegram(
@@ -105,7 +105,7 @@ platform :android do
 
   desc "Deploy a new version to the Google Play"
   lane :deploy do
-    gradle(task: "clean assembleRelease")
+    gradle(task: "clean bundle")
     upload_to_play_store
     new_version_name = Actions.lane_context[Actions::SharedValues::ANDROID_VERSION_NAME]
     telegram(
