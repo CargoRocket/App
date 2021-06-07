@@ -133,8 +133,8 @@
   "privacyPolicy": {
     "title": "Nutzungsbedingungen zustimmen",
     "doYouAgree": "Bitte stimme unseren AGBs und Datenschutzrichtlinien zu.",
-    "privacylink": "https://cargorocket.de/privacy",
-    "agblink": "https://cargorocket.de/agb",
+    "privacylink": "https://cargorocket.de/privacy_app",
+    "agblink": "https://cargorocket.de/terms_of_service",
     "privacyPolicy": "Datenschutz",
     "agb":"AGB",
     "cancel": "Beenden",

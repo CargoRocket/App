@@ -12,7 +12,7 @@
     "private": "Private Use",
 
     "bikeType": "Bike Type",
-    "howDoesYourBikeLookLike": "How does your cargobike look like?",
+    "howDoesYourBikeLookLike": "How does your cargo bike look like?",
 
     "bikeDimensions":"Bike Dimensions",
     "bikeDimensionsSubtitle": "subtitle",
@@ -24,7 +24,7 @@
   },
   "settings": {
     "email": "E-mail (Optional)",
-    "yourMessageToUs": "YOUR MESSAGE TO US. Feel free to provide us any thought you have about the project, cargobike-index, routing etc.",
+    "yourMessageToUs": "YOUR MESSAGE TO US. Feel free to provide us any thought you have about the project, CargoBikeIndex, routing etc.",
     "send": "Send",
 
     "feedback": "Feedback",
@@ -120,8 +120,8 @@
     ]
   },
   "routeFeedback": {
-    "howBikeFriendlyIsTheWayRoute": "How cargobike friendly is the way here?",
-    "areThereOpsticals": "Are there any opsticals for cargo bikes?",
+    "howBikeFriendlyIsTheWayRoute": "How cargo bike friendly is the way here?",
+    "areThereOpsticals": "Are there any obstacles for cargo bikes?",
     "howWouldYouRate": "How would you rate this section?",
     "whyDoYouRate": "Why do you give this section this rating? (Optional)",
     "send": "Send"
@@ -132,8 +132,8 @@
   "privacyPolicy": {
     "title": "Terms of Service",
     "doYouAgree": "To use our App, please agree to our Terms of Service (TOS) and privacy policy",
-    "privacylink": "https://cargorocket.de/en/privacy",
-    "agblink": "https://cargorocket.de/en/agb",
+    "privacylink": "https://cargorocket.de/en/privacy_app",
+    "agblink": "https://cargorocket.de/en/terms_of_service",
     "privacyPolicy": "Privacy Policy",
     "agb":"ToS",
     "cancel": "Close App",
