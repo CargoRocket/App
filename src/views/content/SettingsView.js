@@ -108,7 +108,17 @@ export const SettingsView = ({navigation}) => {
           i18n.settings.privacyPolicySubtitle,
           'ProjectWebView',
           {
-            uri: `${deviceLanguage.slice(0,2) === 'de' ? 'https://cargorocket.de/privacy':'https://cargorocket.de/privacy_en'}`,
+            uri: `${deviceLanguage.slice(0,2) === 'de' ? 'https://cargorocket.de/privacy_app' : 'https://cargorocket.de/en/privacy_app'}`,
+          },
+        )}
+        <Divider />
+        {SettingsEntry(
+          'info-outline',
+          i18n.settings.termsOfService,
+          i18n.settings.termsOfServiceSubtitle,
+          'ProjectWebView',
+          {
+            uri: `${deviceLanguage.slice(0,2) === 'de' ? 'https://cargorocket.de/terms_of_service' : 'https://cargorocket.de/en/terms_of_service'}`,
           },
         )}
         <Divider />

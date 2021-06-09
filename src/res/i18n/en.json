@@ -42,7 +42,7 @@
     "start": "Start",
     "destination": "Destination",
     "via": "via",
-    "yourLocation": "Your last location",
+    "yourLocation": "Your location",
     "chooseOnMap": "Select on map",
     "backToListView": "Back to list view",
     "to": "to",
@@ -101,7 +101,7 @@
       },
       {
         "title": "CargoBikeIndex",
-        "description":"Our CargoBikeIndex for Stuttgart (CAUTION! Long loading time ahead!)",
+        "description":"Our CargoBikeIndex",
         "image": "index_2.png",
         "uri": "https://cargorocket.de/cargobikeindex"
       },

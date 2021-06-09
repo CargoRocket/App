@@ -36,13 +36,15 @@
     "about": "Impressum",
     "aboutSubtitle": "Rechtliche Informationen und mehr",
     "privacyPolicy": "Datenschutz",
-    "privacyPolicySubtitle": "Wie wir mit deinen Daten umgehen"
+    "privacyPolicySubtitle": "Wie wir mit deinen Daten umgehen",
+    "termsOfService": "Allgemeine Geschäftsbedingungen",
+    "termsOfServiceSubtitle": "Haftungsausschluss und Rahmenbedingungen."
   },
   "navigation": {
     "start": "Start",
     "destination": "Ziel",
     "via": "Via",
-    "yourLocation": "Dein letzter Standort",
+    "yourLocation": "Dein Standort",
     "chooseOnMap": "Auf Karte suchen",
     "backToListView": "Zurück zur Liste",
     "to": "nach",
@@ -101,8 +103,8 @@
         "uri": "https://cargorocket.de/2021/04/17/mapping-tutorial.html"
       },
       {
-        "title": "Cargobike Index",
-        "description":"Unser CargoBikeIndex für Stuttgart (Vorsicht! Evtl. Lange Ladezeiten!)",
+        "title": "CargoBikeIndex",
+        "description":"Unser CargoBikeIndex",
         "image": "index_2.png",
         "uri": "https://cargorocket.de/cargobikeindex"
       },
