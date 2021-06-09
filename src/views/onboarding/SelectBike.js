@@ -17,6 +17,7 @@ import LongJohn from '../../res/images/longjohn.svg';
 import LongTail from '../../res/images/longtail.svg';
 import Schwertransporter from '../../res/images/schwertransporter.svg';
 import Trike from '../../res/images/trike.svg';
+import Trailer from '../../res/images/trailer_bike.svg';
 
 const styles = StyleSheet.create({
   option: {
@@ -133,6 +134,19 @@ export const SelectBike = ({navigation}) => {
           setLength(200);
         }}>
         <Trike height={100} width={100} />
+      </Card>
+      <Card
+        style={
+          bikeType === 'trailer'
+            ? {...styles.option, ...styles.optionSelected}
+            : styles.option
+        }
+        onPress={() => {
+          setBikeType('trailer');
+          setWidth(80);
+          setLength(250);
+        }}>
+        <Trailer height={100} width={100} />
       </Card>
     </SafeAreaView>
   );
