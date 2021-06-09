@@ -36,7 +36,9 @@
     "about": "Imprint",
     "aboutSubtitle": "Legal information and more",
     "privacyPolicy": "Privacy Policy",
-    "privacyPolicySubtitle": "How we use your data"
+    "privacyPolicySubtitle": "How we use your data",
+    "termsOfService": "Terms of Service",
+    "termsOfServiceSubtitle": "How this App is meant to be used."
   },
   "navigation": {
     "start": "Start",

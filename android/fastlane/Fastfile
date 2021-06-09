@@ -117,6 +117,7 @@ platform :android do
         en: "Initial Version"
       }
     )
+    new_version_name = Actions.lane_context[Actions::SharedValues::ANDROID_VERSION_NAME]
     telegram(
       token: ENV['TG_BOT_TOKEN'],
       chat_id: ENV['TG_CHAT_ID'],
