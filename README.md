@@ -8,8 +8,14 @@
 </div>
 
 <div align="center">
+  <!-- <a href="">
+    <img src="res/images/fdroid.png" width="200">
+  </a> -->
   <a href="https://play.google.com/store/apps/details?id=de.cargorocket">
-    <img src="res/images/en_get.svg" width="200">
+    <img src="res/images/play.png" width="200">
+  </a>
+  <a href="https://appgallery.huawei.com/#/app/C104405489">
+    <img src="res/images/huawei.png" width="200">
   </a>
 </div>
 
