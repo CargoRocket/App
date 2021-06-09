@@ -36,6 +36,11 @@ Runs all the tests
 fastlane android internal
 ```
 Submit a new Internal Beta Build
+### android huawei
+```
+fastlane android huawei
+```
+Submit a new Release to Huawei App Gallery
 ### android deploy
 ```
 fastlane android deploy

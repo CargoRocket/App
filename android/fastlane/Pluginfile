@@ -5,3 +5,4 @@
 gem 'fastlane-plugin-telegram'
 gem 'fastlane-plugin-android_version_manager'
 gem 'fastlane-plugin-icon_banner'
+gem 'fastlane-plugin-huawei_appgallery'

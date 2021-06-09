@@ -103,6 +103,27 @@ platform :android do
     )
   end
 
+
+  desc "Submit a new Release to Huawei App Gallery"
+  lane :huawei do
+    gradle(task: "clean assembleRelease")
+    huawei_appgallery(
+      client_id: ENV['client_id_from_the_developer_console'],
+      client_secret: ENV['client_secret_from_the_developer_console'],
+      app_id: ENV['app_id_from_the_developer_console'],
+      apk_path: "app/build/outputs/apk/release/app-release.apk",
+      release_notes: {
+        de: "Erste Version",
+        en: "Initial Version"
+      }
+    )
+    telegram(
+      token: ENV['TG_BOT_TOKEN'],
+      chat_id: ENV['TG_CHAT_ID'],
+      text: "Version #{new_version_name} is now available as new version release at Huaweis App Gallery"
+    )
+  end
+
   desc "Deploy a new version to the Google Play"
   lane :deploy do
     gradle(task: "clean bundle")
